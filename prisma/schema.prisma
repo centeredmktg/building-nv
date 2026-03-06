@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Client {
+  id         String   @id @default(cuid())
+  name       String
+  company    String?
+  email      String?
+  phone      String?
+  createdAt  DateTime @default(now())
+  quotes     Quote[]
+}
+
+model Quote {
+  id                  String              @id @default(cuid())
+  slug                String              @unique
+  title               String
+  address             String
+  projectType         String
+  status              String              @default("draft") // draft | sent | accepted
+  scopeText           String?
+  materialMarkupPct   Float               @default(10)
+  overheadPct         Float               @default(10)
+  profitPct           Float               @default(10)
+  paymentTerms        String              @default("10% due at signing. 25% due after materials purchased. Balance due net 30.")
+  exclusions          String              @default("Plans. Permit fees. Any work not specifically described above. All valuables and personal property to be removed from work areas prior to work.")
+  notes               String?
+  clientId            String
+  client              Client              @relation(fields: [clientId], references: [id])
+  sections            LineItemSection[]
+  acceptance          Acceptance?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  sentAt              DateTime?
+}
+
+model LineItemSection {
+  id        String     @id @default(cuid())
+  title     String
+  position  Int
+  quoteId   String
+  quote     Quote      @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  items     LineItem[]
+}
+
+model LineItem {
+  id          String          @id @default(cuid())
+  description String
+  quantity    Float
+  unit        String          @default("ea")
+  unitPrice   Float
+  isMaterial  Boolean         @default(false)
+  position    Int
+  sectionId   String
+  section     LineItemSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}
+
+model Acceptance {
+  id          String   @id @default(cuid())
+  signerName  String
+  acceptedAt  DateTime @default(now())
+  ipAddress   String?
+  quoteId     String   @unique
+  quote       Quote    @relation(fields: [quoteId], references: [id])
+}
