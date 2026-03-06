@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
           credentials?.username === process.env.INTERNAL_USERNAME &&
           credentials?.password === process.env.INTERNAL_PASSWORD
         ) {
-          return { id: "1", name: credentials.username };
+          return { id: "1", name: credentials!.username };
         }
         return null;
       },
