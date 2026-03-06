@@ -15,24 +15,18 @@ const services = [
   },
   {
     number: "03",
-    title: "Medical & Healthcare",
-    description:
-      "Compliant, purpose-built spaces for medical offices, clinics, and healthcare facilities with attention to code and patient flow.",
-  },
-  {
-    number: "04",
     title: "Warehouse & Industrial",
     description:
       "Functional improvements for logistics, manufacturing, and industrial tenants. Efficient buildouts that maximize your operational footprint.",
   },
   {
-    number: "05",
+    number: "04",
     title: "Full Suite Renovations",
     description:
       "End-to-end gut renovations transforming dated commercial spaces into modern, functional environments ready for new tenants.",
   },
   {
-    number: "06",
+    number: "05",
     title: "Property Manager Services",
     description:
       "Reliable, repeat-ready TI work for property managers who need a contractor they can trust across their portfolio.",
