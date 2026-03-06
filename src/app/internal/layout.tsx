@@ -1,6 +1,12 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 import InternalNav from "@/components/internal/InternalNav";
 
-export default function InternalLayout({ children }: { children: React.ReactNode }) {
+export default async function InternalLayout({ children }: { children: React.ReactNode }) {
+  const session = await getServerSession(authOptions);
+  if (!session) redirect("/internal/login");
+
   return (
     <div className="min-h-screen bg-bg">
       <InternalNav />
