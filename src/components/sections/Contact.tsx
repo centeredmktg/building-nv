@@ -17,6 +17,7 @@ export default function Contact() {
   const [form, setForm] = useState({
     name: "",
     company: "",
+    email: "",
     phone: "",
     projectType: "",
     message: "",
@@ -39,7 +40,7 @@ export default function Contact() {
       });
       if (res.ok) {
         setStatus("success");
-        setForm({ name: "", company: "", phone: "", projectType: "", message: "" });
+        setForm({ name: "", company: "", email: "", phone: "", projectType: "", message: "" });
       } else {
         setStatus("error");
       }
@@ -99,15 +100,26 @@ export default function Contact() {
                   className={inputClass}
                 />
               </div>
-              <input
-                name="phone"
-                type="tel"
-                placeholder="Phone Number *"
-                required
-                value={form.phone}
-                onChange={handleChange}
-                className={inputClass}
-              />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Email Address *"
+                  required
+                  value={form.email}
+                  onChange={handleChange}
+                  className={inputClass}
+                />
+                <input
+                  name="phone"
+                  type="tel"
+                  placeholder="Phone Number *"
+                  required
+                  value={form.phone}
+                  onChange={handleChange}
+                  className={inputClass}
+                />
+              </div>
               <select
                 name="projectType"
                 value={form.projectType}
