@@ -7,46 +7,51 @@ datasource db {
   provider = "sqlite"
 }
 
+// ─── Quoting Engine (existing) ────────────────────────────────────────────────
+
 model Client {
-  id         String   @id @default(cuid())
-  name       String
-  company    String?
-  email      String?
-  phone      String?
-  createdAt  DateTime @default(now())
-  quotes     Quote[]
+  id        String   @id @default(cuid())
+  name      String
+  company   String?
+  email     String?
+  phone     String?
+  createdAt DateTime @default(now())
+  quotes    Quote[]
 }
 
 model Quote {
-  id                  String              @id @default(cuid())
-  slug                String              @unique
-  title               String
-  address             String
-  projectType         String
-  status              String              @default("draft") // draft | sent | accepted
-  scopeText           String?
-  materialMarkupPct   Float               @default(10)
-  overheadPct         Float               @default(10)
-  profitPct           Float               @default(10)
-  paymentTerms        String              @default("10% due at signing. 25% due after materials purchased. Balance due net 30.")
-  exclusions          String              @default("Plans. Permit fees. Any work not specifically described above. All valuables and personal property to be removed from work areas prior to work.")
-  notes               String?
-  clientId            String
-  client              Client              @relation(fields: [clientId], references: [id])
-  sections            LineItemSection[]
-  acceptance          Acceptance?
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
-  sentAt              DateTime?
+  id                String          @id @default(cuid())
+  slug              String          @unique
+  title             String
+  address           String
+  projectType       String
+  status            String          @default("draft") // draft | sent | accepted
+  scopeText         String?
+  materialMarkupPct Float           @default(10)
+  overheadPct       Float           @default(10)
+  profitPct         Float           @default(10)
+  paymentTerms      String          @default("10% due at signing. 25% due after materials purchased. Balance due net 30.")
+  exclusions        String          @default("Plans. Permit fees. Any work not specifically described above. All valuables and personal property to be removed from work areas prior to work.")
+  notes             String?
+  clientId          String
+  client            Client          @relation(fields: [clientId], references: [id])
+  // CRM link — optional until we migrate existing quotes
+  projectId         String?
+  project           Project?        @relation(fields: [projectId], references: [id])
+  sections          LineItemSection[]
+  acceptance        Acceptance?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  sentAt            DateTime?
 }
 
 model LineItemSection {
-  id        String     @id @default(cuid())
-  title     String
-  position  Int
-  quoteId   String
-  quote     Quote      @relation(fields: [quoteId], references: [id], onDelete: Cascade)
-  items     LineItem[]
+  id      String     @id @default(cuid())
+  title   String
+  position Int
+  quoteId String
+  quote   Quote      @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  items   LineItem[]
 }
 
 model LineItem {
@@ -54,18 +59,114 @@ model LineItem {
   description String
   quantity    Float
   unit        String          @default("ea")
-  unitPrice   Float
+  unitPrice   Float           // customer-facing price per unit
+  vendorCost  Float?          // internal cost per unit (null if not from catalog)
   isMaterial  Boolean         @default(false)
   position    Int
   sectionId   String
   section     LineItemSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  // CPQ link — optional, set when line item comes from component catalog
+  componentId String?
+  component   Component?      @relation(fields: [componentId], references: [id])
 }
 
 model Acceptance {
-  id          String   @id @default(cuid())
-  signerName  String
-  acceptedAt  DateTime @default(now())
-  ipAddress   String?
-  quoteId     String   @unique
-  quote       Quote    @relation(fields: [quoteId], references: [id])
+  id         String   @id @default(cuid())
+  signerName String
+  acceptedAt DateTime @default(now())
+  ipAddress  String?
+  quoteId    String   @unique
+  quote      Quote    @relation(fields: [quoteId], references: [id])
+}
+
+// ─── CRM ──────────────────────────────────────────────────────────────────────
+
+// stages: opportunity_identified | quote_requested | bid_delivered |
+//         contract_completed | contract_sent | contract_signed | closed_lost
+model Project {
+  id               String           @id @default(cuid())
+  name             String
+  stage            String           @default("opportunity_identified")
+  projectType      String?
+  message          String?          // original inbound message from contact form
+  notes            String?          // internal notes
+  attachmentUrl    String?
+  projectContacts  ProjectContact[]
+  projectCompanies ProjectCompany[]
+  quotes           Quote[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model Contact {
+  id               String           @id @default(cuid())
+  firstName        String
+  lastName         String?
+  email            String           @unique
+  phone            String?
+  type             String           @default("customer") // customer | vendor | pm | other
+  primaryCompany   Company?         @relation(fields: [primaryCompanyId], references: [id])
+  primaryCompanyId String?
+  projectContacts  ProjectContact[]
+  createdAt        DateTime         @default(now())
+}
+
+model Company {
+  id               String           @id @default(cuid())
+  name             String
+  type             String           @default("customer") // customer | vendor | pm | other
+  domain           String?          @unique
+  phone            String?
+  contacts         Contact[]
+  projectCompanies ProjectCompany[]
+  createdAt        DateTime         @default(now())
+}
+
+model ProjectContact {
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactId String
+  role      String  @default("customer") // customer | pm | architect | gc | other
+
+  @@id([projectId, contactId])
+}
+
+model ProjectCompany {
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String
+  role      String  @default("customer") // customer | pm | architect | gc | other
+
+  @@id([projectId, companyId])
+}
+
+// ─── CPQ: Component Catalog ───────────────────────────────────────────────────
+
+model Vendor {
+  id         String      @id @default(cuid())
+  name       String
+  website    String?
+  notes      String?
+  components Component[]
+  createdAt  DateTime    @default(now())
+}
+
+// A specific purchasable item from a vendor with a known cost.
+// When used on a quote, vendorCost is copied to LineItem.vendorCost
+// and the customer-facing unitPrice is set separately (via markup or manual entry).
+model Component {
+  id          String     @id @default(cuid())
+  name        String
+  description String?
+  category    String?    // e.g. "Flooring", "Electrical", "Millwork"
+  vendorSku   String?
+  vendorCost  Float      // what we pay the vendor per unit
+  unit        String     @default("ea")
+  vendor      Vendor     @relation(fields: [vendorId], references: [id])
+  vendorId    String
+  lineItems   LineItem[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
