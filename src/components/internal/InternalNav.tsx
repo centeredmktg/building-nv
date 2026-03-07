@@ -2,20 +2,36 @@
 
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function InternalNav() {
+  const pathname = usePathname();
+
+  const navLink = (href: string, label: string) => (
+    <Link
+      href={href}
+      className={`text-sm transition-colors ${
+        pathname.startsWith(href)
+          ? "text-text-primary font-semibold"
+          : "text-text-muted hover:text-text-primary"
+      }`}
+    >
+      {label}
+    </Link>
+  );
+
   return (
     <nav className="border-b border-border bg-surface px-6 py-4 flex items-center justify-between">
       <div className="flex items-center gap-8">
         <Link href="/internal/quotes" className="text-text-primary font-bold text-lg">
           Building NV
         </Link>
-        <Link href="/internal/quotes" className="text-text-muted hover:text-text-primary text-sm transition-colors">
-          Quotes
-        </Link>
+        {navLink("/internal/projects", "Pipeline")}
+        {navLink("/internal/quotes", "Quotes")}
+        {navLink("/internal/components", "Catalog")}
       </div>
       <button
-        onClick={() => signOut({ callbackUrl: "/internal/login" })}
+        onClick={() => signOut({ callbackUrl: "/login" })}
         className="text-text-muted hover:text-text-primary text-sm transition-colors"
       >
         Sign Out
