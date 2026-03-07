@@ -5,7 +5,7 @@ import InternalNav from "@/components/internal/InternalNav";
 
 export default async function InternalLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/internal/login");
+  if (!session) redirect("/login");
 
   return (
     <div className="min-h-screen bg-bg">
