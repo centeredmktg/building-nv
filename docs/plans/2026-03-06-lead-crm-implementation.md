@@ -2,20 +2,20 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Add lead persistence (Supabase Postgres), email notification (Resend), file attachments (Supabase Storage), and a kanban admin CRM at `/admin` to the Building NV marketing site.
+**Goal:** Build a full lead-to-project CRM backend for Building NV — inbound form creates/deduplicates contacts and companies, stores a project in Postgres, sends email via Resend, and surfaces everything in a kanban admin at `/admin`.
 
-**Architecture:** The contact form submits multipart/form-data to `/api/contact`, which uploads any attachment to Supabase Storage, saves the lead to Postgres, and sends a notification email via Resend. The `/admin` section is protected by signed-cookie middleware (jose) and shows a drag-and-drop kanban board (dnd-kit) across 7 pipeline stages.
+**Architecture:** The contact form submits multipart/form-data to `/api/contact`. The route upserts contact (by email) and company (by domain, with consumer domain exclusions), creates a project, links them via join tables, uploads any attachment to Supabase Storage, and sends a Resend email to `bids@buildingnv.com`. The `/admin` kanban is a server-rendered Next.js page with dnd-kit drag-and-drop and a slide-out detail panel.
 
-**Tech Stack:** Next.js 16 App Router, Supabase (Postgres + Storage), Resend, dnd-kit/core + dnd-kit/utilities, jose.
+**Tech Stack:** Next.js 16 App Router, Supabase (Postgres + Storage), Resend, @dnd-kit/core, @dnd-kit/utilities, jose.
 
 ---
 
 ## Prerequisites (manual steps before running tasks)
 
 1. Create a Supabase project at https://supabase.com — free tier is sufficient
-2. In Supabase SQL editor, run the schema in Task 1
-3. In Supabase Storage, create a public bucket named `lead-attachments`
-4. Create a Resend account at https://resend.com, get an API key, verify your sending domain
+2. Run the schema SQL from Task 1 in the Supabase SQL editor
+3. In Supabase Storage, create a **public** bucket named `project-attachments`
+4. Create a Resend account at https://resend.com, verify your sending domain, get an API key
 5. Create `.env.local` in the project root:
 
 ```
@@ -34,23 +34,45 @@ ADMIN_JWT_SECRET=choose-a-random-32-char-string
 **Files:**
 - Reference only — run in Supabase SQL editor
 
-**Step 1: Run schema SQL in Supabase SQL editor**
+**Step 1: Run schema SQL**
 
 ```sql
-CREATE TABLE leads (
+-- Companies
+CREATE TABLE companies (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
-  company text,
-  phone text NOT NULL,
+  type text NOT NULL DEFAULT 'customer',
+  domain text UNIQUE,
+  phone text,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+-- Contacts
+CREATE TABLE contacts (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  first_name text NOT NULL,
+  last_name text,
+  email text UNIQUE NOT NULL,
+  phone text,
+  type text NOT NULL DEFAULT 'customer',
+  primary_company_id uuid REFERENCES companies(id) ON DELETE SET NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
+-- Projects
+CREATE TABLE projects (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  stage text NOT NULL DEFAULT 'opportunity_identified',
   project_type text,
   message text,
-  stage text NOT NULL DEFAULT 'opportunity_identified',
   notes text,
   attachment_url text,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now()
 );
 
+-- Auto-update updated_at
 CREATE OR REPLACE FUNCTION update_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -59,17 +81,37 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER leads_updated_at
-  BEFORE UPDATE ON leads
+CREATE TRIGGER projects_updated_at
+  BEFORE UPDATE ON projects
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at();
 
-ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
+-- Join tables
+CREATE TABLE project_contacts (
+  project_id uuid NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  contact_id uuid NOT NULL REFERENCES contacts(id) ON DELETE CASCADE,
+  role text NOT NULL DEFAULT 'customer',
+  PRIMARY KEY (project_id, contact_id)
+);
+
+CREATE TABLE project_companies (
+  project_id uuid NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  company_id uuid NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+  role text NOT NULL DEFAULT 'customer',
+  PRIMARY KEY (project_id, company_id)
+);
+
+-- Enable RLS (server uses service role key, so RLS blocks direct client access)
+ALTER TABLE companies ENABLE ROW LEVEL SECURITY;
+ALTER TABLE contacts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE project_contacts ENABLE ROW LEVEL SECURITY;
+ALTER TABLE project_companies ENABLE ROW LEVEL SECURITY;
 ```
 
-**Step 2: Verify**
+**Step 2: Verify in Supabase Table Editor**
 
-In Supabase Table Editor, confirm the `leads` table exists with all columns.
+Confirm all 5 tables exist with correct columns.
 
 ---
 
@@ -98,24 +140,80 @@ git commit -m "feat: install supabase, resend, dnd-kit, jose"
 
 ---
 
-## Task 3: Supabase Client Utilities
+## Task 3: Shared Types and Utilities
 
 **Files:**
+- Create: `src/lib/types.ts`
 - Create: `src/lib/supabase.ts`
+- Create: `src/lib/domains.ts`
 
-**Step 1: Create Supabase utility module**
+**Step 1: Create types**
+
+```typescript
+// src/lib/types.ts
+export const STAGES = [
+  { id: "opportunity_identified", label: "Opportunity Identified" },
+  { id: "quote_requested",        label: "Quote Requested" },
+  { id: "bid_delivered",          label: "Bid Delivered" },
+  { id: "contract_completed",     label: "Contract Completed" },
+  { id: "contract_sent",          label: "Contract Sent" },
+  { id: "contract_signed",        label: "Contract Signed" },
+  { id: "closed_lost",            label: "Closed Lost" },
+] as const;
+
+export type StageId = (typeof STAGES)[number]["id"];
+
+export interface Company {
+  id: string;
+  name: string;
+  type: string;
+  domain: string | null;
+  phone: string | null;
+  created_at: string;
+}
+
+export interface Contact {
+  id: string;
+  first_name: string;
+  last_name: string | null;
+  email: string;
+  phone: string | null;
+  type: string;
+  primary_company_id: string | null;
+  created_at: string;
+}
+
+export interface ProjectContact {
+  role: string;
+  contact: Contact;
+}
+
+export interface ProjectCompany {
+  role: string;
+  company: Company;
+}
+
+export interface Project {
+  id: string;
+  name: string;
+  stage: StageId;
+  project_type: string | null;
+  message: string | null;
+  notes: string | null;
+  attachment_url: string | null;
+  created_at: string;
+  updated_at: string;
+  project_contacts: ProjectContact[];
+  project_companies: ProjectCompany[];
+}
+```
+
+**Step 2: Create Supabase client utility**
 
 ```typescript
 // src/lib/supabase.ts
 import { createClient } from "@supabase/supabase-js";
 
-// Browser client — uses anon key, safe to expose
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-// Server client — uses service role key, never sent to browser
 export function createServiceClient() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -124,7 +222,35 @@ export function createServiceClient() {
 }
 ```
 
-**Step 2: Verify TypeScript**
+**Step 3: Create domain exclusion utility**
+
+```typescript
+// src/lib/domains.ts
+const CONSUMER_DOMAINS = new Set([
+  "gmail.com", "googlemail.com",
+  "outlook.com", "hotmail.com", "hotmail.co.uk", "live.com",
+  "yahoo.com", "yahoo.co.uk",
+  "icloud.com", "me.com", "mac.com",
+  "aol.com",
+  "protonmail.com", "pm.me",
+]);
+
+export function extractBusinessDomain(email: string): string | null {
+  const parts = email.toLowerCase().split("@");
+  if (parts.length !== 2) return null;
+  const domain = parts[1];
+  return CONSUMER_DOMAINS.has(domain) ? null : domain;
+}
+
+export function splitName(fullName: string): { first: string; last: string | null } {
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length === 1) return { first: parts[0], last: null };
+  const last = parts.pop()!;
+  return { first: parts.join(" "), last };
+}
+```
+
+**Step 4: Verify TypeScript**
 
 ```bash
 npx tsc --noEmit
@@ -132,11 +258,11 @@ npx tsc --noEmit
 
 Expected: no output.
 
-**Step 3: Commit**
+**Step 5: Commit**
 
 ```bash
-git add src/lib/supabase.ts
-git commit -m "feat: add Supabase client utilities"
+git add src/lib/types.ts src/lib/supabase.ts src/lib/domains.ts
+git commit -m "feat: add shared types, Supabase client, and domain utilities"
 ```
 
 ---
@@ -152,6 +278,7 @@ git commit -m "feat: add Supabase client utilities"
 // src/app/api/contact/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
+import { extractBusinessDomain, splitName } from "@/lib/domains";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -159,35 +286,91 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
 
-  const name = formData.get("name") as string | null;
-  const company = formData.get("company") as string | null;
-  const phone = formData.get("phone") as string | null;
+  const fullName   = (formData.get("name") as string | null)?.trim() ?? "";
+  const email      = (formData.get("email") as string | null)?.trim().toLowerCase() ?? "";
+  const companyName = (formData.get("company") as string | null)?.trim() ?? "";
+  const phone      = (formData.get("phone") as string | null)?.trim() ?? "";
   const projectType = formData.get("projectType") as string | null;
-  const message = formData.get("message") as string | null;
-  const file = formData.get("attachment") as File | null;
+  const message    = formData.get("message") as string | null;
+  const file       = formData.get("attachment") as File | null;
 
-  if (!name || !phone) {
-    return NextResponse.json({ error: "Name and phone are required" }, { status: 400 });
+  if (!fullName || !phone || !email) {
+    return NextResponse.json({ error: "Name, email, and phone are required" }, { status: 400 });
   }
 
   const supabase = createServiceClient();
+  const { first, last } = splitName(fullName);
+  const domain = extractBusinessDomain(email);
 
-  // Insert lead first to get the ID
-  const { data: lead, error: insertError } = await supabase
-    .from("leads")
-    .insert({
-      name,
-      company: company || null,
-      phone,
-      project_type: projectType || null,
-      message: message || null,
-    })
-    .select()
+  // Upsert company (only if business domain)
+  let companyId: string | null = null;
+  if (domain) {
+    const { data: company } = await supabase
+      .from("companies")
+      .upsert(
+        { name: companyName || domain, type: "customer", domain },
+        { onConflict: "domain", ignoreDuplicates: false }
+      )
+      .select("id")
+      .single();
+    companyId = company?.id ?? null;
+  }
+
+  // Upsert contact
+  const { data: contact } = await supabase
+    .from("contacts")
+    .upsert(
+      {
+        first_name: first,
+        last_name: last,
+        email,
+        phone: phone || null,
+        type: "customer",
+        primary_company_id: companyId,
+      },
+      { onConflict: "email", ignoreDuplicates: false }
+    )
+    .select("id")
     .single();
 
-  if (insertError || !lead) {
-    console.error("Failed to insert lead:", insertError);
-    return NextResponse.json({ error: "Failed to save lead" }, { status: 500 });
+  if (!contact) {
+    return NextResponse.json({ error: "Failed to save contact" }, { status: 500 });
+  }
+
+  // Create project
+  const projectName = companyName
+    ? `${projectType ?? "Project"} — ${companyName}`
+    : `${projectType ?? "Project"} — ${fullName}`;
+
+  const { data: project, error: projectError } = await supabase
+    .from("projects")
+    .insert({
+      name: projectName,
+      stage: "opportunity_identified",
+      project_type: projectType,
+      message,
+    })
+    .select("id")
+    .single();
+
+  if (projectError || !project) {
+    return NextResponse.json({ error: "Failed to create project" }, { status: 500 });
+  }
+
+  // Link contact to project
+  await supabase.from("project_contacts").insert({
+    project_id: project.id,
+    contact_id: contact.id,
+    role: "customer",
+  });
+
+  // Link company to project (if resolved)
+  if (companyId) {
+    await supabase.from("project_companies").insert({
+      project_id: project.id,
+      company_id: companyId,
+      role: "customer",
+    });
   }
 
   // Upload attachment if provided
@@ -195,42 +378,38 @@ export async function POST(req: NextRequest) {
   if (file && file.size > 0) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const path = `${lead.id}/${file.name}`;
+    const path = `${project.id}/${file.name}`;
 
     const { error: uploadError } = await supabase.storage
-      .from("lead-attachments")
+      .from("project-attachments")
       .upload(path, buffer, { contentType: file.type });
 
     if (!uploadError) {
       const { data: urlData } = supabase.storage
-        .from("lead-attachments")
+        .from("project-attachments")
         .getPublicUrl(path);
       attachmentUrl = urlData.publicUrl;
 
       await supabase
-        .from("leads")
+        .from("projects")
         .update({ attachment_url: attachmentUrl })
-        .eq("id", lead.id);
-    } else {
-      console.error("Attachment upload failed:", uploadError);
+        .eq("id", project.id);
     }
   }
 
-  // Send email notification
-  const attachmentLine = attachmentUrl
-    ? `\nAttachment: ${attachmentUrl}`
-    : "";
-
+  // Send email
+  const attachmentLine = attachmentUrl ? `\nAttachment: ${attachmentUrl}` : "";
   await resend.emails.send({
     from: "Building NV <noreply@buildingnv.com>",
     to: "bids@buildingnv.com",
-    subject: `New Lead: ${name} — ${projectType || "General Inquiry"}`,
+    subject: `New Project: ${fullName} — ${projectType ?? "General Inquiry"}`,
     text: [
-      `Name: ${name}`,
-      `Company: ${company || "—"}`,
+      `Name: ${fullName}`,
+      `Email: ${email}`,
+      `Company: ${companyName || "—"}`,
       `Phone: ${phone}`,
-      `Project Type: ${projectType || "—"}`,
-      `Message: ${message || "—"}`,
+      `Project Type: ${projectType ?? "—"}`,
+      `Message: ${message ?? "—"}`,
       attachmentLine,
     ]
       .filter(Boolean)
@@ -247,25 +426,23 @@ export async function POST(req: NextRequest) {
 npx tsc --noEmit
 ```
 
-Expected: no output.
-
 **Step 3: Commit**
 
 ```bash
 git add src/app/api/contact/route.ts
-git commit -m "feat: connect contact form to Supabase and Resend"
+git commit -m "feat: update contact route to upsert contact/company and create project"
 ```
 
 ---
 
-## Task 5: Update Contact Form for File Upload
+## Task 5: Update Contact Form
 
 **Files:**
 - Modify: `src/components/sections/Contact.tsx`
 
-**Step 1: Update handleSubmit to use FormData**
+**Step 1: Add email field and update form to use FormData**
 
-Replace the `handleSubmit` function and add file state. Here is the complete updated file:
+Replace the full file content:
 
 ```typescript
 // src/components/sections/Contact.tsx
@@ -277,9 +454,9 @@ import FadeUp from "@/components/FadeUp";
 const projectTypes = [
   "Office Buildout",
   "Retail / Restaurant",
-  "Medical Suite",
   "Warehouse / Industrial",
   "Suite Renovation",
+  "Kitchen & Bathroom",
   "Other",
 ];
 
@@ -288,6 +465,7 @@ export default function Contact() {
   const [file, setFile] = useState<File | null>(null);
   const [form, setForm] = useState({
     name: "",
+    email: "",
     company: "",
     phone: "",
     projectType: "",
@@ -305,21 +483,13 @@ export default function Contact() {
     setStatus("loading");
     try {
       const formData = new FormData();
-      formData.append("name", form.name);
-      formData.append("company", form.company);
-      formData.append("phone", form.phone);
-      formData.append("projectType", form.projectType);
-      formData.append("message", form.message);
+      Object.entries(form).forEach(([k, v]) => formData.append(k, v));
       if (file) formData.append("attachment", file);
 
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        body: formData,
-      });
-
+      const res = await fetch("/api/contact", { method: "POST", body: formData });
       if (res.ok) {
         setStatus("success");
-        setForm({ name: "", company: "", phone: "", projectType: "", message: "" });
+        setForm({ name: "", email: "", company: "", phone: "", projectType: "", message: "" });
         setFile(null);
       } else {
         setStatus("error");
@@ -362,78 +532,37 @@ export default function Contact() {
           <FadeUp delay={0.1}>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  name="name"
-                  type="text"
-                  placeholder="Your Name *"
-                  required
-                  value={form.name}
-                  onChange={handleChange}
-                  className={inputClass}
-                />
-                <input
-                  name="company"
-                  type="text"
-                  placeholder="Company / Property"
-                  value={form.company}
-                  onChange={handleChange}
-                  className={inputClass}
-                />
+                <input name="name" type="text" placeholder="Your Name *" required
+                  value={form.name} onChange={handleChange} className={inputClass} />
+                <input name="company" type="text" placeholder="Company / Property"
+                  value={form.company} onChange={handleChange} className={inputClass} />
               </div>
-              <input
-                name="phone"
-                type="tel"
-                placeholder="Phone Number *"
-                required
-                value={form.phone}
-                onChange={handleChange}
-                className={inputClass}
-              />
-              <select
-                name="projectType"
-                value={form.projectType}
-                onChange={handleChange}
-                className={`${inputClass} appearance-none`}
-              >
-                <option value="" disabled>
-                  Project Type
-                </option>
-                {projectTypes.map((t) => (
-                  <option key={t} value={t}>
-                    {t}
-                  </option>
-                ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input name="email" type="email" placeholder="Email Address *" required
+                  value={form.email} onChange={handleChange} className={inputClass} />
+                <input name="phone" type="tel" placeholder="Phone Number *" required
+                  value={form.phone} onChange={handleChange} className={inputClass} />
+              </div>
+              <select name="projectType" value={form.projectType} onChange={handleChange}
+                className={`${inputClass} appearance-none`}>
+                <option value="" disabled>Project Type</option>
+                {projectTypes.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
-              <textarea
-                name="message"
+              <textarea name="message"
                 placeholder="Tell us about your project — size, timeline, location..."
-                rows={5}
-                value={form.message}
-                onChange={handleChange}
-                className={`${inputClass} resize-none`}
-              />
-
-              {/* File attachment */}
+                rows={5} value={form.message} onChange={handleChange}
+                className={`${inputClass} resize-none`} />
               <div>
                 <label className="block text-text-muted text-xs uppercase tracking-widest mb-2">
                   Attach existing bid or plans (optional)
                 </label>
-                <input
-                  type="file"
-                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
                   onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                  className="w-full text-text-muted text-sm file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-surface-2 file:text-text-primary hover:file:bg-border cursor-pointer"
-                />
-                {file && (
-                  <p className="text-text-muted text-xs mt-1">{file.name}</p>
-                )}
+                  className="w-full text-text-muted text-sm file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-surface-2 file:text-text-primary hover:file:bg-border cursor-pointer" />
+                {file && <p className="text-text-muted text-xs mt-1">{file.name}</p>}
               </div>
-
-              <button
-                type="submit"
-                disabled={status === "loading"}
-                className="w-full bg-accent text-bg font-semibold py-4 rounded-sm text-sm tracking-wide hover:bg-accent/90 transition-colors disabled:opacity-60"
-              >
+              <button type="submit" disabled={status === "loading"}
+                className="w-full bg-accent text-bg font-semibold py-4 rounded-sm text-sm tracking-wide hover:bg-accent/90 transition-colors disabled:opacity-60">
                 {status === "loading" ? "Sending..." : "Send Message"}
               </button>
               {status === "success" && (
@@ -465,12 +594,12 @@ npx tsc --noEmit
 
 ```bash
 git add src/components/sections/Contact.tsx
-git commit -m "feat: add file attachment to contact form"
+git commit -m "feat: add email field and file attachment to contact form"
 ```
 
 ---
 
-## Task 6: Admin Auth (Middleware + Login)
+## Task 6: Admin Auth
 
 **Files:**
 - Create: `src/middleware.ts`
@@ -489,17 +618,11 @@ const secret = new TextEncoder().encode(process.env.ADMIN_JWT_SECRET ?? "fallbac
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-
   if (!pathname.startsWith("/admin") || pathname === "/admin/login") {
     return NextResponse.next();
   }
-
   const token = req.cookies.get("admin_session")?.value;
-
-  if (!token) {
-    return NextResponse.redirect(new URL("/admin/login", req.url));
-  }
-
+  if (!token) return NextResponse.redirect(new URL("/admin/login", req.url));
   try {
     await jwtVerify(token, secret);
     return NextResponse.next();
@@ -508,9 +631,7 @@ export async function middleware(req: NextRequest) {
   }
 }
 
-export const config = {
-  matcher: ["/admin/:path*"],
-};
+export const config = { matcher: ["/admin/:path*"] };
 ```
 
 **Step 2: Create login API route**
@@ -524,16 +645,13 @@ const secret = new TextEncoder().encode(process.env.ADMIN_JWT_SECRET ?? "fallbac
 
 export async function POST(req: NextRequest) {
   const { password } = await req.json();
-
   if (password !== process.env.ADMIN_PASSWORD) {
     return NextResponse.json({ error: "Invalid password" }, { status: 401 });
   }
-
   const token = await new SignJWT({ role: "admin" })
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("7d")
     .sign(secret);
-
   const res = NextResponse.json({ success: true });
   res.cookies.set("admin_session", token, {
     httpOnly: true,
@@ -542,7 +660,6 @@ export async function POST(req: NextRequest) {
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
-
   return res;
 }
 ```
@@ -579,13 +696,11 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     setError("");
-
     const res = await fetch("/api/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
     });
-
     if (res.ok) {
       router.push("/admin");
     } else {
@@ -600,19 +715,11 @@ export default function AdminLogin() {
         <h1 className="text-text-primary font-bold text-2xl mb-2">Building NV</h1>
         <p className="text-text-muted text-sm mb-8">Admin access</p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoFocus
-            className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-accent transition-colors"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-accent text-bg font-semibold py-3 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60"
-          >
+          <input type="password" placeholder="Password" value={password}
+            onChange={(e) => setPassword(e.target.value)} autoFocus
+            className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-accent transition-colors" />
+          <button type="submit" disabled={loading}
+            className="w-full bg-accent text-bg font-semibold py-3 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60">
             {loading ? "Signing in..." : "Sign In"}
           </button>
           {error && <p className="text-red-400 text-sm text-center">{error}</p>}
@@ -638,39 +745,39 @@ git commit -m "feat: add admin auth with signed cookie middleware"
 
 ---
 
-## Task 7: Leads API Routes
+## Task 7: Projects API Routes
 
 **Files:**
-- Create: `src/app/api/leads/route.ts`
-- Create: `src/app/api/leads/[id]/route.ts`
+- Create: `src/app/api/projects/route.ts`
+- Create: `src/app/api/projects/[id]/route.ts`
 
-**Step 1: Create GET /api/leads**
+**Step 1: Create GET /api/projects**
 
 ```typescript
-// src/app/api/leads/route.ts
+// src/app/api/projects/route.ts
 import { NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 
 export async function GET() {
   const supabase = createServiceClient();
-
   const { data, error } = await supabase
-    .from("leads")
-    .select("*")
+    .from("projects")
+    .select(`
+      *,
+      project_contacts ( role, contact:contacts(*) ),
+      project_companies ( role, company:companies(*) )
+    `)
     .order("created_at", { ascending: false });
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data);
 }
 ```
 
-**Step 2: Create PATCH /api/leads/[id]**
+**Step 2: Create PATCH /api/projects/[id]**
 
 ```typescript
-// src/app/api/leads/[id]/route.ts
+// src/app/api/projects/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { createServiceClient } from "@/lib/supabase";
 
@@ -692,16 +799,13 @@ export async function PATCH(
 
   const supabase = createServiceClient();
   const { data, error } = await supabase
-    .from("leads")
+    .from("projects")
     .update(update)
     .eq("id", id)
     .select()
     .single();
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data);
 }
 ```
@@ -715,72 +819,19 @@ npx tsc --noEmit
 **Step 4: Commit**
 
 ```bash
-git add src/app/api/leads/route.ts src/app/api/leads/[id]/route.ts
-git commit -m "feat: add leads API routes (GET all, PATCH stage/notes)"
+git add src/app/api/projects/route.ts src/app/api/projects/[id]/route.ts
+git commit -m "feat: add projects API routes (GET with relations, PATCH)"
 ```
 
 ---
 
-## Task 8: Lead Types
+## Task 8: Admin Kanban Components
 
 **Files:**
-- Create: `src/lib/types.ts`
-
-**Step 1: Create shared types**
-
-```typescript
-// src/lib/types.ts
-export const STAGES = [
-  { id: "opportunity_identified", label: "Opportunity Identified" },
-  { id: "quote_requested",        label: "Quote Requested" },
-  { id: "bid_delivered",          label: "Bid Delivered" },
-  { id: "contract_completed",     label: "Contract Completed" },
-  { id: "contract_sent",          label: "Contract Sent" },
-  { id: "contract_signed",        label: "Contract Signed" },
-  { id: "closed_lost",            label: "Closed Lost" },
-] as const;
-
-export type StageId = (typeof STAGES)[number]["id"];
-
-export interface Lead {
-  id: string;
-  name: string;
-  company: string | null;
-  phone: string;
-  project_type: string | null;
-  message: string | null;
-  stage: StageId;
-  notes: string | null;
-  attachment_url: string | null;
-  created_at: string;
-  updated_at: string;
-}
-```
-
-**Step 2: Verify TypeScript**
-
-```bash
-npx tsc --noEmit
-```
-
-**Step 3: Commit**
-
-```bash
-git add src/lib/types.ts
-git commit -m "feat: add shared Lead types and STAGES constant"
-```
-
----
-
-## Task 9: Admin Kanban Board
-
-**Files:**
-- Create: `src/app/admin/page.tsx`
-- Create: `src/components/admin/KanbanBoard.tsx`
-- Create: `src/components/admin/KanbanColumn.tsx`
 - Create: `src/components/admin/LeadCard.tsx`
+- Create: `src/components/admin/KanbanColumn.tsx`
 
-**Step 1: Create LeadCard component**
+**Step 1: Create LeadCard**
 
 ```typescript
 // src/components/admin/LeadCard.tsx
@@ -788,45 +839,42 @@ git commit -m "feat: add shared Lead types and STAGES constant"
 
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { Lead } from "@/lib/types";
+import { Project } from "@/lib/types";
 
 interface LeadCardProps {
-  lead: Lead;
-  onClick: (lead: Lead) => void;
+  project: Project;
+  onClick: (project: Project) => void;
 }
 
-export default function LeadCard({ lead, onClick }: LeadCardProps) {
+export default function LeadCard({ project, onClick }: LeadCardProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id: lead.id,
-    data: { lead },
+    id: project.id,
+    data: { project },
   });
 
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.5 : 1,
-  };
+  const style = { transform: CSS.Translate.toString(transform), opacity: isDragging ? 0.5 : 1 };
 
-  const date = new Date(lead.created_at).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
+  const primaryContact = project.project_contacts?.[0]?.contact;
+  const primaryCompany = project.project_companies?.[0]?.company;
+  const date = new Date(project.created_at).toLocaleDateString("en-US", {
+    month: "short", day: "numeric",
   });
 
   return (
     <div
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-      onClick={() => onClick(lead)}
+      ref={setNodeRef} style={style} {...listeners} {...attributes}
+      onClick={() => onClick(project)}
       className="bg-surface-2 border border-border rounded-sm p-3 cursor-grab active:cursor-grabbing hover:border-accent/40 transition-colors"
     >
-      <p className="text-text-primary font-semibold text-sm">{lead.name}</p>
-      {lead.company && (
-        <p className="text-text-muted text-xs mt-0.5">{lead.company}</p>
+      <p className="text-text-primary font-semibold text-sm leading-tight">{project.name}</p>
+      {primaryCompany && (
+        <p className="text-text-muted text-xs mt-0.5">{primaryCompany.name}</p>
       )}
-      <p className="text-accent text-xs mt-1">{lead.project_type ?? "—"}</p>
+      {primaryContact && (
+        <p className="text-accent text-xs mt-1">{primaryContact.first_name} {primaryContact.last_name}</p>
+      )}
       <div className="flex items-center justify-between mt-2">
-        <p className="text-text-muted text-xs">{lead.phone}</p>
+        <p className="text-text-muted text-xs">{project.project_type ?? "—"}</p>
         <p className="text-text-muted text-xs">{date}</p>
       </div>
     </div>
@@ -834,173 +882,58 @@ export default function LeadCard({ lead, onClick }: LeadCardProps) {
 }
 ```
 
-**Step 2: Create KanbanColumn component**
+**Step 2: Create KanbanColumn**
 
 ```typescript
 // src/components/admin/KanbanColumn.tsx
 "use client";
 
 import { useDroppable } from "@dnd-kit/core";
-import { Lead } from "@/lib/types";
+import { Project } from "@/lib/types";
 import LeadCard from "./LeadCard";
 
 interface KanbanColumnProps {
   id: string;
   label: string;
-  leads: Lead[];
-  onCardClick: (lead: Lead) => void;
+  projects: Project[];
+  onCardClick: (project: Project) => void;
 }
 
-export default function KanbanColumn({ id, label, leads, onCardClick }: KanbanColumnProps) {
+export default function KanbanColumn({ id, label, projects, onCardClick }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
-
   return (
     <div className="flex flex-col min-w-[220px] w-[220px]">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest">
-          {label}
-        </h3>
-        <span className="text-text-muted text-xs bg-surface-2 px-2 py-0.5 rounded-full">
-          {leads.length}
-        </span>
+        <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest">{label}</h3>
+        <span className="text-text-muted text-xs bg-surface-2 px-2 py-0.5 rounded-full">{projects.length}</span>
       </div>
       <div
         ref={setNodeRef}
-        className={`flex flex-col gap-2 flex-1 min-h-[80px] rounded-sm p-2 transition-colors ${
-          isOver ? "bg-surface-2/60" : "bg-transparent"
-        }`}
+        className={`flex flex-col gap-2 flex-1 min-h-[80px] rounded-sm p-2 transition-colors ${isOver ? "bg-surface-2/60" : "bg-transparent"}`}
       >
-        {leads.map((lead) => (
-          <LeadCard key={lead.id} lead={lead} onClick={onCardClick} />
-        ))}
+        {projects.map((p) => <LeadCard key={p.id} project={p} onClick={onCardClick} />)}
       </div>
     </div>
   );
 }
 ```
 
-**Step 3: Create KanbanBoard component**
-
-```typescript
-// src/components/admin/KanbanBoard.tsx
-"use client";
-
-import { useState } from "react";
-import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { Lead, STAGES, StageId } from "@/lib/types";
-import KanbanColumn from "./KanbanColumn";
-import LeadPanel from "./LeadPanel";
-
-interface KanbanBoardProps {
-  initialLeads: Lead[];
-}
-
-export default function KanbanBoard({ initialLeads }: KanbanBoardProps) {
-  const [leads, setLeads] = useState<Lead[]>(initialLeads);
-  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
-
-  const sensors = useSensors(useSensor(PointerSensor, {
-    activationConstraint: { distance: 8 },
-  }));
-
-  const openCount = leads.filter(
-    (l) => l.stage !== "contract_signed" && l.stage !== "closed_lost"
-  ).length;
-
-  const handleDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const leadId = active.id as string;
-    const newStage = over.id as StageId;
-
-    setLeads((prev) =>
-      prev.map((l) => (l.id === leadId ? { ...l, stage: newStage } : l))
-    );
-
-    await fetch(`/api/leads/${leadId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ stage: newStage }),
-    });
-  };
-
-  const handleNotesUpdate = (id: string, notes: string) => {
-    setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, notes } : l)));
-    if (selectedLead?.id === id) {
-      setSelectedLead((prev) => prev ? { ...prev, notes } : prev);
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-bg">
-      {/* Header */}
-      <div className="border-b border-border px-6 py-4 flex items-center justify-between">
-        <div>
-          <span className="text-text-primary font-bold text-lg">Building NV</span>
-          <span className="text-text-muted text-sm ml-3">Bid Pipeline</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-text-muted text-sm">
-            <span className="text-accent font-semibold">{openCount}</span> open bids
-          </span>
-          <form action="/api/admin/logout" method="POST">
-            <button
-              type="submit"
-              className="text-text-muted text-xs hover:text-text-primary transition-colors"
-            >
-              Sign out
-            </button>
-          </form>
-        </div>
-      </div>
-
-      {/* Board */}
-      <div className="overflow-x-auto p-6">
-        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-          <div className="flex gap-4 w-max">
-            {STAGES.map((stage) => (
-              <KanbanColumn
-                key={stage.id}
-                id={stage.id}
-                label={stage.label}
-                leads={leads.filter((l) => l.stage === stage.id)}
-                onCardClick={setSelectedLead}
-              />
-            ))}
-          </div>
-        </DndContext>
-      </div>
-
-      {/* Detail panel */}
-      {selectedLead && (
-        <LeadPanel
-          lead={selectedLead}
-          onClose={() => setSelectedLead(null)}
-          onNotesUpdate={handleNotesUpdate}
-        />
-      )}
-    </div>
-  );
-}
-```
-
-**Step 4: Verify TypeScript**
+**Step 3: Verify TypeScript**
 
 ```bash
 npx tsc --noEmit
 ```
 
-**Step 5: Commit**
+**Step 4: Commit**
 
 ```bash
-git add src/components/admin/
-git commit -m "feat: add kanban board components (LeadCard, KanbanColumn, KanbanBoard)"
+git add src/components/admin/LeadCard.tsx src/components/admin/KanbanColumn.tsx
+git commit -m "feat: add kanban card and column components"
 ```
 
 ---
 
-## Task 10: Lead Detail Panel
+## Task 9: Lead Detail Panel
 
 **Files:**
 - Create: `src/components/admin/LeadPanel.tsx`
@@ -1012,106 +945,100 @@ git commit -m "feat: add kanban board components (LeadCard, KanbanColumn, Kanban
 "use client";
 
 import { useState } from "react";
-import { Lead, STAGES } from "@/lib/types";
+import { Project, STAGES } from "@/lib/types";
 
 interface LeadPanelProps {
-  lead: Lead;
+  project: Project;
   onClose: () => void;
   onNotesUpdate: (id: string, notes: string) => void;
 }
 
-export default function LeadPanel({ lead, onClose, onNotesUpdate }: LeadPanelProps) {
-  const [notes, setNotes] = useState(lead.notes ?? "");
+export default function LeadPanel({ project, onClose, onNotesUpdate }: LeadPanelProps) {
+  const [notes, setNotes] = useState(project.notes ?? "");
   const [saving, setSaving] = useState(false);
-
-  const stageLabel = STAGES.find((s) => s.id === lead.stage)?.label ?? lead.stage;
+  const stageLabel = STAGES.find((s) => s.id === project.stage)?.label ?? project.stage;
+  const date = new Date(project.created_at).toLocaleDateString("en-US", {
+    month: "long", day: "numeric", year: "numeric",
+  });
 
   const saveNotes = async () => {
     setSaving(true);
-    await fetch(`/api/leads/${lead.id}`, {
+    await fetch(`/api/projects/${project.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ notes }),
     });
-    onNotesUpdate(lead.id, notes);
+    onNotesUpdate(project.id, notes);
     setSaving(false);
   };
 
-  const date = new Date(lead.created_at).toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-
   return (
     <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-bg/60 backdrop-blur-sm z-40"
-        onClick={onClose}
-      />
-
-      {/* Panel */}
+      <div className="fixed inset-0 bg-bg/60 backdrop-blur-sm z-40" onClick={onClose} />
       <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-surface border-l border-border z-50 overflow-y-auto">
         <div className="p-6">
-          {/* Header */}
-          <div className="flex items-start justify-between mb-6">
-            <div>
-              <h2 className="text-text-primary font-bold text-xl">{lead.name}</h2>
-              {lead.company && (
-                <p className="text-text-muted text-sm mt-0.5">{lead.company}</p>
-              )}
-            </div>
-            <button
-              onClick={onClose}
-              className="text-text-muted hover:text-text-primary transition-colors text-xl leading-none"
-            >
-              ×
-            </button>
+          <div className="flex items-start justify-between mb-4">
+            <h2 className="text-text-primary font-bold text-xl leading-tight">{project.name}</h2>
+            <button onClick={onClose} className="text-text-muted hover:text-text-primary text-2xl leading-none ml-4">×</button>
           </div>
 
-          {/* Stage badge */}
           <span className="inline-block text-accent text-xs font-semibold tracking-widest uppercase border border-accent/30 px-3 py-1 rounded-full mb-6">
             {stageLabel}
           </span>
 
-          {/* Fields */}
-          <div className="flex flex-col gap-4 mb-6">
-            <Field label="Phone" value={lead.phone} href={`tel:${lead.phone}`} />
-            <Field label="Project Type" value={lead.project_type ?? "—"} />
+          {/* Contacts */}
+          {project.project_contacts?.length > 0 && (
+            <div className="mb-4">
+              <p className="text-text-muted text-xs uppercase tracking-widest mb-2">Contacts</p>
+              {project.project_contacts.map(({ contact, role }) => (
+                <div key={contact.id} className="mb-2">
+                  <p className="text-text-primary text-sm font-semibold">
+                    {contact.first_name} {contact.last_name}
+                    <span className="text-text-muted font-normal ml-2 text-xs">({role})</span>
+                  </p>
+                  {contact.email && (
+                    <a href={`mailto:${contact.email}`} className="text-accent text-xs hover:underline">{contact.email}</a>
+                  )}
+                  {contact.phone && <p className="text-text-muted text-xs">{contact.phone}</p>}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Companies */}
+          {project.project_companies?.length > 0 && (
+            <div className="mb-4">
+              <p className="text-text-muted text-xs uppercase tracking-widest mb-2">Companies</p>
+              {project.project_companies.map(({ company, role }) => (
+                <div key={company.id} className="mb-1">
+                  <p className="text-text-primary text-sm">
+                    {company.name}
+                    <span className="text-text-muted ml-2 text-xs">({role})</span>
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="flex flex-col gap-3 mb-6">
+            {project.project_type && <Field label="Project Type" value={project.project_type} />}
             <Field label="Submitted" value={date} />
-            {lead.message && <Field label="Message" value={lead.message} multiline />}
-            {lead.attachment_url && (
+            {project.message && <Field label="Message" value={project.message} multiline />}
+            {project.attachment_url && (
               <div>
                 <p className="text-text-muted text-xs uppercase tracking-widest mb-1">Attachment</p>
-                <a
-                  href={lead.attachment_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent text-sm hover:underline"
-                >
-                  View / Download
-                </a>
+                <a href={project.attachment_url} target="_blank" rel="noopener noreferrer"
+                  className="text-accent text-sm hover:underline">View / Download</a>
               </div>
             )}
           </div>
 
-          {/* Notes */}
           <div>
-            <p className="text-text-muted text-xs uppercase tracking-widest mb-2">
-              Internal Notes
-            </p>
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              onBlur={saveNotes}
-              rows={5}
-              placeholder="Add notes..."
-              className="w-full bg-surface-2 border border-border rounded-sm px-4 py-3 text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-accent transition-colors resize-none"
-            />
-            {saving && (
-              <p className="text-text-muted text-xs mt-1">Saving...</p>
-            )}
+            <p className="text-text-muted text-xs uppercase tracking-widest mb-2">Internal Notes</p>
+            <textarea value={notes} onChange={(e) => setNotes(e.target.value)} onBlur={saveNotes}
+              rows={5} placeholder="Add notes..."
+              className="w-full bg-surface-2 border border-border rounded-sm px-4 py-3 text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-accent transition-colors resize-none" />
+            {saving && <p className="text-text-muted text-xs mt-1">Saving...</p>}
           </div>
         </div>
       </div>
@@ -1119,29 +1046,13 @@ export default function LeadPanel({ lead, onClose, onNotesUpdate }: LeadPanelPro
   );
 }
 
-function Field({
-  label,
-  value,
-  href,
-  multiline,
-}: {
-  label: string;
-  value: string;
-  href?: string;
-  multiline?: boolean;
-}) {
+function Field({ label, value, multiline }: { label: string; value: string; multiline?: boolean }) {
   return (
     <div>
       <p className="text-text-muted text-xs uppercase tracking-widest mb-1">{label}</p>
-      {href ? (
-        <a href={href} className="text-text-primary text-sm hover:text-accent transition-colors">
-          {value}
-        </a>
-      ) : multiline ? (
-        <p className="text-text-primary text-sm leading-relaxed whitespace-pre-wrap">{value}</p>
-      ) : (
-        <p className="text-text-primary text-sm">{value}</p>
-      )}
+      {multiline
+        ? <p className="text-text-primary text-sm leading-relaxed whitespace-pre-wrap">{value}</p>
+        : <p className="text-text-primary text-sm">{value}</p>}
     </div>
   );
 }
@@ -1157,80 +1068,186 @@ npx tsc --noEmit
 
 ```bash
 git add src/components/admin/LeadPanel.tsx
-git commit -m "feat: add lead detail panel with notes editing"
+git commit -m "feat: add lead detail panel with contacts, companies, and notes"
 ```
 
 ---
 
-## Task 11: Admin Page (Server Component)
+## Task 10: KanbanBoard and Admin Page
 
 **Files:**
+- Create: `src/components/admin/KanbanBoard.tsx`
 - Create: `src/app/admin/page.tsx`
 
-**Step 1: Create server component that fetches leads and renders the board**
+**Step 1: Create KanbanBoard**
+
+```typescript
+// src/components/admin/KanbanBoard.tsx
+"use client";
+
+import { useState } from "react";
+import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { Project, STAGES, StageId } from "@/lib/types";
+import KanbanColumn from "./KanbanColumn";
+import LeadPanel from "./LeadPanel";
+
+export default function KanbanBoard({ initialProjects }: { initialProjects: Project[] }) {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [selected, setSelected] = useState<Project | null>(null);
+
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
+
+  const openCount = projects.filter(
+    (p) => p.stage !== "contract_signed" && p.stage !== "closed_lost"
+  ).length;
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const projectId = active.id as string;
+    const newStage = over.id as StageId;
+    setProjects((prev) => prev.map((p) => p.id === projectId ? { ...p, stage: newStage } : p));
+    await fetch(`/api/projects/${projectId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ stage: newStage }),
+    });
+  };
+
+  const handleNotesUpdate = (id: string, notes: string) => {
+    setProjects((prev) => prev.map((p) => p.id === id ? { ...p, notes } : p));
+    setSelected((prev) => prev?.id === id ? { ...prev, notes } : prev);
+  };
+
+  return (
+    <div className="min-h-screen bg-bg">
+      <div className="border-b border-border px-6 py-4 flex items-center justify-between">
+        <div>
+          <span className="text-text-primary font-bold text-lg">Building NV</span>
+          <span className="text-text-muted text-sm ml-3">Bid Pipeline</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-text-muted text-sm">
+            <span className="text-accent font-semibold">{openCount}</span> open bids
+          </span>
+          <form action="/api/admin/logout" method="POST">
+            <button type="submit" className="text-text-muted text-xs hover:text-text-primary transition-colors">
+              Sign out
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="overflow-x-auto p-6">
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+          <div className="flex gap-4 w-max">
+            {STAGES.map((stage) => (
+              <KanbanColumn
+                key={stage.id}
+                id={stage.id}
+                label={stage.label}
+                projects={projects.filter((p) => p.stage === stage.id)}
+                onCardClick={setSelected}
+              />
+            ))}
+          </div>
+        </DndContext>
+      </div>
+      {selected && (
+        <LeadPanel
+          project={selected}
+          onClose={() => setSelected(null)}
+          onNotesUpdate={handleNotesUpdate}
+        />
+      )}
+    </div>
+  );
+}
+```
+
+**Step 2: Create admin page server component**
 
 ```typescript
 // src/app/admin/page.tsx
 import { createServiceClient } from "@/lib/supabase";
 import KanbanBoard from "@/components/admin/KanbanBoard";
-import { Lead } from "@/lib/types";
+import { Project } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const supabase = createServiceClient();
-
   const { data, error } = await supabase
-    .from("leads")
-    .select("*")
+    .from("projects")
+    .select(`*, project_contacts(role, contact:contacts(*)), project_companies(role, company:companies(*))`)
     .order("created_at", { ascending: false });
 
   if (error) {
     return (
       <div className="min-h-screen bg-bg flex items-center justify-center">
-        <p className="text-red-400">Failed to load leads: {error.message}</p>
+        <p className="text-red-400">Failed to load projects: {error.message}</p>
       </div>
     );
   }
 
-  return <KanbanBoard initialLeads={(data ?? []) as Lead[]} />;
+  return <KanbanBoard initialProjects={(data ?? []) as Project[]} />;
 }
 ```
 
-**Step 2: Verify TypeScript**
+**Step 3: Verify TypeScript**
 
 ```bash
 npx tsc --noEmit
 ```
 
-**Step 3: Run production build**
+**Step 4: Production build**
 
 ```bash
 npm run build
 ```
 
-Expected: no errors. Routes should include `/admin`, `/admin/login`, `/api/leads`, `/api/leads/[id]`.
+Expected: no errors. Routes should include `/admin`, `/admin/login`, `/api/projects`, `/api/projects/[id]`, `/api/contact`.
 
-**Step 4: Commit**
+**Step 5: Commit**
 
 ```bash
-git add src/app/admin/page.tsx
-git commit -m "feat: add admin page server component wiring leads into kanban board"
+git add src/components/admin/KanbanBoard.tsx src/app/admin/page.tsx
+git commit -m "feat: wire up kanban board and admin page"
 ```
 
 ---
 
-## Task 12: Seed Database (Optional)
+## Task 11: Seed Database
 
-If you have existing leads to import, insert them directly in the Supabase SQL editor:
+If you have existing projects to import, use the Supabase SQL editor. Example:
 
 ```sql
-INSERT INTO leads (name, company, phone, project_type, stage, notes) VALUES
-  ('Jane Smith', 'Acme Corp', '775-555-0101', 'Office Buildout', 'bid_delivered', 'Waiting on owner approval'),
-  ('Bob Jones', 'NV Properties', '775-555-0102', 'Suite Renovation', 'quote_requested', NULL);
-```
+-- Insert a company
+INSERT INTO companies (name, type, domain) VALUES ('Acme Corp', 'customer', 'acmecorp.com');
 
-Or use the Supabase Table Editor to insert rows manually.
+-- Insert a contact
+INSERT INTO contacts (first_name, last_name, email, phone, type, primary_company_id)
+VALUES ('Jane', 'Smith', 'jane@acmecorp.com', '775-555-0101', 'customer',
+  (SELECT id FROM companies WHERE domain = 'acmecorp.com'));
+
+-- Insert a project
+INSERT INTO projects (name, stage, project_type, notes)
+VALUES ('Office Buildout — Acme Corp', 'bid_delivered', 'Office Buildout', 'Waiting on owner approval');
+
+-- Link them
+INSERT INTO project_contacts (project_id, contact_id, role)
+VALUES (
+  (SELECT id FROM projects WHERE name = 'Office Buildout — Acme Corp'),
+  (SELECT id FROM contacts WHERE email = 'jane@acmecorp.com'),
+  'customer'
+);
+
+INSERT INTO project_companies (project_id, company_id, role)
+VALUES (
+  (SELECT id FROM projects WHERE name = 'Office Buildout — Acme Corp'),
+  (SELECT id FROM companies WHERE domain = 'acmecorp.com'),
+  'customer'
+);
+```
 
 ---
 
@@ -1239,10 +1256,10 @@ Or use the Supabase Table Editor to insert rows manually.
 | URL | Purpose |
 |---|---|
 | `http://localhost:3000` | Marketing site |
-| `http://localhost:3000/admin` | Kanban CRM (redirects to login if not authenticated) |
+| `http://localhost:3000/admin` | Kanban CRM |
 | `http://localhost:3000/admin/login` | Admin login |
 
-## Environment Variables Needed
+## Environment Variables
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=

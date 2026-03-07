@@ -2,7 +2,11 @@
 
 ## Goal
 
-Connect the contact form to a real backend: store leads in Postgres, notify the bids team by email, and provide a simple kanban CRM for tracking bids through the pipeline.
+Connect the contact form to a real backend: store projects in Postgres with linked contacts and companies, notify the bids team by email, and provide a simple kanban CRM for tracking projects through the pipeline.
+
+## Core Concept
+
+**Project is the central object.** "Lead" is not a separate object — it is a stage. A project starts as an opportunity and accumulates data as it moves through the pipeline. There is no structural difference between an early-stage opportunity and a signed contract.
 
 ## Stack
 
@@ -16,23 +20,67 @@ Connect the contact form to a real backend: store leads in Postgres, notify the 
 
 ## Data Model
 
-### `leads` table
+### `companies`
 
 | column | type | notes |
 |---|---|---|
-| `id` | uuid | primary key, default gen_random_uuid() |
-| `name` | text | required |
-| `company` | text | nullable |
-| `phone` | text | required |
+| `id` | uuid | PK, gen_random_uuid() |
+| `name` | text | |
+| `type` | text | customer, real_estate_agency, property_manager, subcontractor, supplier |
+| `domain` | text | unique — dedupe key (null for consumer domains) |
+| `phone` | text | nullable |
+| `created_at` | timestamptz | default now() |
+
+### `contacts`
+
+| column | type | notes |
+|---|---|---|
+| `id` | uuid | PK, gen_random_uuid() |
+| `first_name` | text | |
+| `last_name` | text | nullable |
+| `email` | text | unique — dedupe key |
+| `phone` | text | nullable |
+| `type` | text | employee, subcontractor, customer, real_estate_agent, property_manager, supplier |
+| `primary_company_id` | uuid | FK → companies, nullable |
+| `created_at` | timestamptz | default now() |
+
+### `projects`
+
+| column | type | notes |
+|---|---|---|
+| `id` | uuid | PK, gen_random_uuid() |
+| `name` | text | auto-generated on inbound, editable |
+| `stage` | text | see pipeline stages below |
 | `project_type` | text | nullable |
 | `message` | text | nullable |
-| `stage` | text | enum, default 'opportunity_identified' |
-| `notes` | text | internal notes, nullable |
-| `attachment_url` | text | Supabase Storage URL, nullable |
+| `notes` | text | nullable |
+| `attachment_url` | text | nullable |
 | `created_at` | timestamptz | default now() |
-| `updated_at` | timestamptz | updated via trigger |
+| `updated_at` | timestamptz | auto-updated via trigger |
 
-### Stages (ordered)
+### `project_contacts` (join)
+
+| column | type | notes |
+|---|---|---|
+| `project_id` | uuid | FK → projects |
+| `contact_id` | uuid | FK → contacts |
+| `role` | text | customer, property_manager, subcontractor, etc. |
+
+PK: `(project_id, contact_id)`
+
+### `project_companies` (join)
+
+| column | type | notes |
+|---|---|---|
+| `project_id` | uuid | FK → projects |
+| `company_id` | uuid | FK → companies |
+| `role` | text | customer, property_manager, subcontractor, etc. |
+
+PK: `(project_id, company_id)`
+
+---
+
+## Pipeline Stages (ordered)
 
 1. `opportunity_identified`
 2. `quote_requested`
@@ -42,42 +90,50 @@ Connect the contact form to a real backend: store leads in Postgres, notify the 
 6. `contract_signed`
 7. `closed_lost`
 
-### Supabase Storage
+---
 
-- Bucket: `lead-attachments`
-- Files stored as `{lead_id}/{filename}`
-- Public read URLs stored in `attachment_url`
+## Supabase Storage
+
+- Bucket: `project-attachments`
+- Files stored as `{project_id}/{filename}`
+- Public read URLs stored in `projects.attachment_url`
 
 ---
 
-## API Routes
+## Inbound Form Submission Logic
 
-| route | method | description |
-|---|---|---|
-| `/api/contact` | POST | Save lead to DB, upload attachment to Storage, send email via Resend |
-| `/api/leads` | GET | Return all leads, ordered by created_at desc (admin only) |
-| `/api/leads/[id]` | PATCH | Update stage or notes (admin only) |
+When a form is submitted from the marketing site:
 
-Admin routes protected by middleware checking `Authorization` header against `ADMIN_PASSWORD` env var.
-
----
-
-## Contact Form Changes
-
-- Add optional file upload field: "Attach existing bid or plans (optional)"
-- Accepted types: PDF, JPG, PNG, DOC, DOCX
-- Max size: 10MB
-- On submit: upload file to Supabase Storage first, then POST lead data + attachment URL to `/api/contact`
+1. **Parse email domain** — extract domain from contact's email
+2. **Consumer domain exclusion** — if domain is in the exclusion list (gmail.com, outlook.com, hotmail.com, yahoo.com, icloud.com, me.com, aol.com), do NOT create or match a company from it
+3. **Upsert company** — if domain is business domain, find or create company by domain; use form's company name if creating
+4. **Upsert contact** — find or create contact by email; link to company if one was resolved
+5. **Upload attachment** — if file present, upload to Supabase Storage
+6. **Create project** — new project record with stage `opportunity_identified`
+7. **Link via join tables** — `project_contacts` and `project_companies` with role `customer`
+8. **Send email** — notify `bids@buildingnv.com` via Resend
 
 ---
 
-## Email (Resend)
+## Contact Form Fields
+
+- Name (full name, split into first/last on save)
+- Email * (new — needed for contact deduplication)
+- Company name
+- Phone *
+- Project type
+- Message
+- Attachment (optional — PDF, JPG, PNG, DOC, DOCX, max 10MB)
+
+---
+
+## Email Notification (Resend)
 
 Sent to `bids@buildingnv.com` on every form submission.
 
-- **Subject:** `New Lead: {name} — {project_type}`
-- **Body:** All form fields (name, company, phone, project type, message)
-- **Attachment link:** If present, include a labeled download link to the Supabase Storage URL
+- **Subject:** `New Project: {name} — {project_type}`
+- **Body:** All form fields
+- **Attachment link:** download URL if present
 
 ---
 
@@ -85,25 +141,36 @@ Sent to `bids@buildingnv.com` on every form submission.
 
 ### Auth
 
-Simple middleware: checks for a session cookie set by a login form. Login form at `/admin/login` accepts `ADMIN_PASSWORD` env var. No auth library — just a signed cookie via `jose`.
+Middleware checks for a signed JWT cookie (`jose`). Login at `/admin/login` validates against `ADMIN_PASSWORD` env var.
 
 ### Kanban Board
 
 - 7 columns, one per stage
-- Horizontal scroll on smaller screens
-- Cards show: name, company, project type, phone, created date
-- Drag-and-drop via dnd-kit to move cards between stages (calls `PATCH /api/leads/[id]`)
+- Horizontal scroll
+- Cards show: contact name, company, project type, phone, date
+- Drag-and-drop via dnd-kit → `PATCH /api/projects/[id]`
 
-### Lead Detail Panel
+### Project Detail Panel
 
-- Slide-out panel on card click
-- Shows all lead fields
-- Editable notes textarea (auto-saves on blur)
+- Slide-out on card click
+- All project fields
+- Linked contacts and companies with roles
+- Editable notes (auto-saves on blur)
 - Attachment download link if present
 
 ### Header
 
-- "X open bids" — count of leads not in `contract_signed` or `closed_lost`
+- Count of open projects (not `contract_signed` or `closed_lost`)
+
+---
+
+## API Routes
+
+| route | method | description |
+|---|---|---|
+| `POST /api/contact` | POST | Full inbound submission: upsert contact + company, create project, send email |
+| `GET /api/projects` | GET | All projects with linked contacts/companies (admin) |
+| `PATCH /api/projects/[id]` | PATCH | Update stage or notes (admin) |
 
 ---
 
@@ -115,13 +182,15 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 RESEND_API_KEY=
 ADMIN_PASSWORD=
+ADMIN_JWT_SECRET=
 ```
 
 ---
 
 ## Out of Scope (for now)
 
+- Property/building object (PM attached directly to project as contact)
 - Bid dollar value tracking
-- Email threading / reply tracking
 - Multi-user admin with roles
 - Mobile-optimized kanban
+- GTM mapping of PM companies to buildings (future biz dev project)
