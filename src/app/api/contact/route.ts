@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { extractBusinessDomain, splitName } from "@/lib/crm";
+import { Resend } from "resend";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -69,7 +70,24 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  console.log("New project created:", project.id, project.name);
+  if (process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    await resend.emails.send({
+      from: "Building NV <noreply@buildingnv.com>",
+      to: "bids@buildingnv.com",
+      subject: `New Inquiry: ${fullName} — ${projectType ?? "General"}`,
+      text: [
+        `Name: ${fullName}`,
+        `Email: ${emailLower}`,
+        `Company: ${companyName?.trim() || "—"}`,
+        `Phone: ${phoneTrimmed}`,
+        `Project Type: ${projectType ?? "—"}`,
+        `Message: ${message ?? "—"}`,
+        ``,
+        `View in pipeline: https://buildingnv.com/internal/projects`,
+      ].join("\n"),
+    });
+  }
 
   return NextResponse.json({ success: true });
 }
