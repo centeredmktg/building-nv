@@ -53,6 +53,7 @@ export type QuoteMinAggregateOutputType = {
   exclusions: string | null
   notes: string | null
   clientId: string | null
+  projectId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   sentAt: Date | null
@@ -73,6 +74,7 @@ export type QuoteMaxAggregateOutputType = {
   exclusions: string | null
   notes: string | null
   clientId: string | null
+  projectId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   sentAt: Date | null
@@ -93,6 +95,7 @@ export type QuoteCountAggregateOutputType = {
   exclusions: number
   notes: number
   clientId: number
+  projectId: number
   createdAt: number
   updatedAt: number
   sentAt: number
@@ -127,6 +130,7 @@ export type QuoteMinAggregateInputType = {
   exclusions?: true
   notes?: true
   clientId?: true
+  projectId?: true
   createdAt?: true
   updatedAt?: true
   sentAt?: true
@@ -147,6 +151,7 @@ export type QuoteMaxAggregateInputType = {
   exclusions?: true
   notes?: true
   clientId?: true
+  projectId?: true
   createdAt?: true
   updatedAt?: true
   sentAt?: true
@@ -167,6 +172,7 @@ export type QuoteCountAggregateInputType = {
   exclusions?: true
   notes?: true
   clientId?: true
+  projectId?: true
   createdAt?: true
   updatedAt?: true
   sentAt?: true
@@ -274,6 +280,7 @@ export type QuoteGroupByOutputType = {
   exclusions: string
   notes: string | null
   clientId: string
+  projectId: string | null
   createdAt: Date
   updatedAt: Date
   sentAt: Date | null
@@ -317,10 +324,12 @@ export type QuoteWhereInput = {
   exclusions?: Prisma.StringFilter<"Quote"> | string
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   clientId?: Prisma.StringFilter<"Quote"> | string
+  projectId?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   sections?: Prisma.LineItemSectionListRelationFilter
   acceptance?: Prisma.XOR<Prisma.AcceptanceNullableScalarRelationFilter, Prisma.AcceptanceWhereInput> | null
 }
@@ -340,10 +349,12 @@ export type QuoteOrderByWithRelationInput = {
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   client?: Prisma.ClientOrderByWithRelationInput
+  project?: Prisma.ProjectOrderByWithRelationInput
   sections?: Prisma.LineItemSectionOrderByRelationAggregateInput
   acceptance?: Prisma.AcceptanceOrderByWithRelationInput
 }
@@ -366,10 +377,12 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   exclusions?: Prisma.StringFilter<"Quote"> | string
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   clientId?: Prisma.StringFilter<"Quote"> | string
+  projectId?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   sections?: Prisma.LineItemSectionListRelationFilter
   acceptance?: Prisma.XOR<Prisma.AcceptanceNullableScalarRelationFilter, Prisma.AcceptanceWhereInput> | null
 }, "id" | "slug">
@@ -389,6 +402,7 @@ export type QuoteOrderByWithAggregationInput = {
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -417,6 +431,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
   exclusions?: Prisma.StringWithAggregatesFilter<"Quote"> | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   clientId?: Prisma.StringWithAggregatesFilter<"Quote"> | string
+  projectId?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
@@ -440,6 +455,7 @@ export type QuoteCreateInput = {
   updatedAt?: Date | string
   sentAt?: Date | string | null
   client: Prisma.ClientCreateNestedOneWithoutQuotesInput
+  project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
 }
@@ -459,6 +475,7 @@ export type QuoteUncheckedCreateInput = {
   exclusions?: string
   notes?: string | null
   clientId: string
+  projectId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -484,6 +501,7 @@ export type QuoteUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
+  project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
 }
@@ -503,6 +521,7 @@ export type QuoteUncheckedUpdateInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -525,6 +544,7 @@ export type QuoteCreateManyInput = {
   exclusions?: string
   notes?: string | null
   clientId: string
+  projectId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -564,6 +584,7 @@ export type QuoteUncheckedUpdateManyInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -594,6 +615,7 @@ export type QuoteCountOrderByAggregateInput = {
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -620,6 +642,7 @@ export type QuoteMaxOrderByAggregateInput = {
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -640,6 +663,7 @@ export type QuoteMinOrderByAggregateInput = {
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
+  projectId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -738,6 +762,48 @@ export type QuoteUpdateOneRequiredWithoutAcceptanceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutAcceptanceInput, Prisma.QuoteUpdateWithoutAcceptanceInput>, Prisma.QuoteUncheckedUpdateWithoutAcceptanceInput>
 }
 
+export type QuoteCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutProjectInput, Prisma.QuoteUncheckedCreateWithoutProjectInput> | Prisma.QuoteCreateWithoutProjectInput[] | Prisma.QuoteUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutProjectInput | Prisma.QuoteCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.QuoteCreateManyProjectInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteUncheckedCreateNestedManyWithoutProjectInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutProjectInput, Prisma.QuoteUncheckedCreateWithoutProjectInput> | Prisma.QuoteCreateWithoutProjectInput[] | Prisma.QuoteUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutProjectInput | Prisma.QuoteCreateOrConnectWithoutProjectInput[]
+  createMany?: Prisma.QuoteCreateManyProjectInputEnvelope
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+}
+
+export type QuoteUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutProjectInput, Prisma.QuoteUncheckedCreateWithoutProjectInput> | Prisma.QuoteCreateWithoutProjectInput[] | Prisma.QuoteUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutProjectInput | Prisma.QuoteCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutProjectInput | Prisma.QuoteUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.QuoteCreateManyProjectInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutProjectInput | Prisma.QuoteUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutProjectInput | Prisma.QuoteUpdateManyWithWhereWithoutProjectInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
+export type QuoteUncheckedUpdateManyWithoutProjectNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutProjectInput, Prisma.QuoteUncheckedCreateWithoutProjectInput> | Prisma.QuoteCreateWithoutProjectInput[] | Prisma.QuoteUncheckedCreateWithoutProjectInput[]
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutProjectInput | Prisma.QuoteCreateOrConnectWithoutProjectInput[]
+  upsert?: Prisma.QuoteUpsertWithWhereUniqueWithoutProjectInput | Prisma.QuoteUpsertWithWhereUniqueWithoutProjectInput[]
+  createMany?: Prisma.QuoteCreateManyProjectInputEnvelope
+  set?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  disconnect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  delete?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  connect?: Prisma.QuoteWhereUniqueInput | Prisma.QuoteWhereUniqueInput[]
+  update?: Prisma.QuoteUpdateWithWhereUniqueWithoutProjectInput | Prisma.QuoteUpdateWithWhereUniqueWithoutProjectInput[]
+  updateMany?: Prisma.QuoteUpdateManyWithWhereWithoutProjectInput | Prisma.QuoteUpdateManyWithWhereWithoutProjectInput[]
+  deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
+}
+
 export type QuoteCreateWithoutClientInput = {
   id?: string
   slug: string
@@ -755,6 +821,7 @@ export type QuoteCreateWithoutClientInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
+  project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
 }
@@ -773,6 +840,7 @@ export type QuoteUncheckedCreateWithoutClientInput = {
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
+  projectId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -823,6 +891,7 @@ export type QuoteScalarWhereInput = {
   exclusions?: Prisma.StringFilter<"Quote"> | string
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   clientId?: Prisma.StringFilter<"Quote"> | string
+  projectId?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -846,6 +915,7 @@ export type QuoteCreateWithoutSectionsInput = {
   updatedAt?: Date | string
   sentAt?: Date | string | null
   client: Prisma.ClientCreateNestedOneWithoutQuotesInput
+  project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
 }
 
@@ -864,6 +934,7 @@ export type QuoteUncheckedCreateWithoutSectionsInput = {
   exclusions?: string
   notes?: string | null
   clientId: string
+  projectId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -904,6 +975,7 @@ export type QuoteUpdateWithoutSectionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
+  project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
 }
 
@@ -922,6 +994,7 @@ export type QuoteUncheckedUpdateWithoutSectionsInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -946,6 +1019,7 @@ export type QuoteCreateWithoutAcceptanceInput = {
   updatedAt?: Date | string
   sentAt?: Date | string | null
   client: Prisma.ClientCreateNestedOneWithoutQuotesInput
+  project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
 }
 
@@ -964,6 +1038,7 @@ export type QuoteUncheckedCreateWithoutAcceptanceInput = {
   exclusions?: string
   notes?: string | null
   clientId: string
+  projectId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -1004,6 +1079,7 @@ export type QuoteUpdateWithoutAcceptanceInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
+  project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
 }
 
@@ -1022,10 +1098,80 @@ export type QuoteUncheckedUpdateWithoutAcceptanceInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteCreateWithoutProjectInput = {
+  id?: string
+  slug: string
+  title: string
+  address: string
+  projectType: string
+  status?: string
+  scopeText?: string | null
+  materialMarkupPct?: number
+  overheadPct?: number
+  profitPct?: number
+  paymentTerms?: string
+  exclusions?: string
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sentAt?: Date | string | null
+  client: Prisma.ClientCreateNestedOneWithoutQuotesInput
+  sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
+  acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutProjectInput = {
+  id?: string
+  slug: string
+  title: string
+  address: string
+  projectType: string
+  status?: string
+  scopeText?: string | null
+  materialMarkupPct?: number
+  overheadPct?: number
+  profitPct?: number
+  paymentTerms?: string
+  exclusions?: string
+  notes?: string | null
+  clientId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sentAt?: Date | string | null
+  sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
+  acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutProjectInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutProjectInput, Prisma.QuoteUncheckedCreateWithoutProjectInput>
+}
+
+export type QuoteCreateManyProjectInputEnvelope = {
+  data: Prisma.QuoteCreateManyProjectInput | Prisma.QuoteCreateManyProjectInput[]
+}
+
+export type QuoteUpsertWithWhereUniqueWithoutProjectInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutProjectInput, Prisma.QuoteUncheckedUpdateWithoutProjectInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutProjectInput, Prisma.QuoteUncheckedCreateWithoutProjectInput>
+}
+
+export type QuoteUpdateWithWhereUniqueWithoutProjectInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutProjectInput, Prisma.QuoteUncheckedUpdateWithoutProjectInput>
+}
+
+export type QuoteUpdateManyWithWhereWithoutProjectInput = {
+  where: Prisma.QuoteScalarWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateManyMutationInput, Prisma.QuoteUncheckedUpdateManyWithoutProjectInput>
 }
 
 export type QuoteCreateManyClientInput = {
@@ -1042,6 +1188,7 @@ export type QuoteCreateManyClientInput = {
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
+  projectId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -1064,6 +1211,7 @@ export type QuoteUpdateWithoutClientInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
 }
@@ -1082,6 +1230,7 @@ export type QuoteUncheckedUpdateWithoutClientInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1103,6 +1252,91 @@ export type QuoteUncheckedUpdateManyWithoutClientInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type QuoteCreateManyProjectInput = {
+  id?: string
+  slug: string
+  title: string
+  address: string
+  projectType: string
+  status?: string
+  scopeText?: string | null
+  materialMarkupPct?: number
+  overheadPct?: number
+  profitPct?: number
+  paymentTerms?: string
+  exclusions?: string
+  notes?: string | null
+  clientId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sentAt?: Date | string | null
+}
+
+export type QuoteUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusions?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
+  sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
+  acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusions?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
+  acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateManyWithoutProjectInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusions?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1154,10 +1388,12 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   exclusions?: boolean
   notes?: boolean
   clientId?: boolean
+  projectId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
   sections?: boolean | Prisma.Quote$sectionsArgs<ExtArgs>
   acceptance?: boolean | Prisma.Quote$acceptanceArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
@@ -1178,10 +1414,12 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   exclusions?: boolean
   notes?: boolean
   clientId?: boolean
+  projectId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
 export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1199,10 +1437,12 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   exclusions?: boolean
   notes?: boolean
   clientId?: boolean
+  projectId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
 export type QuoteSelectScalar = {
@@ -1220,29 +1460,34 @@ export type QuoteSelectScalar = {
   exclusions?: boolean
   notes?: boolean
   clientId?: boolean
+  projectId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "address" | "projectType" | "status" | "scopeText" | "materialMarkupPct" | "overheadPct" | "profitPct" | "paymentTerms" | "exclusions" | "notes" | "clientId" | "createdAt" | "updatedAt" | "sentAt", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "address" | "projectType" | "status" | "scopeText" | "materialMarkupPct" | "overheadPct" | "profitPct" | "paymentTerms" | "exclusions" | "notes" | "clientId" | "projectId" | "createdAt" | "updatedAt" | "sentAt", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
   sections?: boolean | Prisma.Quote$sectionsArgs<ExtArgs>
   acceptance?: boolean | Prisma.Quote$acceptanceArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
 }
 export type QuoteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
 }
 
 export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Quote"
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>
+    project: Prisma.$ProjectPayload<ExtArgs> | null
     sections: Prisma.$LineItemSectionPayload<ExtArgs>[]
     acceptance: Prisma.$AcceptancePayload<ExtArgs> | null
   }
@@ -1261,6 +1506,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     exclusions: string
     notes: string | null
     clientId: string
+    projectId: string | null
     createdAt: Date
     updatedAt: Date
     sentAt: Date | null
@@ -1659,6 +1905,7 @@ readonly fields: QuoteFieldRefs;
 export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  project<T extends Prisma.Quote$projectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$projectArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sections<T extends Prisma.Quote$sectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LineItemSectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   acceptance<T extends Prisma.Quote$acceptanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$acceptanceArgs<ExtArgs>>): Prisma.Prisma__AcceptanceClient<runtime.Types.Result.GetResult<Prisma.$AcceptancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1704,6 +1951,7 @@ export interface QuoteFieldRefs {
   readonly exclusions: Prisma.FieldRef<"Quote", 'String'>
   readonly notes: Prisma.FieldRef<"Quote", 'String'>
   readonly clientId: Prisma.FieldRef<"Quote", 'String'>
+  readonly projectId: Prisma.FieldRef<"Quote", 'String'>
   readonly createdAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly sentAt: Prisma.FieldRef<"Quote", 'DateTime'>
@@ -2098,6 +2346,25 @@ export type QuoteDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Quotes to delete.
    */
   limit?: number
+}
+
+/**
+ * Quote.project
+ */
+export type Quote$projectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Project
+   */
+  select?: Prisma.ProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Project
+   */
+  omit?: Prisma.ProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectInclude<ExtArgs> | null
+  where?: Prisma.ProjectWhereInput
 }
 
 /**

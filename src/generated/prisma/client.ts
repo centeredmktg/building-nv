@@ -66,3 +66,63 @@ export type LineItem = Prisma.LineItemModel
  * 
  */
 export type Acceptance = Prisma.AcceptanceModel
+/**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model Contact
+ * 
+ */
+export type Contact = Prisma.ContactModel
+/**
+ * Model Company
+ * 
+ */
+export type Company = Prisma.CompanyModel
+/**
+ * Model ProjectContact
+ * 
+ */
+export type ProjectContact = Prisma.ProjectContactModel
+/**
+ * Model ProjectCompany
+ * 
+ */
+export type ProjectCompany = Prisma.ProjectCompanyModel
+/**
+ * Model Vendor
+ * 
+ */
+export type Vendor = Prisma.VendorModel
+/**
+ * Model Component
+ * 
+ */
+export type Component = Prisma.ComponentModel
+/**
+ * Model Employee
+ * 
+ */
+export type Employee = Prisma.EmployeeModel
+/**
+ * Model Certification
+ * 
+ */
+export type Certification = Prisma.CertificationModel
+/**
+ * Model OnboardingStep
+ * 
+ */
+export type OnboardingStep = Prisma.OnboardingStepModel
+/**
+ * Model OnboardingInvite
+ * 
+ */
+export type OnboardingInvite = Prisma.OnboardingInviteModel
+/**
+ * Model ProjectTeamMember
+ * 
+ */
+export type ProjectTeamMember = Prisma.ProjectTeamMemberModel

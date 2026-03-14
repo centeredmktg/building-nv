@@ -55,7 +55,19 @@ export const ModelName = {
   Quote: 'Quote',
   LineItemSection: 'LineItemSection',
   LineItem: 'LineItem',
-  Acceptance: 'Acceptance'
+  Acceptance: 'Acceptance',
+  Project: 'Project',
+  Contact: 'Contact',
+  Company: 'Company',
+  ProjectContact: 'ProjectContact',
+  ProjectCompany: 'ProjectCompany',
+  Vendor: 'Vendor',
+  Component: 'Component',
+  Employee: 'Employee',
+  Certification: 'Certification',
+  OnboardingStep: 'OnboardingStep',
+  OnboardingInvite: 'OnboardingInvite',
+  ProjectTeamMember: 'ProjectTeamMember'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -98,6 +110,7 @@ export const QuoteScalarFieldEnum = {
   exclusions: 'exclusions',
   notes: 'notes',
   clientId: 'clientId',
+  projectId: 'projectId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   sentAt: 'sentAt'
@@ -122,9 +135,11 @@ export const LineItemScalarFieldEnum = {
   quantity: 'quantity',
   unit: 'unit',
   unitPrice: 'unitPrice',
+  vendorCost: 'vendorCost',
   isMaterial: 'isMaterial',
   position: 'position',
-  sectionId: 'sectionId'
+  sectionId: 'sectionId',
+  componentId: 'componentId'
 } as const
 
 export type LineItemScalarFieldEnum = (typeof LineItemScalarFieldEnum)[keyof typeof LineItemScalarFieldEnum]
@@ -139,6 +154,178 @@ export const AcceptanceScalarFieldEnum = {
 } as const
 
 export type AcceptanceScalarFieldEnum = (typeof AcceptanceScalarFieldEnum)[keyof typeof AcceptanceScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  stage: 'stage',
+  projectType: 'projectType',
+  message: 'message',
+  notes: 'notes',
+  attachmentUrl: 'attachmentUrl',
+  siteAddress: 'siteAddress',
+  siteCity: 'siteCity',
+  siteState: 'siteState',
+  siteZip: 'siteZip',
+  hazardNotes: 'hazardNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ContactScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  type: 'type',
+  primaryCompanyId: 'primaryCompanyId',
+  createdAt: 'createdAt'
+} as const
+
+export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+export const CompanyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  domain: 'domain',
+  phone: 'phone',
+  createdAt: 'createdAt'
+} as const
+
+export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
+
+
+export const ProjectContactScalarFieldEnum = {
+  projectId: 'projectId',
+  contactId: 'contactId',
+  role: 'role'
+} as const
+
+export type ProjectContactScalarFieldEnum = (typeof ProjectContactScalarFieldEnum)[keyof typeof ProjectContactScalarFieldEnum]
+
+
+export const ProjectCompanyScalarFieldEnum = {
+  projectId: 'projectId',
+  companyId: 'companyId',
+  role: 'role'
+} as const
+
+export type ProjectCompanyScalarFieldEnum = (typeof ProjectCompanyScalarFieldEnum)[keyof typeof ProjectCompanyScalarFieldEnum]
+
+
+export const VendorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  website: 'website',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type VendorScalarFieldEnum = (typeof VendorScalarFieldEnum)[keyof typeof VendorScalarFieldEnum]
+
+
+export const ComponentScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  category: 'category',
+  vendorSku: 'vendorSku',
+  vendorCost: 'vendorCost',
+  unit: 'unit',
+  vendorId: 'vendorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  sdsUrl: 'sdsUrl',
+  isHazardous: 'isHazardous'
+} as const
+
+export type ComponentScalarFieldEnum = (typeof ComponentScalarFieldEnum)[keyof typeof ComponentScalarFieldEnum]
+
+
+export const EmployeeScalarFieldEnum = {
+  id: 'id',
+  contactId: 'contactId',
+  legalName: 'legalName',
+  hireDate: 'hireDate',
+  employmentType: 'employmentType',
+  tradeClassification: 'tradeClassification',
+  activeStatus: 'activeStatus',
+  terminatedAt: 'terminatedAt',
+  homeAddress: 'homeAddress',
+  city: 'city',
+  state: 'state',
+  zip: 'zip',
+  ec1Name: 'ec1Name',
+  ec1Relationship: 'ec1Relationship',
+  ec1Phone: 'ec1Phone',
+  ec2Name: 'ec2Name',
+  ec2Relationship: 'ec2Relationship',
+  ec2Phone: 'ec2Phone',
+  driversLicenseNumber: 'driversLicenseNumber',
+  driversLicenseExpiry: 'driversLicenseExpiry',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmployeeScalarFieldEnum = (typeof EmployeeScalarFieldEnum)[keyof typeof EmployeeScalarFieldEnum]
+
+
+export const CertificationScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  type: 'type',
+  issueDate: 'issueDate',
+  expirationDate: 'expirationDate',
+  cardPhotoUrl: 'cardPhotoUrl',
+  verifiedStatus: 'verifiedStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CertificationScalarFieldEnum = (typeof CertificationScalarFieldEnum)[keyof typeof CertificationScalarFieldEnum]
+
+
+export const OnboardingStepScalarFieldEnum = {
+  id: 'id',
+  employeeId: 'employeeId',
+  stepName: 'stepName',
+  completedAt: 'completedAt',
+  signerName: 'signerName',
+  ipAddress: 'ipAddress'
+} as const
+
+export type OnboardingStepScalarFieldEnum = (typeof OnboardingStepScalarFieldEnum)[keyof typeof OnboardingStepScalarFieldEnum]
+
+
+export const OnboardingInviteScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  email: 'email',
+  expiresAt: 'expiresAt',
+  status: 'status',
+  contactId: 'contactId',
+  createdAt: 'createdAt'
+} as const
+
+export type OnboardingInviteScalarFieldEnum = (typeof OnboardingInviteScalarFieldEnum)[keyof typeof OnboardingInviteScalarFieldEnum]
+
+
+export const ProjectTeamMemberScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  employeeId: 'employeeId',
+  role: 'role',
+  assignedAt: 'assignedAt'
+} as const
+
+export type ProjectTeamMemberScalarFieldEnum = (typeof ProjectTeamMemberScalarFieldEnum)[keyof typeof ProjectTeamMemberScalarFieldEnum]
 
 
 export const SortOrder = {

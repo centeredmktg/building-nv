@@ -28,6 +28,8 @@ export default function InternalNav() {
         </Link>
         {navLink("/internal/projects", "Pipeline")}
         {navLink("/internal/quotes", "Quotes")}
+        {navLink("/internal/employees", "Employees")}
+        {navLink("/internal/vendors", "Vendors")}
         {navLink("/internal/components", "Catalog")}
       </div>
       <button
