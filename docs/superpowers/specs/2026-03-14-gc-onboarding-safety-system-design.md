@@ -31,7 +31,7 @@ The system has two parallel tracks:
 - Payroll processing — handled by Gusto
 - Accounting — handled by QuickBooks (Desktop or Online, TBD)
 - Full HRIS — the employee module is purpose-built for compliance and field operations, not a people management platform
-- SDS (Safety Data Sheets) management — SDS binder is a separate physical document; this system references its existence but does not manage individual SDS records
+- Full SDS database management — SDS are manufacturer-provided documents, not created by the business; the app supports lightweight attachment and per-project surfacing only (see Section 2g)
 - Automated email/SMS alerts for expiring certifications — flagged in UI only in this phase
 
 ---
@@ -378,6 +378,36 @@ All implemented as print routes with `@media print` CSS — no PDF generation li
 
 ---
 
+### 2g. SDS Management (Component Catalog Extension)
+
+SDS (Safety Data Sheets) are provided by material/chemical manufacturers — the GC does not create them. OSHA HazCom requires that an SDS be accessible on site for every hazardous material in use.
+
+**Existing model change (additive):**
+
+```prisma
+model Component {
+  // ... existing fields ...
+  sdsUrl       String?   // link to manufacturer's SDS page, or Vercel Blob URL if uploaded
+  isHazardous  Boolean   @default(false) // flags whether this component requires an SDS
+}
+```
+
+**Behavior:**
+- Components marked `isHazardous = true` should have an `sdsUrl` — the UI flags components where this is missing
+- SDS can be a direct upload (stored via Vercel Blob) or an external manufacturer URL — both are valid
+- When a project has linked quotes, the app derives which hazardous components appear in those quote line items
+
+**Per-project SDS checklist (added to project safety plan and job site binder):**
+- Pulls all `LineItem` records for the project's quotes → matches to `Component` records → filters `isHazardous = true`
+- Produces a list: "The following materials on this project require SDS on site"
+- Each entry shows: material name, vendor, SDS link (click to view/print)
+- Checklist item in binder: superintendent confirms SDS packet is in the site binder before work begins
+- If a line item isn't linked to a Component (manual entry), it appears as "Unlinked material — verify SDS manually"
+
+**What this replaces:** the static 7,890-page SDS compilation. Instead of a generic binder, each job site gets a project-specific SDS packet containing only the sheets relevant to that job.
+
+---
+
 ## Integration Points
 
 | System | Integration |
@@ -422,5 +452,6 @@ All implemented as print routes with `@media print` CSS — no PDF generation li
 5. Confirm Vercel Blob setup → build certification upload flow (photo → verified status)
 6. Build project safety plan page + print view (requires Step 3 address fields + team assignment)
 7. Build digital onboarding flow: invite creation, public `/onboarding/[token]` route, all 8 steps
-8. Build print templates: job site binder, phone tree, employee profile sheet
-9. Wire onboarding invite delivery via Resend
+8. Add `sdsUrl` and `isHazardous` to Component model; update Component catalog UI for SDS upload/link
+9. Build print templates: job site binder (includes per-project SDS checklist), phone tree, employee profile sheet
+10. Wire onboarding invite delivery via Resend
