@@ -84,18 +84,24 @@ model Acceptance {
 // stages: opportunity_identified | quote_requested | bid_delivered |
 //         contract_completed | contract_sent | contract_signed | closed_lost
 model Project {
-  id               String           @id @default(cuid())
+  id               String              @id @default(cuid())
   name             String
-  stage            String           @default("opportunity_identified")
+  stage            String              @default("opportunity_identified")
   projectType      String?
-  message          String?          // original inbound message from contact form
-  notes            String?          // internal notes
+  message          String?             // original inbound message from contact form
+  notes            String?             // internal notes
   attachmentUrl    String?
+  siteAddress      String?
+  siteCity         String?
+  siteState        String?
+  siteZip          String?
+  hazardNotes      String?
   projectContacts  ProjectContact[]
   projectCompanies ProjectCompany[]
   quotes           Quote[]
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  teamMembers      ProjectTeamMember[]
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
 }
 
 model Contact {
@@ -104,10 +110,11 @@ model Contact {
   lastName         String?
   email            String           @unique
   phone            String?
-  type             String           @default("customer") // customer | vendor | pm | other
+  type             String           @default("customer") // customer | vendor | pm | employee | other
   primaryCompany   Company?         @relation(fields: [primaryCompanyId], references: [id])
   primaryCompanyId String?
   projectContacts  ProjectContact[]
+  employee         Employee?
   createdAt        DateTime         @default(now())
 }
 
@@ -169,4 +176,109 @@ model Component {
   lineItems   LineItem[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  sdsUrl      String?
+  isHazardous Boolean    @default(false)
+}
+
+// ─── HR: Employee Module ───────────────────────────────────────────────────────
+
+// 1:1 extension of Contact. Only exists when contact.type = "employee".
+// All required fields live here — Contact is not polluted with nullable columns.
+model Employee {
+  id                  String    @id @default(cuid())
+  contactId           String    @unique
+  contact             Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  // Identity
+  legalName           String
+  hireDate            DateTime
+  employmentType      String    // "W2" | "CONTRACTOR_1099"
+  tradeClassification String    // "laborer" | "carpenter" | "electrician" | "superintendent" | "pm" | "other"
+  activeStatus        String    @default("active") // "active" | "inactive" | "terminated"
+  terminatedAt        DateTime?
+
+  // Address
+  homeAddress         String
+  city                String
+  state               String
+  zip                 String
+
+  // Emergency contact 1 (required)
+  ec1Name             String
+  ec1Relationship     String
+  ec1Phone            String
+
+  // Emergency contact 2 (optional)
+  ec2Name             String?
+  ec2Relationship     String?
+  ec2Phone            String?
+
+  // Optional compliance fields
+  driversLicenseNumber String?
+  driversLicenseExpiry DateTime?
+
+  // Relations
+  certifications      Certification[]
+  onboardingSteps     OnboardingStep[]
+  projectTeam         ProjectTeamMember[]
+
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+}
+
+// OSHA and other certifications. cardPhotoUrl required for OSHA_10 and OSHA_30.
+model Certification {
+  id             String    @id @default(cuid())
+  employeeId     String
+  employee       Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  type           String    // "OSHA_10" | "OSHA_30" | "FIRST_AID" | "OTHER"
+  issueDate      DateTime
+  expirationDate DateTime?
+  cardPhotoUrl   String?
+  verifiedStatus String    @default("unverified") // "unverified" | "verified"
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+// Per-step tracking for digital onboarding flow.
+model OnboardingStep {
+  id          String    @id @default(cuid())
+  employeeId  String
+  employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  stepName    String    // "personal_info" | "emergency_contacts" | "employment_docs" |
+                        // "gusto_setup" | "osha_certification" | "safety_manual_ack" |
+                        // "workbook_ack" | "complete"
+  completedAt DateTime?
+  signerName  String?   // for acknowledgment steps
+  ipAddress   String?
+
+  @@unique([employeeId, stepName])
+}
+
+// Pre-hire invite token — allows sending onboarding link before Contact exists.
+model OnboardingInvite {
+  id        String    @id @default(cuid())
+  token     String    @unique @default(cuid())
+  email     String
+  expiresAt DateTime
+  status    String    @default("pending") // "pending" | "completed" | "expired"
+  contactId String?   // set after Step 1 creates the Contact record
+
+  createdAt DateTime  @default(now())
+}
+
+// Assigns employees/contractors to a project job site.
+model ProjectTeamMember {
+  id         String   @id @default(cuid())
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  role       String   @default("worker") // "worker" | "foreman" | "superintendent"
+  assignedAt DateTime @default(now())
+
+  @@unique([projectId, employeeId])
 }
