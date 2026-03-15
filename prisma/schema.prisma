@@ -42,7 +42,22 @@ model Quote {
   acceptance        Acceptance?
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
-  sentAt            DateTime?
+  sentAt              DateTime?
+  estimatedDuration   String?
+  estimatedStartDate  DateTime?
+}
+
+model Milestone {
+  id          String    @id @default(cuid())
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name        String
+  plannedDate DateTime?
+  completedAt DateTime?
+  position    Int
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model LineItemSection {
@@ -81,8 +96,8 @@ model Acceptance {
 
 // ─── CRM ──────────────────────────────────────────────────────────────────────
 
-// stages: opportunity_identified | quote_requested | bid_delivered |
-//         contract_completed | contract_sent | contract_signed | closed_lost
+// stages: opportunity_identified | quote_sent | contract_signed | closed_lost
+//         preconstruction | active | punch_list | complete
 model Project {
   id               String              @id @default(cuid())
   name             String
@@ -90,7 +105,14 @@ model Project {
   projectType      String?
   message          String?             // original inbound message from contact form
   notes            String?             // internal notes
-  attachmentUrl    String?
+  attachmentUrl       String?
+  estimatedCloseDate  DateTime?
+  contractAmount      Float?
+  targetCostAmount    Float?
+  estimatedStartDate  DateTime?
+  estimatedEndDate    DateTime?
+  timingNotes         String?
+  milestones          Milestone[]
   siteAddress      String?
   siteCity         String?
   siteState        String?
