@@ -10,7 +10,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const { name, description, category, vendorSku, vendorCost, unit, vendorId } =
+  const { name, description, category, vendorSku, vendorCost, unit, vendorId, sdsUrl, isHazardous } =
     await req.json();
 
   if (!name?.trim() || !vendorId || vendorCost == null) {
@@ -29,6 +29,8 @@ export async function POST(req: NextRequest) {
       vendorCost: parseFloat(vendorCost),
       unit: unit?.trim() || "ea",
       vendorId,
+      sdsUrl: sdsUrl?.trim() || null,
+      isHazardous: isHazardous === true,
     },
     include: { vendor: { select: { id: true, name: true } } },
   });
