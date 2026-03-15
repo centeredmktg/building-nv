@@ -25,12 +25,17 @@ export default async function EmployeesPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold text-text-primary">Employees</h1>
-        <Link
-          href="/internal/employees/new"
-          className="bg-accent text-bg font-semibold px-5 py-2.5 rounded-sm text-sm hover:bg-accent/90 transition-colors"
-        >
-          Add Employee
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link href="/internal/employees/onboarding" className="text-text-muted text-sm hover:text-text-primary transition-colors">
+            Send Invite
+          </Link>
+          <Link
+            href="/internal/employees/new"
+            className="bg-accent text-bg font-semibold px-5 py-2.5 rounded-sm text-sm hover:bg-accent/90 transition-colors"
+          >
+            Add Employee
+          </Link>
+        </div>
       </div>
 
       {employees.length === 0 ? (
