@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Client: 'Client',
   Quote: 'Quote',
+  Milestone: 'Milestone',
   LineItemSection: 'LineItemSection',
   LineItem: 'LineItem',
   Acceptance: 'Acceptance',
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "client" | "quote" | "lineItemSection" | "lineItem" | "acceptance" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
+    modelProps: "client" | "quote" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -565,6 +566,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.QuoteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.QuoteCountAggregateOutputType> | number
+        }
+      }
+    }
+    Milestone: {
+      payload: Prisma.$MilestonePayload<ExtArgs>
+      fields: Prisma.MilestoneFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MilestoneFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MilestoneFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>
+        }
+        findFirst: {
+          args: Prisma.MilestoneFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MilestoneFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>
+        }
+        findMany: {
+          args: Prisma.MilestoneFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>[]
+        }
+        create: {
+          args: Prisma.MilestoneCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>
+        }
+        createMany: {
+          args: Prisma.MilestoneCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MilestoneCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>[]
+        }
+        delete: {
+          args: Prisma.MilestoneDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>
+        }
+        update: {
+          args: Prisma.MilestoneUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>
+        }
+        deleteMany: {
+          args: Prisma.MilestoneDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MilestoneUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MilestoneUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>[]
+        }
+        upsert: {
+          args: Prisma.MilestoneUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MilestonePayload>
+        }
+        aggregate: {
+          args: Prisma.MilestoneAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMilestone>
+        }
+        groupBy: {
+          args: Prisma.MilestoneGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MilestoneGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MilestoneCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MilestoneCountAggregateOutputType> | number
         }
       }
     }
@@ -1744,10 +1819,27 @@ export const QuoteScalarFieldEnum = {
   projectId: 'projectId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  sentAt: 'sentAt'
+  sentAt: 'sentAt',
+  estimatedDuration: 'estimatedDuration',
+  estimatedStartDate: 'estimatedStartDate'
 } as const
 
 export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const MilestoneScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  name: 'name',
+  plannedDate: 'plannedDate',
+  completedAt: 'completedAt',
+  position: 'position',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MilestoneScalarFieldEnum = (typeof MilestoneScalarFieldEnum)[keyof typeof MilestoneScalarFieldEnum]
 
 
 export const LineItemSectionScalarFieldEnum = {
@@ -1795,11 +1887,20 @@ export const ProjectScalarFieldEnum = {
   message: 'message',
   notes: 'notes',
   attachmentUrl: 'attachmentUrl',
+  estimatedCloseDate: 'estimatedCloseDate',
+  contractAmount: 'contractAmount',
+  targetCostAmount: 'targetCostAmount',
+  estimatedStartDate: 'estimatedStartDate',
+  estimatedEndDate: 'estimatedEndDate',
+  timingNotes: 'timingNotes',
   siteAddress: 'siteAddress',
   siteCity: 'siteCity',
   siteState: 'siteState',
   siteZip: 'siteZip',
   hazardNotes: 'hazardNotes',
+  nearestER: 'nearestER',
+  nearestERAddress: 'nearestERAddress',
+  assemblyPoint: 'assemblyPoint',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2112,6 +2213,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   client?: Prisma.ClientOmit
   quote?: Prisma.QuoteOmit
+  milestone?: Prisma.MilestoneOmit
   lineItemSection?: Prisma.LineItemSectionOmit
   lineItem?: Prisma.LineItemOmit
   acceptance?: Prisma.AcceptanceOmit

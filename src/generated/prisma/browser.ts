@@ -28,6 +28,11 @@ export type Client = Prisma.ClientModel
  */
 export type Quote = Prisma.QuoteModel
 /**
+ * Model Milestone
+ * 
+ */
+export type Milestone = Prisma.MilestoneModel
+/**
  * Model LineItemSection
  * 
  */

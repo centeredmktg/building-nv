@@ -393,14 +393,6 @@ export type LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput = {
   deleteMany?: Prisma.LineItemSectionScalarWhereInput | Prisma.LineItemSectionScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type LineItemSectionCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.LineItemSectionCreateWithoutItemsInput, Prisma.LineItemSectionUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.LineItemSectionCreateOrConnectWithoutItemsInput

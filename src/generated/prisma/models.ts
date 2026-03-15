@@ -10,6 +10,7 @@
  */
 export type * from './models/Client'
 export type * from './models/Quote'
+export type * from './models/Milestone'
 export type * from './models/LineItemSection'
 export type * from './models/LineItem'
 export type * from './models/Acceptance'

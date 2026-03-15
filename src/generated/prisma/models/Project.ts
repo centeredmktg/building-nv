@@ -20,8 +20,20 @@ export type ProjectModel = runtime.Types.Result.DefaultSelection<Prisma.$Project
 
 export type AggregateProject = {
   _count: ProjectCountAggregateOutputType | null
+  _avg: ProjectAvgAggregateOutputType | null
+  _sum: ProjectSumAggregateOutputType | null
   _min: ProjectMinAggregateOutputType | null
   _max: ProjectMaxAggregateOutputType | null
+}
+
+export type ProjectAvgAggregateOutputType = {
+  contractAmount: number | null
+  targetCostAmount: number | null
+}
+
+export type ProjectSumAggregateOutputType = {
+  contractAmount: number | null
+  targetCostAmount: number | null
 }
 
 export type ProjectMinAggregateOutputType = {
@@ -32,11 +44,20 @@ export type ProjectMinAggregateOutputType = {
   message: string | null
   notes: string | null
   attachmentUrl: string | null
+  estimatedCloseDate: Date | null
+  contractAmount: number | null
+  targetCostAmount: number | null
+  estimatedStartDate: Date | null
+  estimatedEndDate: Date | null
+  timingNotes: string | null
   siteAddress: string | null
   siteCity: string | null
   siteState: string | null
   siteZip: string | null
   hazardNotes: string | null
+  nearestER: string | null
+  nearestERAddress: string | null
+  assemblyPoint: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,11 +70,20 @@ export type ProjectMaxAggregateOutputType = {
   message: string | null
   notes: string | null
   attachmentUrl: string | null
+  estimatedCloseDate: Date | null
+  contractAmount: number | null
+  targetCostAmount: number | null
+  estimatedStartDate: Date | null
+  estimatedEndDate: Date | null
+  timingNotes: string | null
   siteAddress: string | null
   siteCity: string | null
   siteState: string | null
   siteZip: string | null
   hazardNotes: string | null
+  nearestER: string | null
+  nearestERAddress: string | null
+  assemblyPoint: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,16 +96,35 @@ export type ProjectCountAggregateOutputType = {
   message: number
   notes: number
   attachmentUrl: number
+  estimatedCloseDate: number
+  contractAmount: number
+  targetCostAmount: number
+  estimatedStartDate: number
+  estimatedEndDate: number
+  timingNotes: number
   siteAddress: number
   siteCity: number
   siteState: number
   siteZip: number
   hazardNotes: number
+  nearestER: number
+  nearestERAddress: number
+  assemblyPoint: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type ProjectAvgAggregateInputType = {
+  contractAmount?: true
+  targetCostAmount?: true
+}
+
+export type ProjectSumAggregateInputType = {
+  contractAmount?: true
+  targetCostAmount?: true
+}
 
 export type ProjectMinAggregateInputType = {
   id?: true
@@ -85,11 +134,20 @@ export type ProjectMinAggregateInputType = {
   message?: true
   notes?: true
   attachmentUrl?: true
+  estimatedCloseDate?: true
+  contractAmount?: true
+  targetCostAmount?: true
+  estimatedStartDate?: true
+  estimatedEndDate?: true
+  timingNotes?: true
   siteAddress?: true
   siteCity?: true
   siteState?: true
   siteZip?: true
   hazardNotes?: true
+  nearestER?: true
+  nearestERAddress?: true
+  assemblyPoint?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,11 +160,20 @@ export type ProjectMaxAggregateInputType = {
   message?: true
   notes?: true
   attachmentUrl?: true
+  estimatedCloseDate?: true
+  contractAmount?: true
+  targetCostAmount?: true
+  estimatedStartDate?: true
+  estimatedEndDate?: true
+  timingNotes?: true
   siteAddress?: true
   siteCity?: true
   siteState?: true
   siteZip?: true
   hazardNotes?: true
+  nearestER?: true
+  nearestERAddress?: true
+  assemblyPoint?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -119,11 +186,20 @@ export type ProjectCountAggregateInputType = {
   message?: true
   notes?: true
   attachmentUrl?: true
+  estimatedCloseDate?: true
+  contractAmount?: true
+  targetCostAmount?: true
+  estimatedStartDate?: true
+  estimatedEndDate?: true
+  timingNotes?: true
   siteAddress?: true
   siteCity?: true
   siteState?: true
   siteZip?: true
   hazardNotes?: true
+  nearestER?: true
+  nearestERAddress?: true
+  assemblyPoint?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -167,6 +243,18 @@ export type ProjectAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProjectAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProjectSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProjectMinAggregateInputType
@@ -197,6 +285,8 @@ export type ProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ProjectCountAggregateInputType | true
+  _avg?: ProjectAvgAggregateInputType
+  _sum?: ProjectSumAggregateInputType
   _min?: ProjectMinAggregateInputType
   _max?: ProjectMaxAggregateInputType
 }
@@ -209,14 +299,25 @@ export type ProjectGroupByOutputType = {
   message: string | null
   notes: string | null
   attachmentUrl: string | null
+  estimatedCloseDate: Date | null
+  contractAmount: number | null
+  targetCostAmount: number | null
+  estimatedStartDate: Date | null
+  estimatedEndDate: Date | null
+  timingNotes: string | null
   siteAddress: string | null
   siteCity: string | null
   siteState: string | null
   siteZip: string | null
   hazardNotes: string | null
+  nearestER: string | null
+  nearestERAddress: string | null
+  assemblyPoint: string | null
   createdAt: Date
   updatedAt: Date
   _count: ProjectCountAggregateOutputType | null
+  _avg: ProjectAvgAggregateOutputType | null
+  _sum: ProjectSumAggregateOutputType | null
   _min: ProjectMinAggregateOutputType | null
   _max: ProjectMaxAggregateOutputType | null
 }
@@ -247,13 +348,23 @@ export type ProjectWhereInput = {
   message?: Prisma.StringNullableFilter<"Project"> | string | null
   notes?: Prisma.StringNullableFilter<"Project"> | string | null
   attachmentUrl?: Prisma.StringNullableFilter<"Project"> | string | null
+  estimatedCloseDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  contractAmount?: Prisma.FloatNullableFilter<"Project"> | number | null
+  targetCostAmount?: Prisma.FloatNullableFilter<"Project"> | number | null
+  estimatedStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  estimatedEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  timingNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   siteAddress?: Prisma.StringNullableFilter<"Project"> | string | null
   siteCity?: Prisma.StringNullableFilter<"Project"> | string | null
   siteState?: Prisma.StringNullableFilter<"Project"> | string | null
   siteZip?: Prisma.StringNullableFilter<"Project"> | string | null
   hazardNotes?: Prisma.StringNullableFilter<"Project"> | string | null
+  nearestER?: Prisma.StringNullableFilter<"Project"> | string | null
+  nearestERAddress?: Prisma.StringNullableFilter<"Project"> | string | null
+  assemblyPoint?: Prisma.StringNullableFilter<"Project"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  milestones?: Prisma.MilestoneListRelationFilter
   projectContacts?: Prisma.ProjectContactListRelationFilter
   projectCompanies?: Prisma.ProjectCompanyListRelationFilter
   quotes?: Prisma.QuoteListRelationFilter
@@ -268,13 +379,23 @@ export type ProjectOrderByWithRelationInput = {
   message?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   attachmentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedCloseDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  contractAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  targetCostAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  timingNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   siteAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   siteCity?: Prisma.SortOrderInput | Prisma.SortOrder
   siteState?: Prisma.SortOrderInput | Prisma.SortOrder
   siteZip?: Prisma.SortOrderInput | Prisma.SortOrder
   hazardNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  nearestER?: Prisma.SortOrderInput | Prisma.SortOrder
+  nearestERAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  assemblyPoint?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  milestones?: Prisma.MilestoneOrderByRelationAggregateInput
   projectContacts?: Prisma.ProjectContactOrderByRelationAggregateInput
   projectCompanies?: Prisma.ProjectCompanyOrderByRelationAggregateInput
   quotes?: Prisma.QuoteOrderByRelationAggregateInput
@@ -292,13 +413,23 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   message?: Prisma.StringNullableFilter<"Project"> | string | null
   notes?: Prisma.StringNullableFilter<"Project"> | string | null
   attachmentUrl?: Prisma.StringNullableFilter<"Project"> | string | null
+  estimatedCloseDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  contractAmount?: Prisma.FloatNullableFilter<"Project"> | number | null
+  targetCostAmount?: Prisma.FloatNullableFilter<"Project"> | number | null
+  estimatedStartDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  estimatedEndDate?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  timingNotes?: Prisma.StringNullableFilter<"Project"> | string | null
   siteAddress?: Prisma.StringNullableFilter<"Project"> | string | null
   siteCity?: Prisma.StringNullableFilter<"Project"> | string | null
   siteState?: Prisma.StringNullableFilter<"Project"> | string | null
   siteZip?: Prisma.StringNullableFilter<"Project"> | string | null
   hazardNotes?: Prisma.StringNullableFilter<"Project"> | string | null
+  nearestER?: Prisma.StringNullableFilter<"Project"> | string | null
+  nearestERAddress?: Prisma.StringNullableFilter<"Project"> | string | null
+  assemblyPoint?: Prisma.StringNullableFilter<"Project"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  milestones?: Prisma.MilestoneListRelationFilter
   projectContacts?: Prisma.ProjectContactListRelationFilter
   projectCompanies?: Prisma.ProjectCompanyListRelationFilter
   quotes?: Prisma.QuoteListRelationFilter
@@ -313,16 +444,27 @@ export type ProjectOrderByWithAggregationInput = {
   message?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   attachmentUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedCloseDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  contractAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  targetCostAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedStartDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedEndDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  timingNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   siteAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   siteCity?: Prisma.SortOrderInput | Prisma.SortOrder
   siteState?: Prisma.SortOrderInput | Prisma.SortOrder
   siteZip?: Prisma.SortOrderInput | Prisma.SortOrder
   hazardNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  nearestER?: Prisma.SortOrderInput | Prisma.SortOrder
+  nearestERAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  assemblyPoint?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProjectCountOrderByAggregateInput
+  _avg?: Prisma.ProjectAvgOrderByAggregateInput
   _max?: Prisma.ProjectMaxOrderByAggregateInput
   _min?: Prisma.ProjectMinOrderByAggregateInput
+  _sum?: Prisma.ProjectSumOrderByAggregateInput
 }
 
 export type ProjectScalarWhereWithAggregatesInput = {
@@ -336,11 +478,20 @@ export type ProjectScalarWhereWithAggregatesInput = {
   message?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   attachmentUrl?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  estimatedCloseDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  contractAmount?: Prisma.FloatNullableWithAggregatesFilter<"Project"> | number | null
+  targetCostAmount?: Prisma.FloatNullableWithAggregatesFilter<"Project"> | number | null
+  estimatedStartDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  estimatedEndDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  timingNotes?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   siteAddress?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   siteCity?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   siteState?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   siteZip?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   hazardNotes?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  nearestER?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  nearestERAddress?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  assemblyPoint?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
 }
@@ -353,13 +504,23 @@ export type ProjectCreateInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
@@ -374,13 +535,23 @@ export type ProjectUncheckedCreateInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
@@ -395,13 +566,23 @@ export type ProjectUpdateInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUpdateManyWithoutProjectNestedInput
   projectContacts?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
@@ -416,13 +597,23 @@ export type ProjectUncheckedUpdateInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProjectNestedInput
   projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
@@ -437,11 +628,20 @@ export type ProjectCreateManyInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -454,11 +654,20 @@ export type ProjectUpdateManyMutationInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -471,11 +680,20 @@ export type ProjectUncheckedUpdateManyInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -483,6 +701,11 @@ export type ProjectUncheckedUpdateManyInput = {
 export type ProjectNullableScalarRelationFilter = {
   is?: Prisma.ProjectWhereInput | null
   isNot?: Prisma.ProjectWhereInput | null
+}
+
+export type ProjectScalarRelationFilter = {
+  is?: Prisma.ProjectWhereInput
+  isNot?: Prisma.ProjectWhereInput
 }
 
 export type ProjectCountOrderByAggregateInput = {
@@ -493,13 +716,27 @@ export type ProjectCountOrderByAggregateInput = {
   message?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   attachmentUrl?: Prisma.SortOrder
+  estimatedCloseDate?: Prisma.SortOrder
+  contractAmount?: Prisma.SortOrder
+  targetCostAmount?: Prisma.SortOrder
+  estimatedStartDate?: Prisma.SortOrder
+  estimatedEndDate?: Prisma.SortOrder
+  timingNotes?: Prisma.SortOrder
   siteAddress?: Prisma.SortOrder
   siteCity?: Prisma.SortOrder
   siteState?: Prisma.SortOrder
   siteZip?: Prisma.SortOrder
   hazardNotes?: Prisma.SortOrder
+  nearestER?: Prisma.SortOrder
+  nearestERAddress?: Prisma.SortOrder
+  assemblyPoint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProjectAvgOrderByAggregateInput = {
+  contractAmount?: Prisma.SortOrder
+  targetCostAmount?: Prisma.SortOrder
 }
 
 export type ProjectMaxOrderByAggregateInput = {
@@ -510,11 +747,20 @@ export type ProjectMaxOrderByAggregateInput = {
   message?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   attachmentUrl?: Prisma.SortOrder
+  estimatedCloseDate?: Prisma.SortOrder
+  contractAmount?: Prisma.SortOrder
+  targetCostAmount?: Prisma.SortOrder
+  estimatedStartDate?: Prisma.SortOrder
+  estimatedEndDate?: Prisma.SortOrder
+  timingNotes?: Prisma.SortOrder
   siteAddress?: Prisma.SortOrder
   siteCity?: Prisma.SortOrder
   siteState?: Prisma.SortOrder
   siteZip?: Prisma.SortOrder
   hazardNotes?: Prisma.SortOrder
+  nearestER?: Prisma.SortOrder
+  nearestERAddress?: Prisma.SortOrder
+  assemblyPoint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -527,18 +773,27 @@ export type ProjectMinOrderByAggregateInput = {
   message?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   attachmentUrl?: Prisma.SortOrder
+  estimatedCloseDate?: Prisma.SortOrder
+  contractAmount?: Prisma.SortOrder
+  targetCostAmount?: Prisma.SortOrder
+  estimatedStartDate?: Prisma.SortOrder
+  estimatedEndDate?: Prisma.SortOrder
+  timingNotes?: Prisma.SortOrder
   siteAddress?: Prisma.SortOrder
   siteCity?: Prisma.SortOrder
   siteState?: Prisma.SortOrder
   siteZip?: Prisma.SortOrder
   hazardNotes?: Prisma.SortOrder
+  nearestER?: Prisma.SortOrder
+  nearestERAddress?: Prisma.SortOrder
+  assemblyPoint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type ProjectScalarRelationFilter = {
-  is?: Prisma.ProjectWhereInput
-  isNot?: Prisma.ProjectWhereInput
+export type ProjectSumOrderByAggregateInput = {
+  contractAmount?: Prisma.SortOrder
+  targetCostAmount?: Prisma.SortOrder
 }
 
 export type ProjectCreateNestedOneWithoutQuotesInput = {
@@ -555,6 +810,20 @@ export type ProjectUpdateOneWithoutQuotesNestedInput = {
   delete?: Prisma.ProjectWhereInput | boolean
   connect?: Prisma.ProjectWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutQuotesInput, Prisma.ProjectUpdateWithoutQuotesInput>, Prisma.ProjectUncheckedUpdateWithoutQuotesInput>
+}
+
+export type ProjectCreateNestedOneWithoutMilestonesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMilestonesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutMilestonesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutMilestonesInput
+  upsert?: Prisma.ProjectUpsertWithoutMilestonesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutMilestonesInput, Prisma.ProjectUpdateWithoutMilestonesInput>, Prisma.ProjectUncheckedUpdateWithoutMilestonesInput>
 }
 
 export type ProjectCreateNestedOneWithoutProjectContactsInput = {
@@ -607,13 +876,23 @@ export type ProjectCreateWithoutQuotesInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
@@ -627,13 +906,23 @@ export type ProjectUncheckedCreateWithoutQuotesInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
@@ -663,13 +952,23 @@ export type ProjectUpdateWithoutQuotesInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUpdateManyWithoutProjectNestedInput
   projectContacts?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
@@ -683,15 +982,161 @@ export type ProjectUncheckedUpdateWithoutQuotesInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
+  teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutMilestonesInput = {
+  id?: string
+  name: string
+  stage?: string
+  projectType?: string | null
+  message?: string | null
+  notes?: string | null
+  attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteState?: string | null
+  siteZip?: string | null
+  hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
+  teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutMilestonesInput = {
+  id?: string
+  name: string
+  stage?: string
+  projectType?: string | null
+  message?: string | null
+  notes?: string | null
+  attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteState?: string | null
+  siteZip?: string | null
+  hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
+  teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutMilestonesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+}
+
+export type ProjectUpsertWithoutMilestonesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutMilestonesInput, Prisma.ProjectUncheckedUpdateWithoutMilestonesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutMilestonesInput, Prisma.ProjectUncheckedCreateWithoutMilestonesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutMilestonesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutMilestonesInput, Prisma.ProjectUncheckedUpdateWithoutMilestonesInput>
+}
+
+export type ProjectUpdateWithoutMilestonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectContacts?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
+  teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutMilestonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -703,13 +1148,23 @@ export type ProjectCreateWithoutProjectContactsInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
@@ -723,13 +1178,23 @@ export type ProjectUncheckedCreateWithoutProjectContactsInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
@@ -759,13 +1224,23 @@ export type ProjectUpdateWithoutProjectContactsInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
@@ -779,13 +1254,23 @@ export type ProjectUncheckedUpdateWithoutProjectContactsInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
@@ -799,13 +1284,23 @@ export type ProjectCreateWithoutProjectCompaniesInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
@@ -819,13 +1314,23 @@ export type ProjectUncheckedCreateWithoutProjectCompaniesInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
@@ -855,13 +1360,23 @@ export type ProjectUpdateWithoutProjectCompaniesInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUpdateManyWithoutProjectNestedInput
   projectContacts?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
@@ -875,13 +1390,23 @@ export type ProjectUncheckedUpdateWithoutProjectCompaniesInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProjectNestedInput
   projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
@@ -895,13 +1420,23 @@ export type ProjectCreateWithoutTeamMembersInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
@@ -915,13 +1450,23 @@ export type ProjectUncheckedCreateWithoutTeamMembersInput = {
   message?: string | null
   notes?: string | null
   attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
   siteAddress?: string | null
   siteCity?: string | null
   siteState?: string | null
   siteZip?: string | null
   hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProjectInput
   projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
@@ -951,13 +1496,23 @@ export type ProjectUpdateWithoutTeamMembersInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUpdateManyWithoutProjectNestedInput
   projectContacts?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
@@ -971,13 +1526,23 @@ export type ProjectUncheckedUpdateWithoutTeamMembersInput = {
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProjectNestedInput
   projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
@@ -989,6 +1554,7 @@ export type ProjectUncheckedUpdateWithoutTeamMembersInput = {
  */
 
 export type ProjectCountOutputType = {
+  milestones: number
   projectContacts: number
   projectCompanies: number
   quotes: number
@@ -996,6 +1562,7 @@ export type ProjectCountOutputType = {
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  milestones?: boolean | ProjectCountOutputTypeCountMilestonesArgs
   projectContacts?: boolean | ProjectCountOutputTypeCountProjectContactsArgs
   projectCompanies?: boolean | ProjectCountOutputTypeCountProjectCompaniesArgs
   quotes?: boolean | ProjectCountOutputTypeCountQuotesArgs
@@ -1010,6 +1577,13 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the ProjectCountOutputType
    */
   select?: Prisma.ProjectCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountMilestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MilestoneWhereInput
 }
 
 /**
@@ -1049,13 +1623,23 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   message?: boolean
   notes?: boolean
   attachmentUrl?: boolean
+  estimatedCloseDate?: boolean
+  contractAmount?: boolean
+  targetCostAmount?: boolean
+  estimatedStartDate?: boolean
+  estimatedEndDate?: boolean
+  timingNotes?: boolean
   siteAddress?: boolean
   siteCity?: boolean
   siteState?: boolean
   siteZip?: boolean
   hazardNotes?: boolean
+  nearestER?: boolean
+  nearestERAddress?: boolean
+  assemblyPoint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
   projectContacts?: boolean | Prisma.Project$projectContactsArgs<ExtArgs>
   projectCompanies?: boolean | Prisma.Project$projectCompaniesArgs<ExtArgs>
   quotes?: boolean | Prisma.Project$quotesArgs<ExtArgs>
@@ -1071,11 +1655,20 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   message?: boolean
   notes?: boolean
   attachmentUrl?: boolean
+  estimatedCloseDate?: boolean
+  contractAmount?: boolean
+  targetCostAmount?: boolean
+  estimatedStartDate?: boolean
+  estimatedEndDate?: boolean
+  timingNotes?: boolean
   siteAddress?: boolean
   siteCity?: boolean
   siteState?: boolean
   siteZip?: boolean
   hazardNotes?: boolean
+  nearestER?: boolean
+  nearestERAddress?: boolean
+  assemblyPoint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["project"]>
@@ -1088,11 +1681,20 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   message?: boolean
   notes?: boolean
   attachmentUrl?: boolean
+  estimatedCloseDate?: boolean
+  contractAmount?: boolean
+  targetCostAmount?: boolean
+  estimatedStartDate?: boolean
+  estimatedEndDate?: boolean
+  timingNotes?: boolean
   siteAddress?: boolean
   siteCity?: boolean
   siteState?: boolean
   siteZip?: boolean
   hazardNotes?: boolean
+  nearestER?: boolean
+  nearestERAddress?: boolean
+  assemblyPoint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["project"]>
@@ -1105,17 +1707,27 @@ export type ProjectSelectScalar = {
   message?: boolean
   notes?: boolean
   attachmentUrl?: boolean
+  estimatedCloseDate?: boolean
+  contractAmount?: boolean
+  targetCostAmount?: boolean
+  estimatedStartDate?: boolean
+  estimatedEndDate?: boolean
+  timingNotes?: boolean
   siteAddress?: boolean
   siteCity?: boolean
   siteState?: boolean
   siteZip?: boolean
   hazardNotes?: boolean
+  nearestER?: boolean
+  nearestERAddress?: boolean
+  assemblyPoint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "stage" | "projectType" | "message" | "notes" | "attachmentUrl" | "siteAddress" | "siteCity" | "siteState" | "siteZip" | "hazardNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "stage" | "projectType" | "message" | "notes" | "attachmentUrl" | "estimatedCloseDate" | "contractAmount" | "targetCostAmount" | "estimatedStartDate" | "estimatedEndDate" | "timingNotes" | "siteAddress" | "siteCity" | "siteState" | "siteZip" | "hazardNotes" | "nearestER" | "nearestERAddress" | "assemblyPoint" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
   projectContacts?: boolean | Prisma.Project$projectContactsArgs<ExtArgs>
   projectCompanies?: boolean | Prisma.Project$projectCompaniesArgs<ExtArgs>
   quotes?: boolean | Prisma.Project$quotesArgs<ExtArgs>
@@ -1128,6 +1740,7 @@ export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
+    milestones: Prisma.$MilestonePayload<ExtArgs>[]
     projectContacts: Prisma.$ProjectContactPayload<ExtArgs>[]
     projectCompanies: Prisma.$ProjectCompanyPayload<ExtArgs>[]
     quotes: Prisma.$QuotePayload<ExtArgs>[]
@@ -1141,11 +1754,20 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     message: string | null
     notes: string | null
     attachmentUrl: string | null
+    estimatedCloseDate: Date | null
+    contractAmount: number | null
+    targetCostAmount: number | null
+    estimatedStartDate: Date | null
+    estimatedEndDate: Date | null
+    timingNotes: string | null
     siteAddress: string | null
     siteCity: string | null
     siteState: string | null
     siteZip: string | null
     hazardNotes: string | null
+    nearestER: string | null
+    nearestERAddress: string | null
+    assemblyPoint: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["project"]>
@@ -1542,6 +2164,7 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  milestones<T extends Prisma.Project$milestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projectContacts<T extends Prisma.Project$projectContactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$projectContactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   projectCompanies<T extends Prisma.Project$projectCompaniesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$projectCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   quotes<T extends Prisma.Project$quotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$quotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1582,11 +2205,20 @@ export interface ProjectFieldRefs {
   readonly message: Prisma.FieldRef<"Project", 'String'>
   readonly notes: Prisma.FieldRef<"Project", 'String'>
   readonly attachmentUrl: Prisma.FieldRef<"Project", 'String'>
+  readonly estimatedCloseDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly contractAmount: Prisma.FieldRef<"Project", 'Float'>
+  readonly targetCostAmount: Prisma.FieldRef<"Project", 'Float'>
+  readonly estimatedStartDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly estimatedEndDate: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly timingNotes: Prisma.FieldRef<"Project", 'String'>
   readonly siteAddress: Prisma.FieldRef<"Project", 'String'>
   readonly siteCity: Prisma.FieldRef<"Project", 'String'>
   readonly siteState: Prisma.FieldRef<"Project", 'String'>
   readonly siteZip: Prisma.FieldRef<"Project", 'String'>
   readonly hazardNotes: Prisma.FieldRef<"Project", 'String'>
+  readonly nearestER: Prisma.FieldRef<"Project", 'String'>
+  readonly nearestERAddress: Prisma.FieldRef<"Project", 'String'>
+  readonly assemblyPoint: Prisma.FieldRef<"Project", 'String'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
 }
@@ -1972,6 +2604,30 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Projects to delete.
    */
   limit?: number
+}
+
+/**
+ * Project.milestones
+ */
+export type Project$milestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Milestone
+   */
+  select?: Prisma.MilestoneSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Milestone
+   */
+  omit?: Prisma.MilestoneOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MilestoneInclude<ExtArgs> | null
+  where?: Prisma.MilestoneWhereInput
+  orderBy?: Prisma.MilestoneOrderByWithRelationInput | Prisma.MilestoneOrderByWithRelationInput[]
+  cursor?: Prisma.MilestoneWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MilestoneScalarFieldEnum | Prisma.MilestoneScalarFieldEnum[]
 }
 
 /**

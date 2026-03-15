@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Client: 'Client',
   Quote: 'Quote',
+  Milestone: 'Milestone',
   LineItemSection: 'LineItemSection',
   LineItem: 'LineItem',
   Acceptance: 'Acceptance',
@@ -113,10 +114,27 @@ export const QuoteScalarFieldEnum = {
   projectId: 'projectId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  sentAt: 'sentAt'
+  sentAt: 'sentAt',
+  estimatedDuration: 'estimatedDuration',
+  estimatedStartDate: 'estimatedStartDate'
 } as const
 
 export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const MilestoneScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  name: 'name',
+  plannedDate: 'plannedDate',
+  completedAt: 'completedAt',
+  position: 'position',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MilestoneScalarFieldEnum = (typeof MilestoneScalarFieldEnum)[keyof typeof MilestoneScalarFieldEnum]
 
 
 export const LineItemSectionScalarFieldEnum = {
@@ -164,11 +182,20 @@ export const ProjectScalarFieldEnum = {
   message: 'message',
   notes: 'notes',
   attachmentUrl: 'attachmentUrl',
+  estimatedCloseDate: 'estimatedCloseDate',
+  contractAmount: 'contractAmount',
+  targetCostAmount: 'targetCostAmount',
+  estimatedStartDate: 'estimatedStartDate',
+  estimatedEndDate: 'estimatedEndDate',
+  timingNotes: 'timingNotes',
   siteAddress: 'siteAddress',
   siteCity: 'siteCity',
   siteState: 'siteState',
   siteZip: 'siteZip',
   hazardNotes: 'hazardNotes',
+  nearestER: 'nearestER',
+  nearestERAddress: 'nearestERAddress',
+  assemblyPoint: 'assemblyPoint',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
