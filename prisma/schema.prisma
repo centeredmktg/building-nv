@@ -96,6 +96,9 @@ model Project {
   siteState        String?
   siteZip          String?
   hazardNotes      String?
+  nearestER        String?
+  nearestERAddress String?
+  assemblyPoint    String?
   projectContacts  ProjectContact[]
   projectCompanies ProjectCompany[]
   quotes           Quote[]

@@ -39,6 +39,7 @@ export async function PATCH(
   const allowedFields = [
     "stage", "notes", "hazardNotes",
     "siteAddress", "siteCity", "siteState", "siteZip",
+    "nearestER", "nearestERAddress", "assemblyPoint",
   ];
 
   const data: Record<string, unknown> = {};
