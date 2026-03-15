@@ -9,6 +9,9 @@ const projectTypes = [
   "Medical Suite",
   "Warehouse / Industrial",
   "Suite Renovation",
+  "Kitchen Remodel",
+  "Bathroom Renovation",
+  "Custom Residential Build",
   "Other",
 ];
 
@@ -50,7 +53,7 @@ export default function Contact() {
   };
 
   const inputClass =
-    "w-full bg-surface border border-border rounded-sm px-4 py-3 text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-accent transition-colors";
+    "w-full bg-surface border border-border px-4 py-3 text-text-primary placeholder-text-muted text-sm focus:outline-none focus:border-accent transition-colors";
 
   return (
     <section id="contact" className="py-32 px-6 bg-surface">
@@ -146,7 +149,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full bg-accent text-bg font-semibold py-4 rounded-sm text-sm tracking-wide hover:bg-accent/90 transition-colors disabled:opacity-60"
+                className="w-full bg-accent text-bg font-bold py-4 text-xs tracking-widest uppercase hover:bg-accent/90 transition-colors disabled:opacity-60"
               >
                 {status === "loading" ? "Sending..." : "Send Message"}
               </button>

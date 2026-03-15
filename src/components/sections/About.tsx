@@ -22,10 +22,10 @@ export default function About() {
                 <span className="text-text-muted">We Know Reno.</span>
               </h2>
               <p className="text-text-muted leading-relaxed mb-6">
-                Building NV was built specifically for commercial tenant improvement work. We understand the relationship between property managers, landlords, and tenants — and we operate as a trusted partner across all of them.
+                Building NV does residential and commercial work — custom builds, remodels, and tenant improvement. We understand the relationship between property managers, landlords, tenants, and homeowners, and we operate as a trusted partner across all of them.
               </p>
               <p className="text-text-muted leading-relaxed">
-                Based in Reno, Nevada, we bring local knowledge, reliable crews, and transparent communication to every project. When you work with us, you get a team that picks up the phone.
+                Based in Reno, Nevada. Family owned. We bring local knowledge, reliable crews, and straight communication to every project. When you work with us, you get a team that picks up the phone.
               </p>
             </div>
           </FadeUp>

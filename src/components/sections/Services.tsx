@@ -27,6 +27,12 @@ const services = [
   },
   {
     number: "05",
+    title: "Kitchen & Bathroom Remodels",
+    description:
+      "High-end residential renovations built with the same standard of craft as our commercial work. Clean timelines, honest pricing, and a crew you can trust in your home.",
+  },
+  {
+    number: "06",
     title: "Property Manager Services",
     description:
       "Reliable, repeat-ready TI work for property managers who need a contractor they can trust across their portfolio.",

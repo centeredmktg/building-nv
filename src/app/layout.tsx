@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  axes: ["opsz"],
 });
 
 const geistMono = Geist_Mono({
@@ -14,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Building NV | Commercial Tenant Improvement | Reno, NV",
+  title: "Building NV | General Contractor | Reno, NV",
   description:
-    "Building NV specializes in commercial tenant improvement projects across Reno, Nevada. Office buildouts, retail spaces, medical, and more. Get a quote today.",
+    "Building NV is a Reno, Nevada general contractor specializing in residential builds, remodels, and commercial tenant improvement. We show up, we do the work, we stand behind it.",
 };
 
 export default function RootLayout({
@@ -25,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${geistMono.variable}`}>
       <body className="font-sans bg-bg text-text-primary antialiased">
         <Providers>{children}</Providers>
       </body>
