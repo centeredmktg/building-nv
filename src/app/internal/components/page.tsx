@@ -48,10 +48,17 @@ export default async function ComponentsPage() {
                 {items.map((c) => (
                   <div
                     key={c.id}
-                    className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-6 px-6 py-4"
+                    className="grid grid-cols-[1fr_auto_auto_auto_auto] items-center gap-6 px-6 py-4"
                   >
                     <div>
-                      <p className="text-text-primary font-medium">{c.name}</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-text-primary font-medium">{c.name}</p>
+                        {c.isHazardous && (
+                          <span className="text-xs px-1.5 py-0.5 rounded-sm bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                            HAZ
+                          </span>
+                        )}
+                      </div>
                       <p className="text-text-muted text-sm mt-0.5">
                         {c.vendor.name}
                         {c.vendorSku ? ` · SKU: ${c.vendorSku}` : ""}
@@ -61,6 +68,18 @@ export default async function ComponentsPage() {
                     <p className="text-text-primary font-semibold text-sm tabular-nums">
                       ${c.vendorCost.toFixed(2)}
                     </p>
+                    {c.sdsUrl ? (
+                      <a
+                        href={c.sdsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent text-xs hover:underline"
+                      >
+                        SDS
+                      </a>
+                    ) : (
+                      <span />
+                    )}
                     <Link
                       href={`/internal/components/${c.id}/edit`}
                       className="text-accent text-xs hover:underline"

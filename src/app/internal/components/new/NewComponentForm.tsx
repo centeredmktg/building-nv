@@ -8,8 +8,9 @@ interface Vendor { id: string; name: string }
 export default function NewComponentForm({ vendors }: { vendors: Vendor[] }) {
   const [form, setForm] = useState({
     name: "", description: "", category: "", vendorSku: "",
-    vendorCost: "", unit: "ea", vendorId: "",
+    vendorCost: "", unit: "ea", vendorId: "", sdsUrl: "",
   });
+  const [isHazardous, setIsHazardous] = useState(false);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function NewComponentForm({ vendors }: { vendors: Vendor[] }) {
     const res = await fetch("/api/components", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, vendorCost: parseFloat(form.vendorCost) }),
+      body: JSON.stringify({ ...form, vendorCost: parseFloat(form.vendorCost), isHazardous }),
     });
     if (res.ok) {
       router.push("/internal/components");
@@ -53,6 +54,25 @@ export default function NewComponentForm({ vendors }: { vendors: Vendor[] }) {
         <input placeholder="Vendor Cost * (e.g. 4.50)" required type="number" step="0.01" min="0" value={form.vendorCost} onChange={set("vendorCost")} className={inputClass} />
       </div>
       <textarea placeholder="Description (optional)" rows={3} value={form.description} onChange={set("description")} className={`${inputClass} resize-none`} />
+      <div className="flex flex-col gap-3 pt-1 border-t border-border">
+        <p className="text-text-muted text-xs font-semibold uppercase tracking-widest">Safety Data</p>
+        <input
+          placeholder="SDS URL (optional)"
+          type="url"
+          value={form.sdsUrl}
+          onChange={set("sdsUrl")}
+          className={inputClass}
+        />
+        <label className="flex items-center gap-2 text-sm text-text-primary cursor-pointer">
+          <input
+            type="checkbox"
+            checked={isHazardous}
+            onChange={(e) => setIsHazardous(e.target.checked)}
+            className="accent-accent w-4 h-4"
+          />
+          This component is a hazardous material
+        </label>
+      </div>
       {error && <p className="text-red-400 text-sm">{error}</p>}
       <div className="flex gap-3">
         <button type="submit" disabled={saving} className="bg-accent text-bg font-semibold px-6 py-3 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60">

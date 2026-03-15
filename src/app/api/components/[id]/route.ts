@@ -1,13 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const component = await prisma.component.findUnique({
+    where: { id },
+    include: { vendor: { select: { id: true, name: true } } },
+  });
+  if (!component) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json(component);
+}
+
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
   const body = await req.json();
-  const { name, description, category, vendorSku, vendorCost, unit } = body;
+  const { name, description, category, vendorSku, vendorCost, unit, vendorId, sdsUrl, isHazardous } = body;
 
   const data: Record<string, unknown> = {};
   if (name !== undefined) data.name = name.trim();
@@ -16,8 +29,15 @@ export async function PATCH(
   if (vendorSku !== undefined) data.vendorSku = vendorSku?.trim() || null;
   if (vendorCost !== undefined) data.vendorCost = parseFloat(vendorCost);
   if (unit !== undefined) data.unit = unit?.trim() || "ea";
+  if (vendorId !== undefined) data.vendorId = vendorId;
+  if (sdsUrl !== undefined) data.sdsUrl = sdsUrl?.trim() || null;
+  if (isHazardous !== undefined) data.isHazardous = isHazardous === true;
 
-  const component = await prisma.component.update({ where: { id }, data });
+  const component = await prisma.component.update({
+    where: { id },
+    data,
+    include: { vendor: { select: { id: true, name: true } } },
+  });
   return NextResponse.json(component);
 }
 
@@ -27,5 +47,5 @@ export async function DELETE(
 ) {
   const { id } = await params;
   await prisma.component.delete({ where: { id } });
-  return NextResponse.json({ success: true });
+  return new NextResponse(null, { status: 204 });
 }
