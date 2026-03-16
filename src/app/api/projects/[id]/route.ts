@@ -40,11 +40,21 @@ export async function PATCH(
     "stage", "notes", "hazardNotes",
     "siteAddress", "siteCity", "siteState", "siteZip",
     "nearestER", "nearestERAddress", "assemblyPoint",
+    "contractAmount", "targetCostAmount",
+    "estimatedStartDate", "estimatedEndDate",
+    "timingNotes", "estimatedCloseDate",
   ];
 
   const data: Record<string, unknown> = {};
   for (const field of allowedFields) {
     if (body[field] !== undefined) data[field] = body[field];
+  }
+
+  const dateFields = ["estimatedStartDate", "estimatedEndDate", "estimatedCloseDate"];
+  for (const field of dateFields) {
+    if (data[field] !== undefined && data[field] !== null) {
+      data[field] = new Date(data[field] as string);
+    }
   }
 
   if (Object.keys(data).length === 0) {
