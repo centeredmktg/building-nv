@@ -5,12 +5,14 @@ import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "
 import { CRMProject, JobProject, STAGES, StageId } from "@/lib/crmTypes";
 import KanbanColumn from "./KanbanColumn";
 import LeadPanel from "./LeadPanel";
+import ActivateJobModal from "./ActivateJobModal";
 
 type AnyProject = CRMProject | JobProject;
 
 export default function KanbanBoard({ initialProjects }: { initialProjects: AnyProject[] }) {
   const [projects, setProjects] = useState<AnyProject[]>(initialProjects);
   const [selected, setSelected] = useState<AnyProject | null>(null);
+  const [activating, setActivating] = useState<AnyProject | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
@@ -73,6 +75,7 @@ export default function KanbanBoard({ initialProjects }: { initialProjects: AnyP
                 label={stage.label}
                 projects={projects.filter((p) => p.stage === stage.id)}
                 onCardClick={setSelected}
+                onActivate={setActivating}
               />
             ))}
           </div>
@@ -87,6 +90,15 @@ export default function KanbanBoard({ initialProjects }: { initialProjects: AnyP
           onNotesUpdate={handleNotesUpdate}
           onStageChange={handleStageChange}
           onTargetCostUpdate={handleTargetCostUpdate}
+        />
+      )}
+      {activating && (
+        <ActivateJobModal
+          project={activating}
+          onClose={() => setActivating(null)}
+          onActivated={() => {
+            window.location.href = "/internal/jobs";
+          }}
         />
       )}
     </div>

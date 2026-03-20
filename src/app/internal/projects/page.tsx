@@ -10,6 +10,7 @@ export default async function ProjectsPage() {
       projectContacts: { include: { contact: true } },
       projectCompanies: { include: { company: true } },
       milestones: true,
+      quotes: { where: { status: "accepted" }, include: { sections: { include: { items: true } } } },
     },
     orderBy: { createdAt: "desc" },
   });
