@@ -51,7 +51,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   // Extract just the body content from quoteHtml to embed as Exhibit A
   const quoteBodyContent = quoteHtml
     .replace(/<!DOCTYPE html>[\s\S]*?<body[^>]*>/i, '')
-    .replace(/<\/body>[\s\S]*?<\/html>/i, '');
+    .replace(/<\/body>\s*<\/html>\s*$/i, '');
 
   const exhibitA = `
 <div style="page-break-before:always;">

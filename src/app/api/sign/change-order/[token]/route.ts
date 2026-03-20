@@ -14,19 +14,19 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     return NextResponse.json({ error: 'Invalid token' }, { status: 400 });
   }
 
-  const contract = await prisma.contract.findFirst({
+  const changeOrder = await prisma.changeOrder.findFirst({
     where: { signingToken: token },
-    include: { quote: { include: { client: true } } },
+    include: { contract: { include: { quote: { include: { client: true } } } } },
   });
 
-  if (!contract) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  if (contract.status === 'executed') return NextResponse.json({ error: 'Already signed' }, { status: 409 });
+  if (!changeOrder) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  if (changeOrder.status === 'executed') return NextResponse.json({ error: 'Already signed' }, { status: 409 });
 
-  if (contract.signingTokenExpiresAt && new Date() > contract.signingTokenExpiresAt) {
+  if (changeOrder.signingTokenExpiresAt && new Date() > changeOrder.signingTokenExpiresAt) {
     return NextResponse.json({ error: 'Link expired' }, { status: 410 });
   }
 
-  if (!contract.htmlPath) return NextResponse.json({ error: 'Contract HTML not found' }, { status: 422 });
+  if (!changeOrder.htmlPath) return NextResponse.json({ error: 'Change order HTML not found' }, { status: 422 });
 
   let body: { signature?: string; signerName?: string };
   try {
@@ -44,23 +44,23 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   mkdirSync(docsDir, { recursive: true });
 
   const sigBase64 = body.signature.replace(/^data:image\/png;base64,/, '');
-  const sigPath = path.join(docsDir, `${token}-contract-sig.png`);
+  const sigPath = path.join(docsDir, `${token}-co-sig.png`);
   writeFileSync(sigPath, Buffer.from(sigBase64, 'base64'));
 
-  const contractHtml = readFileSync(contract.htmlPath, 'utf-8');
-  const pdfPath = path.join(docsDir, `${token}-contract-signed.pdf`);
+  const coHtml = readFileSync(changeOrder.htmlPath, 'utf-8');
+  const pdfPath = path.join(docsDir, `${token}-co-signed.pdf`);
 
   try {
-    await generateSignedPDF(contractHtml, pdfPath, body.signature);
+    await generateSignedPDF(coHtml, pdfPath, body.signature);
   } catch (err) {
-    console.error('Contract PDF generation failed:', err);
+    console.error('Change order PDF generation failed:', err);
     return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
   }
 
   const signedAt = new Date();
 
-  await prisma.contract.update({
-    where: { id: contract.id },
+  await prisma.changeOrder.update({
+    where: { id: changeOrder.id },
     data: {
       status: 'executed',
       signerName: body.signerName,
@@ -69,30 +69,24 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
     },
   });
 
-  // Auto-update project stage when contract executed
-  if (contract.projectId) {
-    try {
-      await prisma.project.update({
-        where: { id: contract.projectId },
-        data: { stage: 'contract_signed' },
-      });
-    } catch (err) {
-      console.error('Failed to update project stage:', err);
-    }
-  }
+  // Update contract amount by adding priceDelta
+  await prisma.contract.update({
+    where: { id: changeOrder.contractId },
+    data: { contractAmount: (changeOrder.contract.contractAmount ?? 0) + changeOrder.priceDelta },
+  });
 
   // Send signed PDF (non-blocking)
-  if (contract.quote.client.email) {
+  if (changeOrder.contract.quote.client.email) {
     try {
       await sendSignedPDF({
-        toEmail: contract.quote.client.email,
-        toName: contract.quote.client.name,
-        projectTitle: contract.quote.title,
+        toEmail: changeOrder.contract.quote.client.email,
+        toName: changeOrder.contract.quote.client.name,
+        projectTitle: changeOrder.contract.quote.title,
         signedPdfPath: pdfPath,
-        docLabel: 'Contract',
+        docLabel: 'Change Order',
       });
     } catch (err) {
-      console.error('Email failed after contract signing:', err);
+      console.error('Email failed after change order signing:', err);
     }
   }
 
