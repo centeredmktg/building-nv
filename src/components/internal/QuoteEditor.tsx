@@ -37,12 +37,32 @@ interface Quote {
   estimatedDuration: string | null;
   client: { name: string; company: string };
   sections: Section[];
+  signingToken?: string | null;
+  signedAt?: string | Date | null;
+  signedPdfPath?: string | null;
+  contract?: {
+    id: string;
+    status: string;
+    signedAt?: string | Date | null;
+    signedPdfPath?: string | null;
+    contractAmount?: number | null;
+    changeOrders: Array<{
+      id: string;
+      number: number;
+      title: string;
+      priceDelta: number;
+      status: string;
+      signedAt?: string | Date | null;
+    }>;
+  } | null;
 }
 
 export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
   const [quote, setQuote] = useState(initial);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [signingUrl, setSigningUrl] = useState<string | null>(null);
 
   const allItems = quote.sections.flatMap((s) => s.items);
   const totals = calculateQuoteTotals(
@@ -106,19 +126,31 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
     setTimeout(() => setSaved(false), 2000);
   }, [quote]);
 
-  const markSent = async () => {
-    const link = `${window.location.origin}/proposals/${quote.slug}`;
-    await navigator.clipboard.writeText(link);
-    await fetch(`/api/quotes/${quote.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...quote, status: "sent" }),
-    });
-    setQuote((q) => ({ ...q, status: "sent" }));
-    alert(`Proposal link copied to clipboard:\n${link}`);
+  const sendForSignature = async () => {
+    if (!confirm(`Send signing link to ${quote.client.name}?`)) return;
+    setSending(true);
+    try {
+      const res = await fetch(`/api/quotes/${quote.id}/send`, { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error ?? 'Failed to send signing link');
+        return;
+      }
+      setSigningUrl(data.signingUrl);
+      setQuote((q) => ({ ...q, status: 'sent' }));
+      if (!data.emailSent) {
+        alert(`Email delivery failed. Signing link (copy manually):\n${data.signingUrl}`);
+      } else {
+        alert(`Signing link sent to ${quote.client.name}.\n\nLink: ${data.signingUrl}`);
+      }
+    } finally {
+      setSending(false);
+    }
   };
 
   const inputClass = "bg-transparent border border-transparent hover:border-border focus:border-accent rounded px-2 py-1 text-sm text-text-primary focus:outline-none transition-colors w-full";
+
+  void signingUrl; // used via state; suppress unused warning
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
@@ -138,10 +170,18 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
               className="border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors">
               Preview
             </a>
-            <button onClick={markSent}
-              className="bg-accent text-bg font-semibold px-4 py-2 rounded-sm text-sm hover:bg-accent/90 transition-colors">
-              Send to Client
-            </button>
+            {quote.status === 'draft' || quote.status === 'sent' ? (
+              <button
+                onClick={sendForSignature}
+                disabled={sending}
+                className="bg-accent text-bg font-semibold px-4 py-2 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60"
+              >
+                {sending ? 'Sending...' : quote.status === 'sent' ? 'Resend Link' : 'Send for Signature'}
+              </button>
+            ) : null}
+            {quote.status === 'quote_signed' && !quote.contract ? (
+              <ConvertToContractButton quoteId={quote.id} />
+            ) : null}
           </div>
         </div>
 
@@ -293,15 +333,76 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
 
           <div className="border-t border-border pt-4 flex flex-col gap-2">
             <span className={`text-xs border px-2 py-1 rounded-full text-center uppercase tracking-wide ${
-              quote.status === "accepted" ? "text-green-400 border-green-400" :
-              quote.status === "sent" ? "text-accent border-accent" :
-              "text-text-muted border-border"
+              quote.status === 'quote_signed' ? 'text-green-400 border-green-400' :
+              quote.status === 'sent' ? 'text-accent border-accent' :
+              'text-text-muted border-border'
             }`}>
-              {quote.status}
+              {quote.status === 'quote_signed' ? 'Signed' : quote.status}
             </span>
           </div>
+
+          {/* Document history */}
+          {(quote.signedAt || quote.contract) && (
+            <div className="border-t border-border pt-4 mt-2">
+              <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest mb-3">Documents</h3>
+              <div className="flex flex-col gap-2 text-xs">
+                {quote.signedAt && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-text-muted">Quote signed</span>
+                    <span className="text-green-400">✓ {new Date(quote.signedAt).toLocaleDateString()}</span>
+                  </div>
+                )}
+                {quote.contract && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-text-muted">Contract</span>
+                    <span className={quote.contract.status === 'executed' ? 'text-green-400' : 'text-accent'}>
+                      {quote.contract.status === 'executed' ? '✓ Executed' : quote.contract.status}
+                    </span>
+                  </div>
+                )}
+                {quote.contract?.changeOrders?.map((co) => (
+                  <div key={co.id} className="flex justify-between items-center">
+                    <span className="text-text-muted">CO #{co.number}</span>
+                    <span className={co.status === 'executed' ? 'text-green-400' : 'text-accent'}>
+                      {co.status === 'executed' ? '✓' : co.status} {co.priceDelta >= 0 ? '+' : ''}{co.priceDelta.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
+  );
+}
+
+function ConvertToContractButton({ quoteId }: { quoteId: string }) {
+  const [loading, setLoading] = useState(false);
+
+  const convert = async () => {
+    if (!confirm("Convert this signed quote to a contract?")) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/quotes/${quoteId}/convert-to-contract`, { method: "POST" });
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.error ?? "Failed to create contract");
+        return;
+      }
+      window.location.reload();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={convert}
+      disabled={loading}
+      className="bg-accent text-bg font-semibold px-4 py-2 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60"
+    >
+      {loading ? "Creating..." : "Convert to Contract →"}
+    </button>
   );
 }
