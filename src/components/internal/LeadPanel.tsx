@@ -150,13 +150,13 @@ export default function LeadPanel({
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-text-muted text-xs">Margin $</p>
-                <p className={`text-sm font-medium ${margin && margin.dollars >= 0 ? "text-text-primary" : "text-red-400"}`}>
+                <p className={`text-sm font-medium ${!margin ? "text-text-muted" : margin.dollars >= 0 ? "text-text-primary" : "text-red-400"}`}>
                   {margin != null ? `$${fmt(margin.dollars)}` : "—"}
                 </p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-text-muted text-xs">Margin %</p>
-                <p className={`text-sm font-medium ${margin && margin.percent >= 0 ? "text-text-primary" : "text-red-400"}`}>
+                <p className={`text-sm font-medium ${!margin ? "text-text-muted" : margin.percent >= 0 ? "text-text-primary" : "text-red-400"}`}>
                   {margin != null
                     ? `${fmt(margin.percent, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`
                     : "—"}
