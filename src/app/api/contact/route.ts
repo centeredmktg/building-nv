@@ -73,8 +73,8 @@ export async function POST(req: NextRequest) {
   if (process.env.RESEND_API_KEY) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
-      from: "Building NV <noreply@buildingnv.com>",
-      to: "bids@buildingnv.com",
+      from: process.env.RESEND_FROM ?? "Building NV <noreply@buildingnv.com>",
+      to: process.env.RESEND_TO ?? "bids@buildingnv.com",
       subject: `New Inquiry: ${fullName} — ${projectType ?? "General"}`,
       text: [
         `Name: ${fullName}`,
@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
         `Project Type: ${projectType ?? "—"}`,
         `Message: ${message ?? "—"}`,
         ``,
-        `View in pipeline: https://buildingnv.com/internal/projects`,
+        `View in pipeline: https://buildingnv.us/internal/projects`,
       ].join("\n"),
     });
   }
