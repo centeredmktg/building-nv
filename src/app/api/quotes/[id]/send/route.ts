@@ -35,13 +35,19 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
   const signingUrl = `${baseUrl}/proposals/${token}`;
 
-  await sendSigningLink({
-    toEmail: quote.client.email,
-    toName: quote.client.name,
-    projectTitle: quote.title,
-    signingUrl,
-    docLabel: 'Proposal',
-  });
+  let emailSent = true;
+  try {
+    await sendSigningLink({
+      toEmail: quote.client.email,
+      toName: quote.client.name,
+      projectTitle: quote.title,
+      signingUrl,
+      docLabel: 'Proposal',
+    });
+  } catch (err) {
+    console.error('Failed to send signing link email:', err);
+    emailSent = false;
+  }
 
-  return NextResponse.json({ token, signingUrl });
+  return NextResponse.json({ token, signingUrl, emailSent });
 }

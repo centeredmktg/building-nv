@@ -43,7 +43,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   // Generate signed PDF
   const quoteHtml = renderQuoteHtml(quote);
   const pdfPath = path.join(docsDir, `${token}-signed.pdf`);
-  await generateSignedPDF(quoteHtml, pdfPath, body.signature);
+  try {
+    await generateSignedPDF(quoteHtml, pdfPath, body.signature);
+  } catch (err) {
+    console.error('PDF generation failed:', err);
+    return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
+  }
 
   const signedAt = new Date();
 
