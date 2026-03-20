@@ -334,9 +334,9 @@ export type ClientMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
-export type ClientScalarRelationFilter = {
-  is?: Prisma.ClientWhereInput
-  isNot?: Prisma.ClientWhereInput
+export type ClientNullableScalarRelationFilter = {
+  is?: Prisma.ClientWhereInput | null
+  isNot?: Prisma.ClientWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -357,10 +357,12 @@ export type ClientCreateNestedOneWithoutQuotesInput = {
   connect?: Prisma.ClientWhereUniqueInput
 }
 
-export type ClientUpdateOneRequiredWithoutQuotesNestedInput = {
+export type ClientUpdateOneWithoutQuotesNestedInput = {
   create?: Prisma.XOR<Prisma.ClientCreateWithoutQuotesInput, Prisma.ClientUncheckedCreateWithoutQuotesInput>
   connectOrCreate?: Prisma.ClientCreateOrConnectWithoutQuotesInput
   upsert?: Prisma.ClientUpsertWithoutQuotesInput
+  disconnect?: Prisma.ClientWhereInput | boolean
+  delete?: Prisma.ClientWhereInput | boolean
   connect?: Prisma.ClientWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutQuotesInput, Prisma.ClientUpdateWithoutQuotesInput>, Prisma.ClientUncheckedUpdateWithoutQuotesInput>
 }

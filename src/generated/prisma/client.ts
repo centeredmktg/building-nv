@@ -107,6 +107,16 @@ export type ProjectContact = Prisma.ProjectContactModel
  */
 export type ProjectCompany = Prisma.ProjectCompanyModel
 /**
+ * Model QuoteContact
+ * 
+ */
+export type QuoteContact = Prisma.QuoteContactModel
+/**
+ * Model QuoteCompany
+ * 
+ */
+export type QuoteCompany = Prisma.QuoteCompanyModel
+/**
  * Model Vendor
  * 
  */

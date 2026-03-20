@@ -64,6 +64,8 @@ export const ModelName = {
   Company: 'Company',
   ProjectContact: 'ProjectContact',
   ProjectCompany: 'ProjectCompany',
+  QuoteContact: 'QuoteContact',
+  QuoteCompany: 'QuoteCompany',
   Vendor: 'Vendor',
   Component: 'Component',
   Employee: 'Employee',
@@ -296,6 +298,26 @@ export const ProjectCompanyScalarFieldEnum = {
 } as const
 
 export type ProjectCompanyScalarFieldEnum = (typeof ProjectCompanyScalarFieldEnum)[keyof typeof ProjectCompanyScalarFieldEnum]
+
+
+export const QuoteContactScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  contactId: 'contactId',
+  role: 'role'
+} as const
+
+export type QuoteContactScalarFieldEnum = (typeof QuoteContactScalarFieldEnum)[keyof typeof QuoteContactScalarFieldEnum]
+
+
+export const QuoteCompanyScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  companyId: 'companyId',
+  role: 'role'
+} as const
+
+export type QuoteCompanyScalarFieldEnum = (typeof QuoteCompanyScalarFieldEnum)[keyof typeof QuoteCompanyScalarFieldEnum]
 
 
 export const VendorScalarFieldEnum = {

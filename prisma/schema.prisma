@@ -33,8 +33,10 @@ model Quote {
   paymentTerms      String          @default("10% due at signing. 25% due after materials purchased. Balance due net 30.")
   exclusions        String          @default("Plans. Permit fees. Any work not specifically described above. All valuables and personal property to be removed from work areas prior to work.")
   notes             String?
-  clientId          String
-  client            Client          @relation(fields: [clientId], references: [id])
+  clientId          String?
+  client            Client?         @relation(fields: [clientId], references: [id])
+  quoteContacts     QuoteContact[]
+  quoteCompanies    QuoteCompany[]
   // CRM link — optional until we migrate existing quotes
   projectId         String?
   project           Project?        @relation(fields: [projectId], references: [id])
@@ -184,12 +186,13 @@ model Contact {
   id               String           @id @default(cuid())
   firstName        String
   lastName         String?
-  email            String           @unique
+  email            String?          @unique
   phone            String?
   type             String           @default("customer") // customer | vendor | pm | employee | other
   primaryCompany   Company?         @relation(fields: [primaryCompanyId], references: [id])
   primaryCompanyId String?
   projectContacts  ProjectContact[]
+  quoteContacts    QuoteContact[]
   employee         Employee?
   createdAt        DateTime         @default(now())
 }
@@ -202,6 +205,7 @@ model Company {
   phone            String?
   contacts         Contact[]
   projectCompanies ProjectCompany[]
+  quoteCompanies   QuoteCompany[]
   createdAt        DateTime         @default(now())
 }
 
@@ -223,6 +227,24 @@ model ProjectCompany {
   role      String  @default("customer") // customer | pm | architect | gc | other
 
   @@id([projectId, companyId])
+}
+
+model QuoteContact {
+  id        String  @id @default(cuid())
+  quoteId   String
+  quote     Quote   @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  contactId String
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  role      String  @default("decision_maker") // decision_maker | site_contact | billing_contact
+}
+
+model QuoteCompany {
+  id        String  @id @default(cuid())
+  quoteId   String
+  quote     Quote   @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  role      String  @default("tenant") // tenant | landlord | property_manager | owner
 }
 
 // ─── CPQ: Component Catalog ───────────────────────────────────────────────────

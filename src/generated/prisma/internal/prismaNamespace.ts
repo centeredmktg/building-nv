@@ -397,6 +397,8 @@ export const ModelName = {
   Company: 'Company',
   ProjectContact: 'ProjectContact',
   ProjectCompany: 'ProjectCompany',
+  QuoteContact: 'QuoteContact',
+  QuoteCompany: 'QuoteCompany',
   Vendor: 'Vendor',
   Component: 'Component',
   Employee: 'Employee',
@@ -419,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "client" | "quote" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
+    modelProps: "client" | "quote" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1385,6 +1387,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    QuoteContact: {
+      payload: Prisma.$QuoteContactPayload<ExtArgs>
+      fields: Prisma.QuoteContactFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteContactFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteContactFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteContactFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteContactFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteContactFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteContactCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteContactCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteContactCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteContactDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>
+        }
+        update: {
+          args: Prisma.QuoteContactUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteContactDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteContactUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteContactUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteContactUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteContactPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteContactAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteContact>
+        }
+        groupBy: {
+          args: Prisma.QuoteContactGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteContactGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteContactCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteContactCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuoteCompany: {
+      payload: Prisma.$QuoteCompanyPayload<ExtArgs>
+      fields: Prisma.QuoteCompanyFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteCompanyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteCompanyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteCompanyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteCompanyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>
+        }
+        findMany: {
+          args: Prisma.QuoteCompanyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>[]
+        }
+        create: {
+          args: Prisma.QuoteCompanyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>
+        }
+        createMany: {
+          args: Prisma.QuoteCompanyCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteCompanyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteCompanyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>
+        }
+        update: {
+          args: Prisma.QuoteCompanyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteCompanyDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteCompanyUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteCompanyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteCompanyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteCompanyPayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteCompanyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteCompany>
+        }
+        groupBy: {
+          args: Prisma.QuoteCompanyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteCompanyGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteCompanyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteCompanyCountAggregateOutputType> | number
+        }
+      }
+    }
     Vendor: {
       payload: Prisma.$VendorPayload<ExtArgs>
       fields: Prisma.VendorFieldRefs
@@ -2151,6 +2301,26 @@ export const ProjectCompanyScalarFieldEnum = {
 export type ProjectCompanyScalarFieldEnum = (typeof ProjectCompanyScalarFieldEnum)[keyof typeof ProjectCompanyScalarFieldEnum]
 
 
+export const QuoteContactScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  contactId: 'contactId',
+  role: 'role'
+} as const
+
+export type QuoteContactScalarFieldEnum = (typeof QuoteContactScalarFieldEnum)[keyof typeof QuoteContactScalarFieldEnum]
+
+
+export const QuoteCompanyScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  companyId: 'companyId',
+  role: 'role'
+} as const
+
+export type QuoteCompanyScalarFieldEnum = (typeof QuoteCompanyScalarFieldEnum)[keyof typeof QuoteCompanyScalarFieldEnum]
+
+
 export const VendorScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -2423,6 +2593,8 @@ export type GlobalOmitConfig = {
   company?: Prisma.CompanyOmit
   projectContact?: Prisma.ProjectContactOmit
   projectCompany?: Prisma.ProjectCompanyOmit
+  quoteContact?: Prisma.QuoteContactOmit
+  quoteCompany?: Prisma.QuoteCompanyOmit
   vendor?: Prisma.VendorOmit
   component?: Prisma.ComponentOmit
   employee?: Prisma.EmployeeOmit
