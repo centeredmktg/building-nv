@@ -30,6 +30,7 @@ export type AcceptanceMinAggregateOutputType = {
   acceptedAt: Date | null
   ipAddress: string | null
   quoteId: string | null
+  signaturePngPath: string | null
 }
 
 export type AcceptanceMaxAggregateOutputType = {
@@ -38,6 +39,7 @@ export type AcceptanceMaxAggregateOutputType = {
   acceptedAt: Date | null
   ipAddress: string | null
   quoteId: string | null
+  signaturePngPath: string | null
 }
 
 export type AcceptanceCountAggregateOutputType = {
@@ -46,6 +48,7 @@ export type AcceptanceCountAggregateOutputType = {
   acceptedAt: number
   ipAddress: number
   quoteId: number
+  signaturePngPath: number
   _all: number
 }
 
@@ -56,6 +59,7 @@ export type AcceptanceMinAggregateInputType = {
   acceptedAt?: true
   ipAddress?: true
   quoteId?: true
+  signaturePngPath?: true
 }
 
 export type AcceptanceMaxAggregateInputType = {
@@ -64,6 +68,7 @@ export type AcceptanceMaxAggregateInputType = {
   acceptedAt?: true
   ipAddress?: true
   quoteId?: true
+  signaturePngPath?: true
 }
 
 export type AcceptanceCountAggregateInputType = {
@@ -72,6 +77,7 @@ export type AcceptanceCountAggregateInputType = {
   acceptedAt?: true
   ipAddress?: true
   quoteId?: true
+  signaturePngPath?: true
   _all?: true
 }
 
@@ -153,6 +159,7 @@ export type AcceptanceGroupByOutputType = {
   acceptedAt: Date
   ipAddress: string | null
   quoteId: string
+  signaturePngPath: string | null
   _count: AcceptanceCountAggregateOutputType | null
   _min: AcceptanceMinAggregateOutputType | null
   _max: AcceptanceMaxAggregateOutputType | null
@@ -182,6 +189,7 @@ export type AcceptanceWhereInput = {
   acceptedAt?: Prisma.DateTimeFilter<"Acceptance"> | Date | string
   ipAddress?: Prisma.StringNullableFilter<"Acceptance"> | string | null
   quoteId?: Prisma.StringFilter<"Acceptance"> | string
+  signaturePngPath?: Prisma.StringNullableFilter<"Acceptance"> | string | null
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
 }
 
@@ -191,6 +199,7 @@ export type AcceptanceOrderByWithRelationInput = {
   acceptedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  signaturePngPath?: Prisma.SortOrderInput | Prisma.SortOrder
   quote?: Prisma.QuoteOrderByWithRelationInput
 }
 
@@ -203,6 +212,7 @@ export type AcceptanceWhereUniqueInput = Prisma.AtLeast<{
   signerName?: Prisma.StringFilter<"Acceptance"> | string
   acceptedAt?: Prisma.DateTimeFilter<"Acceptance"> | Date | string
   ipAddress?: Prisma.StringNullableFilter<"Acceptance"> | string | null
+  signaturePngPath?: Prisma.StringNullableFilter<"Acceptance"> | string | null
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
 }, "id" | "quoteId">
 
@@ -212,6 +222,7 @@ export type AcceptanceOrderByWithAggregationInput = {
   acceptedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  signaturePngPath?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AcceptanceCountOrderByAggregateInput
   _max?: Prisma.AcceptanceMaxOrderByAggregateInput
   _min?: Prisma.AcceptanceMinOrderByAggregateInput
@@ -226,6 +237,7 @@ export type AcceptanceScalarWhereWithAggregatesInput = {
   acceptedAt?: Prisma.DateTimeWithAggregatesFilter<"Acceptance"> | Date | string
   ipAddress?: Prisma.StringNullableWithAggregatesFilter<"Acceptance"> | string | null
   quoteId?: Prisma.StringWithAggregatesFilter<"Acceptance"> | string
+  signaturePngPath?: Prisma.StringNullableWithAggregatesFilter<"Acceptance"> | string | null
 }
 
 export type AcceptanceCreateInput = {
@@ -233,6 +245,7 @@ export type AcceptanceCreateInput = {
   signerName: string
   acceptedAt?: Date | string
   ipAddress?: string | null
+  signaturePngPath?: string | null
   quote: Prisma.QuoteCreateNestedOneWithoutAcceptanceInput
 }
 
@@ -242,6 +255,7 @@ export type AcceptanceUncheckedCreateInput = {
   acceptedAt?: Date | string
   ipAddress?: string | null
   quoteId: string
+  signaturePngPath?: string | null
 }
 
 export type AcceptanceUpdateInput = {
@@ -249,6 +263,7 @@ export type AcceptanceUpdateInput = {
   signerName?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePngPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quote?: Prisma.QuoteUpdateOneRequiredWithoutAcceptanceNestedInput
 }
 
@@ -258,6 +273,7 @@ export type AcceptanceUncheckedUpdateInput = {
   acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  signaturePngPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AcceptanceCreateManyInput = {
@@ -266,6 +282,7 @@ export type AcceptanceCreateManyInput = {
   acceptedAt?: Date | string
   ipAddress?: string | null
   quoteId: string
+  signaturePngPath?: string | null
 }
 
 export type AcceptanceUpdateManyMutationInput = {
@@ -273,6 +290,7 @@ export type AcceptanceUpdateManyMutationInput = {
   signerName?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePngPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AcceptanceUncheckedUpdateManyInput = {
@@ -281,6 +299,7 @@ export type AcceptanceUncheckedUpdateManyInput = {
   acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quoteId?: Prisma.StringFieldUpdateOperationsInput | string
+  signaturePngPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AcceptanceNullableScalarRelationFilter = {
@@ -294,6 +313,7 @@ export type AcceptanceCountOrderByAggregateInput = {
   acceptedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  signaturePngPath?: Prisma.SortOrder
 }
 
 export type AcceptanceMaxOrderByAggregateInput = {
@@ -302,6 +322,7 @@ export type AcceptanceMaxOrderByAggregateInput = {
   acceptedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  signaturePngPath?: Prisma.SortOrder
 }
 
 export type AcceptanceMinOrderByAggregateInput = {
@@ -310,6 +331,7 @@ export type AcceptanceMinOrderByAggregateInput = {
   acceptedAt?: Prisma.SortOrder
   ipAddress?: Prisma.SortOrder
   quoteId?: Prisma.SortOrder
+  signaturePngPath?: Prisma.SortOrder
 }
 
 export type AcceptanceCreateNestedOneWithoutQuoteInput = {
@@ -349,6 +371,7 @@ export type AcceptanceCreateWithoutQuoteInput = {
   signerName: string
   acceptedAt?: Date | string
   ipAddress?: string | null
+  signaturePngPath?: string | null
 }
 
 export type AcceptanceUncheckedCreateWithoutQuoteInput = {
@@ -356,6 +379,7 @@ export type AcceptanceUncheckedCreateWithoutQuoteInput = {
   signerName: string
   acceptedAt?: Date | string
   ipAddress?: string | null
+  signaturePngPath?: string | null
 }
 
 export type AcceptanceCreateOrConnectWithoutQuoteInput = {
@@ -379,6 +403,7 @@ export type AcceptanceUpdateWithoutQuoteInput = {
   signerName?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePngPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type AcceptanceUncheckedUpdateWithoutQuoteInput = {
@@ -386,6 +411,7 @@ export type AcceptanceUncheckedUpdateWithoutQuoteInput = {
   signerName?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ipAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePngPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -396,6 +422,7 @@ export type AcceptanceSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   acceptedAt?: boolean
   ipAddress?: boolean
   quoteId?: boolean
+  signaturePngPath?: boolean
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["acceptance"]>
 
@@ -405,6 +432,7 @@ export type AcceptanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   acceptedAt?: boolean
   ipAddress?: boolean
   quoteId?: boolean
+  signaturePngPath?: boolean
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["acceptance"]>
 
@@ -414,6 +442,7 @@ export type AcceptanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   acceptedAt?: boolean
   ipAddress?: boolean
   quoteId?: boolean
+  signaturePngPath?: boolean
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["acceptance"]>
 
@@ -423,9 +452,10 @@ export type AcceptanceSelectScalar = {
   acceptedAt?: boolean
   ipAddress?: boolean
   quoteId?: boolean
+  signaturePngPath?: boolean
 }
 
-export type AcceptanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "signerName" | "acceptedAt" | "ipAddress" | "quoteId", ExtArgs["result"]["acceptance"]>
+export type AcceptanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "signerName" | "acceptedAt" | "ipAddress" | "quoteId" | "signaturePngPath", ExtArgs["result"]["acceptance"]>
 export type AcceptanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
 }
@@ -447,6 +477,7 @@ export type $AcceptancePayload<ExtArgs extends runtime.Types.Extensions.Internal
     acceptedAt: Date
     ipAddress: string | null
     quoteId: string
+    signaturePngPath: string | null
   }, ExtArgs["result"]["acceptance"]>
   composites: {}
 }
@@ -876,6 +907,7 @@ export interface AcceptanceFieldRefs {
   readonly acceptedAt: Prisma.FieldRef<"Acceptance", 'DateTime'>
   readonly ipAddress: Prisma.FieldRef<"Acceptance", 'String'>
   readonly quoteId: Prisma.FieldRef<"Acceptance", 'String'>
+  readonly signaturePngPath: Prisma.FieldRef<"Acceptance", 'String'>
 }
     
 

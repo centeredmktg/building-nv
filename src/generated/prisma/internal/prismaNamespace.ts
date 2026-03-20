@@ -390,6 +390,8 @@ export const ModelName = {
   LineItemSection: 'LineItemSection',
   LineItem: 'LineItem',
   Acceptance: 'Acceptance',
+  Contract: 'Contract',
+  ChangeOrder: 'ChangeOrder',
   Project: 'Project',
   Contact: 'Contact',
   Company: 'Company',
@@ -417,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "client" | "quote" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
+    modelProps: "client" | "quote" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -862,6 +864,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AcceptanceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AcceptanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    Contract: {
+      payload: Prisma.$ContractPayload<ExtArgs>
+      fields: Prisma.ContractFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ContractFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ContractFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>
+        }
+        findFirst: {
+          args: Prisma.ContractFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ContractFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>
+        }
+        findMany: {
+          args: Prisma.ContractFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>[]
+        }
+        create: {
+          args: Prisma.ContractCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>
+        }
+        createMany: {
+          args: Prisma.ContractCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ContractCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>[]
+        }
+        delete: {
+          args: Prisma.ContractDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>
+        }
+        update: {
+          args: Prisma.ContractUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>
+        }
+        deleteMany: {
+          args: Prisma.ContractDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ContractUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ContractUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>[]
+        }
+        upsert: {
+          args: Prisma.ContractUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContractPayload>
+        }
+        aggregate: {
+          args: Prisma.ContractAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateContract>
+        }
+        groupBy: {
+          args: Prisma.ContractGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContractGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ContractCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContractCountAggregateOutputType> | number
+        }
+      }
+    }
+    ChangeOrder: {
+      payload: Prisma.$ChangeOrderPayload<ExtArgs>
+      fields: Prisma.ChangeOrderFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChangeOrderFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChangeOrderFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>
+        }
+        findFirst: {
+          args: Prisma.ChangeOrderFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChangeOrderFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>
+        }
+        findMany: {
+          args: Prisma.ChangeOrderFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>[]
+        }
+        create: {
+          args: Prisma.ChangeOrderCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>
+        }
+        createMany: {
+          args: Prisma.ChangeOrderCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChangeOrderCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>[]
+        }
+        delete: {
+          args: Prisma.ChangeOrderDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>
+        }
+        update: {
+          args: Prisma.ChangeOrderUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChangeOrderDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChangeOrderUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChangeOrderUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChangeOrderUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChangeOrderPayload>
+        }
+        aggregate: {
+          args: Prisma.ChangeOrderAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChangeOrder>
+        }
+        groupBy: {
+          args: Prisma.ChangeOrderGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChangeOrderGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChangeOrderCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChangeOrderCountAggregateOutputType> | number
         }
       }
     }
@@ -1817,6 +1967,10 @@ export const QuoteScalarFieldEnum = {
   notes: 'notes',
   clientId: 'clientId',
   projectId: 'projectId',
+  signingToken: 'signingToken',
+  signingTokenExpiresAt: 'signingTokenExpiresAt',
+  signedAt: 'signedAt',
+  signedPdfPath: 'signedPdfPath',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   sentAt: 'sentAt',
@@ -1873,10 +2027,53 @@ export const AcceptanceScalarFieldEnum = {
   signerName: 'signerName',
   acceptedAt: 'acceptedAt',
   ipAddress: 'ipAddress',
-  quoteId: 'quoteId'
+  quoteId: 'quoteId',
+  signaturePngPath: 'signaturePngPath'
 } as const
 
 export type AcceptanceScalarFieldEnum = (typeof AcceptanceScalarFieldEnum)[keyof typeof AcceptanceScalarFieldEnum]
+
+
+export const ContractScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  projectId: 'projectId',
+  status: 'status',
+  htmlPath: 'htmlPath',
+  contractAmount: 'contractAmount',
+  signingToken: 'signingToken',
+  signingTokenExpiresAt: 'signingTokenExpiresAt',
+  signerName: 'signerName',
+  signedAt: 'signedAt',
+  signedPdfPath: 'signedPdfPath',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContractScalarFieldEnum = (typeof ContractScalarFieldEnum)[keyof typeof ContractScalarFieldEnum]
+
+
+export const ChangeOrderScalarFieldEnum = {
+  id: 'id',
+  contractId: 'contractId',
+  number: 'number',
+  title: 'title',
+  scopeDelta: 'scopeDelta',
+  priceDelta: 'priceDelta',
+  status: 'status',
+  htmlPath: 'htmlPath',
+  signingToken: 'signingToken',
+  signingTokenExpiresAt: 'signingTokenExpiresAt',
+  signerName: 'signerName',
+  signedAt: 'signedAt',
+  signedPdfPath: 'signedPdfPath',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChangeOrderScalarFieldEnum = (typeof ChangeOrderScalarFieldEnum)[keyof typeof ChangeOrderScalarFieldEnum]
 
 
 export const ProjectScalarFieldEnum = {
@@ -2217,6 +2414,8 @@ export type GlobalOmitConfig = {
   lineItemSection?: Prisma.LineItemSectionOmit
   lineItem?: Prisma.LineItemOmit
   acceptance?: Prisma.AcceptanceOmit
+  contract?: Prisma.ContractOmit
+  changeOrder?: Prisma.ChangeOrderOmit
   project?: Prisma.ProjectOmit
   contact?: Prisma.ContactOmit
   company?: Prisma.CompanyOmit

@@ -72,6 +72,16 @@ export type LineItem = Prisma.LineItemModel
  */
 export type Acceptance = Prisma.AcceptanceModel
 /**
+ * Model Contract
+ * 
+ */
+export type Contract = Prisma.ContractModel
+/**
+ * Model ChangeOrder
+ * 
+ */
+export type ChangeOrder = Prisma.ChangeOrderModel
+/**
  * Model Project
  * 
  */

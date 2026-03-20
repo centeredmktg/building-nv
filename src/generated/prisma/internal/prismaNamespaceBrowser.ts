@@ -57,6 +57,8 @@ export const ModelName = {
   LineItemSection: 'LineItemSection',
   LineItem: 'LineItem',
   Acceptance: 'Acceptance',
+  Contract: 'Contract',
+  ChangeOrder: 'ChangeOrder',
   Project: 'Project',
   Contact: 'Contact',
   Company: 'Company',
@@ -112,6 +114,10 @@ export const QuoteScalarFieldEnum = {
   notes: 'notes',
   clientId: 'clientId',
   projectId: 'projectId',
+  signingToken: 'signingToken',
+  signingTokenExpiresAt: 'signingTokenExpiresAt',
+  signedAt: 'signedAt',
+  signedPdfPath: 'signedPdfPath',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   sentAt: 'sentAt',
@@ -168,10 +174,53 @@ export const AcceptanceScalarFieldEnum = {
   signerName: 'signerName',
   acceptedAt: 'acceptedAt',
   ipAddress: 'ipAddress',
-  quoteId: 'quoteId'
+  quoteId: 'quoteId',
+  signaturePngPath: 'signaturePngPath'
 } as const
 
 export type AcceptanceScalarFieldEnum = (typeof AcceptanceScalarFieldEnum)[keyof typeof AcceptanceScalarFieldEnum]
+
+
+export const ContractScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  projectId: 'projectId',
+  status: 'status',
+  htmlPath: 'htmlPath',
+  contractAmount: 'contractAmount',
+  signingToken: 'signingToken',
+  signingTokenExpiresAt: 'signingTokenExpiresAt',
+  signerName: 'signerName',
+  signedAt: 'signedAt',
+  signedPdfPath: 'signedPdfPath',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContractScalarFieldEnum = (typeof ContractScalarFieldEnum)[keyof typeof ContractScalarFieldEnum]
+
+
+export const ChangeOrderScalarFieldEnum = {
+  id: 'id',
+  contractId: 'contractId',
+  number: 'number',
+  title: 'title',
+  scopeDelta: 'scopeDelta',
+  priceDelta: 'priceDelta',
+  status: 'status',
+  htmlPath: 'htmlPath',
+  signingToken: 'signingToken',
+  signingTokenExpiresAt: 'signingTokenExpiresAt',
+  signerName: 'signerName',
+  signedAt: 'signedAt',
+  signedPdfPath: 'signedPdfPath',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChangeOrderScalarFieldEnum = (typeof ChangeOrderScalarFieldEnum)[keyof typeof ChangeOrderScalarFieldEnum]
 
 
 export const ProjectScalarFieldEnum = {

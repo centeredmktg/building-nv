@@ -54,6 +54,10 @@ export type QuoteMinAggregateOutputType = {
   notes: string | null
   clientId: string | null
   projectId: string | null
+  signingToken: string | null
+  signingTokenExpiresAt: Date | null
+  signedAt: Date | null
+  signedPdfPath: string | null
   createdAt: Date | null
   updatedAt: Date | null
   sentAt: Date | null
@@ -77,6 +81,10 @@ export type QuoteMaxAggregateOutputType = {
   notes: string | null
   clientId: string | null
   projectId: string | null
+  signingToken: string | null
+  signingTokenExpiresAt: Date | null
+  signedAt: Date | null
+  signedPdfPath: string | null
   createdAt: Date | null
   updatedAt: Date | null
   sentAt: Date | null
@@ -100,6 +108,10 @@ export type QuoteCountAggregateOutputType = {
   notes: number
   clientId: number
   projectId: number
+  signingToken: number
+  signingTokenExpiresAt: number
+  signedAt: number
+  signedPdfPath: number
   createdAt: number
   updatedAt: number
   sentAt: number
@@ -137,6 +149,10 @@ export type QuoteMinAggregateInputType = {
   notes?: true
   clientId?: true
   projectId?: true
+  signingToken?: true
+  signingTokenExpiresAt?: true
+  signedAt?: true
+  signedPdfPath?: true
   createdAt?: true
   updatedAt?: true
   sentAt?: true
@@ -160,6 +176,10 @@ export type QuoteMaxAggregateInputType = {
   notes?: true
   clientId?: true
   projectId?: true
+  signingToken?: true
+  signingTokenExpiresAt?: true
+  signedAt?: true
+  signedPdfPath?: true
   createdAt?: true
   updatedAt?: true
   sentAt?: true
@@ -183,6 +203,10 @@ export type QuoteCountAggregateInputType = {
   notes?: true
   clientId?: true
   projectId?: true
+  signingToken?: true
+  signingTokenExpiresAt?: true
+  signedAt?: true
+  signedPdfPath?: true
   createdAt?: true
   updatedAt?: true
   sentAt?: true
@@ -293,6 +317,10 @@ export type QuoteGroupByOutputType = {
   notes: string | null
   clientId: string
   projectId: string | null
+  signingToken: string | null
+  signingTokenExpiresAt: Date | null
+  signedAt: Date | null
+  signedPdfPath: string | null
   createdAt: Date
   updatedAt: Date
   sentAt: Date | null
@@ -339,6 +367,10 @@ export type QuoteWhereInput = {
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   clientId?: Prisma.StringFilter<"Quote"> | string
   projectId?: Prisma.StringNullableFilter<"Quote"> | string | null
+  signingToken?: Prisma.StringNullableFilter<"Quote"> | string | null
+  signingTokenExpiresAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  signedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  signedPdfPath?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -348,6 +380,7 @@ export type QuoteWhereInput = {
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   sections?: Prisma.LineItemSectionListRelationFilter
   acceptance?: Prisma.XOR<Prisma.AcceptanceNullableScalarRelationFilter, Prisma.AcceptanceWhereInput> | null
+  contract?: Prisma.XOR<Prisma.ContractNullableScalarRelationFilter, Prisma.ContractWhereInput> | null
 }
 
 export type QuoteOrderByWithRelationInput = {
@@ -366,6 +399,10 @@ export type QuoteOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrder
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  signingToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  signingTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  signedPdfPath?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -375,11 +412,13 @@ export type QuoteOrderByWithRelationInput = {
   project?: Prisma.ProjectOrderByWithRelationInput
   sections?: Prisma.LineItemSectionOrderByRelationAggregateInput
   acceptance?: Prisma.AcceptanceOrderByWithRelationInput
+  contract?: Prisma.ContractOrderByWithRelationInput
 }
 
 export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   slug?: string
+  signingToken?: string
   AND?: Prisma.QuoteWhereInput | Prisma.QuoteWhereInput[]
   OR?: Prisma.QuoteWhereInput[]
   NOT?: Prisma.QuoteWhereInput | Prisma.QuoteWhereInput[]
@@ -396,6 +435,9 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   clientId?: Prisma.StringFilter<"Quote"> | string
   projectId?: Prisma.StringNullableFilter<"Quote"> | string | null
+  signingTokenExpiresAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  signedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  signedPdfPath?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -405,7 +447,8 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
   sections?: Prisma.LineItemSectionListRelationFilter
   acceptance?: Prisma.XOR<Prisma.AcceptanceNullableScalarRelationFilter, Prisma.AcceptanceWhereInput> | null
-}, "id" | "slug">
+  contract?: Prisma.XOR<Prisma.ContractNullableScalarRelationFilter, Prisma.ContractWhereInput> | null
+}, "id" | "slug" | "signingToken">
 
 export type QuoteOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -423,6 +466,10 @@ export type QuoteOrderByWithAggregationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   clientId?: Prisma.SortOrder
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  signingToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  signingTokenExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  signedPdfPath?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -454,6 +501,10 @@ export type QuoteScalarWhereWithAggregatesInput = {
   notes?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   clientId?: Prisma.StringWithAggregatesFilter<"Quote"> | string
   projectId?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
+  signingToken?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
+  signingTokenExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
+  signedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
+  signedPdfPath?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Quote"> | Date | string | null
@@ -475,6 +526,10 @@ export type QuoteCreateInput = {
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -484,6 +539,7 @@ export type QuoteCreateInput = {
   project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateInput = {
@@ -502,6 +558,10 @@ export type QuoteUncheckedCreateInput = {
   notes?: string | null
   clientId: string
   projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -509,6 +569,7 @@ export type QuoteUncheckedCreateInput = {
   estimatedStartDate?: Date | string | null
   sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteUpdateInput = {
@@ -525,6 +586,10 @@ export type QuoteUpdateInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -534,6 +599,7 @@ export type QuoteUpdateInput = {
   project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateInput = {
@@ -552,6 +618,10 @@ export type QuoteUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -559,6 +629,7 @@ export type QuoteUncheckedUpdateInput = {
   estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteCreateManyInput = {
@@ -577,6 +648,10 @@ export type QuoteCreateManyInput = {
   notes?: string | null
   clientId: string
   projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -598,6 +673,10 @@ export type QuoteUpdateManyMutationInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -621,6 +700,10 @@ export type QuoteUncheckedUpdateManyInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -654,6 +737,10 @@ export type QuoteCountOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  signingToken?: Prisma.SortOrder
+  signingTokenExpiresAt?: Prisma.SortOrder
+  signedAt?: Prisma.SortOrder
+  signedPdfPath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -683,6 +770,10 @@ export type QuoteMaxOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  signingToken?: Prisma.SortOrder
+  signingTokenExpiresAt?: Prisma.SortOrder
+  signedAt?: Prisma.SortOrder
+  signedPdfPath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -706,6 +797,10 @@ export type QuoteMinOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  signingToken?: Prisma.SortOrder
+  signingTokenExpiresAt?: Prisma.SortOrder
+  signedAt?: Prisma.SortOrder
+  signedPdfPath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
@@ -806,6 +901,20 @@ export type QuoteUpdateOneRequiredWithoutAcceptanceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutAcceptanceInput, Prisma.QuoteUpdateWithoutAcceptanceInput>, Prisma.QuoteUncheckedUpdateWithoutAcceptanceInput>
 }
 
+export type QuoteCreateNestedOneWithoutContractInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutContractInput, Prisma.QuoteUncheckedCreateWithoutContractInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutContractInput
+  connect?: Prisma.QuoteWhereUniqueInput
+}
+
+export type QuoteUpdateOneRequiredWithoutContractNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutContractInput, Prisma.QuoteUncheckedCreateWithoutContractInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutContractInput
+  upsert?: Prisma.QuoteUpsertWithoutContractInput
+  connect?: Prisma.QuoteWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutContractInput, Prisma.QuoteUpdateWithoutContractInput>, Prisma.QuoteUncheckedUpdateWithoutContractInput>
+}
+
 export type QuoteCreateNestedManyWithoutProjectInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutProjectInput, Prisma.QuoteUncheckedCreateWithoutProjectInput> | Prisma.QuoteCreateWithoutProjectInput[] | Prisma.QuoteUncheckedCreateWithoutProjectInput[]
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutProjectInput | Prisma.QuoteCreateOrConnectWithoutProjectInput[]
@@ -862,6 +971,10 @@ export type QuoteCreateWithoutClientInput = {
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -870,6 +983,7 @@ export type QuoteCreateWithoutClientInput = {
   project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutClientInput = {
@@ -887,6 +1001,10 @@ export type QuoteUncheckedCreateWithoutClientInput = {
   exclusions?: string
   notes?: string | null
   projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -894,6 +1012,7 @@ export type QuoteUncheckedCreateWithoutClientInput = {
   estimatedStartDate?: Date | string | null
   sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutClientInput = {
@@ -940,6 +1059,10 @@ export type QuoteScalarWhereInput = {
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
   clientId?: Prisma.StringFilter<"Quote"> | string
   projectId?: Prisma.StringNullableFilter<"Quote"> | string | null
+  signingToken?: Prisma.StringNullableFilter<"Quote"> | string | null
+  signingTokenExpiresAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  signedAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
+  signedPdfPath?: Prisma.StringNullableFilter<"Quote"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Quote"> | Date | string
   sentAt?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
@@ -961,6 +1084,10 @@ export type QuoteCreateWithoutSectionsInput = {
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -969,6 +1096,7 @@ export type QuoteCreateWithoutSectionsInput = {
   client: Prisma.ClientCreateNestedOneWithoutQuotesInput
   project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutSectionsInput = {
@@ -987,12 +1115,17 @@ export type QuoteUncheckedCreateWithoutSectionsInput = {
   notes?: string | null
   clientId: string
   projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
   estimatedDuration?: string | null
   estimatedStartDate?: Date | string | null
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutSectionsInput = {
@@ -1025,6 +1158,10 @@ export type QuoteUpdateWithoutSectionsInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1033,6 +1170,7 @@ export type QuoteUpdateWithoutSectionsInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutSectionsInput = {
@@ -1051,12 +1189,17 @@ export type QuoteUncheckedUpdateWithoutSectionsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estimatedDuration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutAcceptanceInput = {
@@ -1073,6 +1216,10 @@ export type QuoteCreateWithoutAcceptanceInput = {
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -1081,6 +1228,7 @@ export type QuoteCreateWithoutAcceptanceInput = {
   client: Prisma.ClientCreateNestedOneWithoutQuotesInput
   project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
+  contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutAcceptanceInput = {
@@ -1099,12 +1247,17 @@ export type QuoteUncheckedCreateWithoutAcceptanceInput = {
   notes?: string | null
   clientId: string
   projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
   estimatedDuration?: string | null
   estimatedStartDate?: Date | string | null
   sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
+  contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutAcceptanceInput = {
@@ -1137,6 +1290,10 @@ export type QuoteUpdateWithoutAcceptanceInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1145,6 +1302,7 @@ export type QuoteUpdateWithoutAcceptanceInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
   project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
+  contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutAcceptanceInput = {
@@ -1163,12 +1321,149 @@ export type QuoteUncheckedUpdateWithoutAcceptanceInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   estimatedDuration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
+  contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
+}
+
+export type QuoteCreateWithoutContractInput = {
+  id?: string
+  slug: string
+  title: string
+  address: string
+  projectType: string
+  status?: string
+  scopeText?: string | null
+  materialMarkupPct?: number
+  overheadPct?: number
+  profitPct?: number
+  paymentTerms?: string
+  exclusions?: string
+  notes?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sentAt?: Date | string | null
+  estimatedDuration?: string | null
+  estimatedStartDate?: Date | string | null
+  client: Prisma.ClientCreateNestedOneWithoutQuotesInput
+  project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
+  sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
+  acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutContractInput = {
+  id?: string
+  slug: string
+  title: string
+  address: string
+  projectType: string
+  status?: string
+  scopeText?: string | null
+  materialMarkupPct?: number
+  overheadPct?: number
+  profitPct?: number
+  paymentTerms?: string
+  exclusions?: string
+  notes?: string | null
+  clientId: string
+  projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sentAt?: Date | string | null
+  estimatedDuration?: string | null
+  estimatedStartDate?: Date | string | null
+  sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
+  acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutContractInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutContractInput, Prisma.QuoteUncheckedCreateWithoutContractInput>
+}
+
+export type QuoteUpsertWithoutContractInput = {
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutContractInput, Prisma.QuoteUncheckedUpdateWithoutContractInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutContractInput, Prisma.QuoteUncheckedCreateWithoutContractInput>
+  where?: Prisma.QuoteWhereInput
+}
+
+export type QuoteUpdateToOneWithWhereWithoutContractInput = {
+  where?: Prisma.QuoteWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutContractInput, Prisma.QuoteUncheckedUpdateWithoutContractInput>
+}
+
+export type QuoteUpdateWithoutContractInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusions?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDuration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
+  project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
+  sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
+  acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutContractInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusions?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDuration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
+  acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutProjectInput = {
@@ -1185,6 +1480,10 @@ export type QuoteCreateWithoutProjectInput = {
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -1193,6 +1492,7 @@ export type QuoteCreateWithoutProjectInput = {
   client: Prisma.ClientCreateNestedOneWithoutQuotesInput
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutProjectInput = {
@@ -1210,6 +1510,10 @@ export type QuoteUncheckedCreateWithoutProjectInput = {
   exclusions?: string
   notes?: string | null
   clientId: string
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -1217,6 +1521,7 @@ export type QuoteUncheckedCreateWithoutProjectInput = {
   estimatedStartDate?: Date | string | null
   sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutProjectInput = {
@@ -1259,6 +1564,10 @@ export type QuoteCreateManyClientInput = {
   exclusions?: string
   notes?: string | null
   projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -1280,6 +1589,10 @@ export type QuoteUpdateWithoutClientInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1288,6 +1601,7 @@ export type QuoteUpdateWithoutClientInput = {
   project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutClientInput = {
@@ -1305,6 +1619,10 @@ export type QuoteUncheckedUpdateWithoutClientInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1312,6 +1630,7 @@ export type QuoteUncheckedUpdateWithoutClientInput = {
   estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutClientInput = {
@@ -1329,6 +1648,10 @@ export type QuoteUncheckedUpdateManyWithoutClientInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1351,6 +1674,10 @@ export type QuoteCreateManyProjectInput = {
   exclusions?: string
   notes?: string | null
   clientId: string
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   sentAt?: Date | string | null
@@ -1372,6 +1699,10 @@ export type QuoteUpdateWithoutProjectInput = {
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1380,6 +1711,7 @@ export type QuoteUpdateWithoutProjectInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutQuotesNestedInput
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutProjectInput = {
@@ -1397,6 +1729,10 @@ export type QuoteUncheckedUpdateWithoutProjectInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1404,6 +1740,7 @@ export type QuoteUncheckedUpdateWithoutProjectInput = {
   estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutProjectInput = {
@@ -1421,6 +1758,10 @@ export type QuoteUncheckedUpdateManyWithoutProjectInput = {
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1475,6 +1816,10 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   notes?: boolean
   clientId?: boolean
   projectId?: boolean
+  signingToken?: boolean
+  signingTokenExpiresAt?: boolean
+  signedAt?: boolean
+  signedPdfPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
@@ -1484,6 +1829,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
   sections?: boolean | Prisma.Quote$sectionsArgs<ExtArgs>
   acceptance?: boolean | Prisma.Quote$acceptanceArgs<ExtArgs>
+  contract?: boolean | Prisma.Quote$contractArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
@@ -1503,6 +1849,10 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   notes?: boolean
   clientId?: boolean
   projectId?: boolean
+  signingToken?: boolean
+  signingTokenExpiresAt?: boolean
+  signedAt?: boolean
+  signedPdfPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
@@ -1528,6 +1878,10 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   notes?: boolean
   clientId?: boolean
   projectId?: boolean
+  signingToken?: boolean
+  signingTokenExpiresAt?: boolean
+  signedAt?: boolean
+  signedPdfPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
@@ -1553,6 +1907,10 @@ export type QuoteSelectScalar = {
   notes?: boolean
   clientId?: boolean
   projectId?: boolean
+  signingToken?: boolean
+  signingTokenExpiresAt?: boolean
+  signedAt?: boolean
+  signedPdfPath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   sentAt?: boolean
@@ -1560,12 +1918,13 @@ export type QuoteSelectScalar = {
   estimatedStartDate?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "address" | "projectType" | "status" | "scopeText" | "materialMarkupPct" | "overheadPct" | "profitPct" | "paymentTerms" | "exclusions" | "notes" | "clientId" | "projectId" | "createdAt" | "updatedAt" | "sentAt" | "estimatedDuration" | "estimatedStartDate", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "address" | "projectType" | "status" | "scopeText" | "materialMarkupPct" | "overheadPct" | "profitPct" | "paymentTerms" | "exclusions" | "notes" | "clientId" | "projectId" | "signingToken" | "signingTokenExpiresAt" | "signedAt" | "signedPdfPath" | "createdAt" | "updatedAt" | "sentAt" | "estimatedDuration" | "estimatedStartDate", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Quote$projectArgs<ExtArgs>
   sections?: boolean | Prisma.Quote$sectionsArgs<ExtArgs>
   acceptance?: boolean | Prisma.Quote$acceptanceArgs<ExtArgs>
+  contract?: boolean | Prisma.Quote$contractArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1584,6 +1943,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     project: Prisma.$ProjectPayload<ExtArgs> | null
     sections: Prisma.$LineItemSectionPayload<ExtArgs>[]
     acceptance: Prisma.$AcceptancePayload<ExtArgs> | null
+    contract: Prisma.$ContractPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1601,6 +1961,10 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     notes: string | null
     clientId: string
     projectId: string | null
+    signingToken: string | null
+    signingTokenExpiresAt: Date | null
+    signedAt: Date | null
+    signedPdfPath: string | null
     createdAt: Date
     updatedAt: Date
     sentAt: Date | null
@@ -2004,6 +2368,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   project<T extends Prisma.Quote$projectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$projectArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sections<T extends Prisma.Quote$sectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LineItemSectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   acceptance<T extends Prisma.Quote$acceptanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$acceptanceArgs<ExtArgs>>): Prisma.Prisma__AcceptanceClient<runtime.Types.Result.GetResult<Prisma.$AcceptancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  contract<T extends Prisma.Quote$contractArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$contractArgs<ExtArgs>>): Prisma.Prisma__ContractClient<runtime.Types.Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2048,6 +2413,10 @@ export interface QuoteFieldRefs {
   readonly notes: Prisma.FieldRef<"Quote", 'String'>
   readonly clientId: Prisma.FieldRef<"Quote", 'String'>
   readonly projectId: Prisma.FieldRef<"Quote", 'String'>
+  readonly signingToken: Prisma.FieldRef<"Quote", 'String'>
+  readonly signingTokenExpiresAt: Prisma.FieldRef<"Quote", 'DateTime'>
+  readonly signedAt: Prisma.FieldRef<"Quote", 'DateTime'>
+  readonly signedPdfPath: Prisma.FieldRef<"Quote", 'String'>
   readonly createdAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Quote", 'DateTime'>
   readonly sentAt: Prisma.FieldRef<"Quote", 'DateTime'>
@@ -2506,6 +2875,25 @@ export type Quote$acceptanceArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.AcceptanceInclude<ExtArgs> | null
   where?: Prisma.AcceptanceWhereInput
+}
+
+/**
+ * Quote.contract
+ */
+export type Quote$contractArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Contract
+   */
+  select?: Prisma.ContractSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Contract
+   */
+  omit?: Prisma.ContractOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContractInclude<ExtArgs> | null
+  where?: Prisma.ContractWhereInput
 }
 
 /**

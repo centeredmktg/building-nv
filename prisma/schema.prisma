@@ -25,7 +25,7 @@ model Quote {
   title             String
   address           String
   projectType       String
-  status            String          @default("draft") // draft | sent | accepted
+  status            String          @default("draft") // draft | sent | quote_signed
   scopeText         String?
   materialMarkupPct Float           @default(10)
   overheadPct       Float           @default(10)
@@ -40,6 +40,11 @@ model Quote {
   project           Project?        @relation(fields: [projectId], references: [id])
   sections          LineItemSection[]
   acceptance        Acceptance?
+  contract          Contract?
+  signingToken      String?         @unique
+  signingTokenExpiresAt DateTime?
+  signedAt          DateTime?
+  signedPdfPath     String?
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   sentAt              DateTime?
@@ -92,6 +97,47 @@ model Acceptance {
   ipAddress  String?
   quoteId    String   @unique
   quote      Quote    @relation(fields: [quoteId], references: [id])
+  signaturePngPath  String?
+}
+
+model Contract {
+  id              String    @id @default(cuid())
+  quoteId         String    @unique
+  quote           Quote     @relation(fields: [quoteId], references: [id])
+  projectId       String?
+  project         Project?  @relation(fields: [projectId], references: [id])
+  status          String    @default("draft") // draft | contract_sent | executed
+  htmlPath        String?   // path to assembled MSA+Exhibit A HTML
+  contractAmount  Float?    // tracks total as COs are executed (set on creation from quote total)
+  signingToken    String?   @unique
+  signingTokenExpiresAt DateTime?
+  signerName      String?
+  signedAt        DateTime?
+  signedPdfPath   String?
+  sentAt          DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  changeOrders    ChangeOrder[]
+}
+
+model ChangeOrder {
+  id              String    @id @default(cuid())
+  contractId      String
+  contract        Contract  @relation(fields: [contractId], references: [id])
+  number          Int       // sequential per contract: 1, 2, 3...
+  title           String
+  scopeDelta      String    // description of scope change
+  priceDelta      Float     // positive = addition, negative = credit
+  status          String    @default("draft") // draft | co_sent | executed
+  htmlPath        String?
+  signingToken    String?   @unique
+  signingTokenExpiresAt DateTime?
+  signerName      String?
+  signedAt        DateTime?
+  signedPdfPath   String?
+  sentAt          DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 // ─── CRM ──────────────────────────────────────────────────────────────────────
@@ -124,6 +170,7 @@ model Project {
   projectContacts  ProjectContact[]
   projectCompanies ProjectCompany[]
   quotes           Quote[]
+  contracts        Contract[]
   teamMembers      ProjectTeamMember[]
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
