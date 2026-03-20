@@ -1,5 +1,5 @@
 import { generateSignedPDF } from '@/lib/docs/pdf';
-import { existsSync, unlinkSync } from 'fs';
+import { existsSync, unlinkSync, statSync } from 'fs';
 import path from 'path';
 
 const OUT = path.join(process.cwd(), 'docs-storage', 'test-signed.pdf');
@@ -11,4 +11,5 @@ it('generates a PDF file from HTML + signature', async () => {
   const fakeSig = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
   await generateSignedPDF(html, OUT, fakeSig);
   expect(existsSync(OUT)).toBe(true);
+  expect(statSync(OUT).size).toBeGreaterThan(1000);
 }, 30000); // Puppeteer can be slow

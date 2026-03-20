@@ -1,4 +1,5 @@
 // src/lib/docs/email.ts
+import 'server-only';
 import { Resend } from 'resend';
 import { readFileSync } from 'fs';
 
@@ -94,7 +95,7 @@ export async function sendSignedPDF(opts: {
     attachments: [
       {
         filename: `${opts.projectTitle} — Signed ${label}.pdf`,
-        content: readFileSync(opts.signedPdfPath).toString('base64'),
+        content: readFileSync(opts.signedPdfPath),
       },
     ],
   });

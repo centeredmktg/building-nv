@@ -1,5 +1,5 @@
 // src/lib/docs/pdf.ts
-// Server-only. Never import in client components.
+import 'server-only';
 import puppeteer from 'puppeteer';
 import { mkdirSync } from 'fs';
 import { dirname } from 'path';
