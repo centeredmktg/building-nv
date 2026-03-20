@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import ProjectSiteForm from "./ProjectSiteForm";
 import TeamAssignmentPanel from "./TeamAssignmentPanel";
 import FinancialSummarySection from "@/components/internal/FinancialSummarySection";
+import MilestonesSection from "@/components/internal/MilestonesSection";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,7 @@ export default async function ProjectDetailPage({
       include: {
         projectContacts: { include: { contact: true } },
         quotes: { select: { id: true, title: true, status: true, address: true } },
+        milestones: { orderBy: { position: "asc" } },
         teamMembers: {
           include: {
             employee: {
@@ -103,6 +105,22 @@ export default async function ProjectDetailPage({
               estimatedEndDate: project.estimatedEndDate?.toISOString() ?? null,
               timingNotes: project.timingNotes ?? null,
             }}
+          />
+        </section>
+      )}
+
+      {/* Milestones */}
+      {["preconstruction", "active", "punch_list", "complete"].includes(project.stage) && (
+        <section className="border border-border rounded-sm p-6 mb-6">
+          <MilestonesSection
+            projectId={project.id}
+            initialMilestones={(project.milestones ?? []).map((m) => ({
+              ...m,
+              plannedDate: m.plannedDate?.toISOString() ?? null,
+              completedAt: m.completedAt?.toISOString() ?? null,
+              createdAt: m.createdAt.toISOString(),
+              updatedAt: m.updatedAt.toISOString(),
+            }))}
           />
         </section>
       )}
