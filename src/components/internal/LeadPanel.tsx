@@ -39,23 +39,27 @@ export default function LeadPanel({
 
   const saveNotes = async () => {
     setSaving(true);
-    await fetch(`/api/projects/${project.id}`, {
+    const res = await fetch(`/api/projects/${project.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ notes }),
     });
-    onNotesUpdate(project.id, notes);
+    if (res.ok) {
+      onNotesUpdate(project.id, notes);
+    }
     setSaving(false);
   };
 
   const handleStageChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStage = e.target.value;
-    await fetch(`/api/projects/${project.id}`, {
+    const res = await fetch(`/api/projects/${project.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ stage: newStage }),
     });
-    onStageChange(project.id, newStage);
+    if (res.ok) {
+      onStageChange(project.id, newStage);
+    }
   };
 
   const handleTargetCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
