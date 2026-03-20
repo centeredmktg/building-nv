@@ -5,8 +5,13 @@ import AcceptanceBlock from "./AcceptanceBlock";
 
 export default async function ProposalPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const quote = await prisma.quote.findUnique({
-    where: { slug },
+  const quote = await prisma.quote.findFirst({
+    where: {
+      OR: [
+        { slug: slug },
+        { signingToken: slug },
+      ],
+    },
     include: {
       client: true,
       sections: {
@@ -127,6 +132,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
         {/* Acceptance */}
         <AcceptanceBlock
           slug={quote.slug}
+          signingToken={quote.signingToken ?? null}
           accepted={!!quote.acceptance}
           signerName={quote.acceptance?.signerName}
           acceptedAt={quote.acceptance?.acceptedAt?.toString()}
