@@ -70,10 +70,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   });
 
   // Update contract amount by adding priceDelta
-  await prisma.contract.update({
-    where: { id: changeOrder.contractId },
-    data: { contractAmount: (changeOrder.contract.contractAmount ?? 0) + changeOrder.priceDelta },
-  });
+  try {
+    await prisma.contract.update({
+      where: { id: changeOrder.contractId },
+      data: { contractAmount: (changeOrder.contract.contractAmount ?? 0) + changeOrder.priceDelta },
+    });
+  } catch (err) {
+    console.error('Failed to update contract amount after CO execution:', err);
+  }
 
   // Send signed PDF (non-blocking)
   if (changeOrder.contract.quote.client.email) {
