@@ -114,6 +114,7 @@ model Contract {
   signerName      String?
   signedAt        DateTime?
   signedPdfPath   String?
+  signerIp        String?
   sentAt          DateTime?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -135,6 +136,7 @@ model ChangeOrder {
   signerName      String?
   signedAt        DateTime?
   signedPdfPath   String?
+  signerIp        String?
   sentAt          DateTime?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt

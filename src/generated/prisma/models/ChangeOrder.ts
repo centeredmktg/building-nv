@@ -50,6 +50,7 @@ export type ChangeOrderMinAggregateOutputType = {
   signerName: string | null
   signedAt: Date | null
   signedPdfPath: string | null
+  signerIp: string | null
   sentAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,6 +70,7 @@ export type ChangeOrderMaxAggregateOutputType = {
   signerName: string | null
   signedAt: Date | null
   signedPdfPath: string | null
+  signerIp: string | null
   sentAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -88,6 +90,7 @@ export type ChangeOrderCountAggregateOutputType = {
   signerName: number
   signedAt: number
   signedPdfPath: number
+  signerIp: number
   sentAt: number
   createdAt: number
   updatedAt: number
@@ -119,6 +122,7 @@ export type ChangeOrderMinAggregateInputType = {
   signerName?: true
   signedAt?: true
   signedPdfPath?: true
+  signerIp?: true
   sentAt?: true
   createdAt?: true
   updatedAt?: true
@@ -138,6 +142,7 @@ export type ChangeOrderMaxAggregateInputType = {
   signerName?: true
   signedAt?: true
   signedPdfPath?: true
+  signerIp?: true
   sentAt?: true
   createdAt?: true
   updatedAt?: true
@@ -157,6 +162,7 @@ export type ChangeOrderCountAggregateInputType = {
   signerName?: true
   signedAt?: true
   signedPdfPath?: true
+  signerIp?: true
   sentAt?: true
   createdAt?: true
   updatedAt?: true
@@ -263,6 +269,7 @@ export type ChangeOrderGroupByOutputType = {
   signerName: string | null
   signedAt: Date | null
   signedPdfPath: string | null
+  signerIp: string | null
   sentAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -305,6 +312,7 @@ export type ChangeOrderWhereInput = {
   signerName?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
   signedAt?: Prisma.DateTimeNullableFilter<"ChangeOrder"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
+  signerIp?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"ChangeOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
@@ -325,6 +333,7 @@ export type ChangeOrderOrderByWithRelationInput = {
   signerName?: Prisma.SortOrderInput | Prisma.SortOrder
   signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  signerIp?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -349,6 +358,7 @@ export type ChangeOrderWhereUniqueInput = Prisma.AtLeast<{
   signerName?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
   signedAt?: Prisma.DateTimeNullableFilter<"ChangeOrder"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
+  signerIp?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"ChangeOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
@@ -369,6 +379,7 @@ export type ChangeOrderOrderByWithAggregationInput = {
   signerName?: Prisma.SortOrderInput | Prisma.SortOrder
   signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  signerIp?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -396,6 +407,7 @@ export type ChangeOrderScalarWhereWithAggregatesInput = {
   signerName?: Prisma.StringNullableWithAggregatesFilter<"ChangeOrder"> | string | null
   signedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ChangeOrder"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableWithAggregatesFilter<"ChangeOrder"> | string | null
+  signerIp?: Prisma.StringNullableWithAggregatesFilter<"ChangeOrder"> | string | null
   sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ChangeOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ChangeOrder"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ChangeOrder"> | Date | string
@@ -414,6 +426,7 @@ export type ChangeOrderCreateInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -434,6 +447,7 @@ export type ChangeOrderUncheckedCreateInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -452,6 +466,7 @@ export type ChangeOrderUpdateInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -472,6 +487,7 @@ export type ChangeOrderUncheckedUpdateInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -491,6 +507,7 @@ export type ChangeOrderCreateManyInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -509,6 +526,7 @@ export type ChangeOrderUpdateManyMutationInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -528,6 +546,7 @@ export type ChangeOrderUncheckedUpdateManyInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -562,6 +581,7 @@ export type ChangeOrderCountOrderByAggregateInput = {
   signerName?: Prisma.SortOrder
   signedAt?: Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrder
+  signerIp?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -586,6 +606,7 @@ export type ChangeOrderMaxOrderByAggregateInput = {
   signerName?: Prisma.SortOrder
   signedAt?: Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrder
+  signerIp?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -605,6 +626,7 @@ export type ChangeOrderMinOrderByAggregateInput = {
   signerName?: Prisma.SortOrder
   signedAt?: Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrder
+  signerIp?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -670,6 +692,7 @@ export type ChangeOrderCreateWithoutContractInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -688,6 +711,7 @@ export type ChangeOrderUncheckedCreateWithoutContractInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -735,6 +759,7 @@ export type ChangeOrderScalarWhereInput = {
   signerName?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
   signedAt?: Prisma.DateTimeNullableFilter<"ChangeOrder"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
+  signerIp?: Prisma.StringNullableFilter<"ChangeOrder"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"ChangeOrder"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
@@ -753,6 +778,7 @@ export type ChangeOrderCreateManyContractInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -771,6 +797,7 @@ export type ChangeOrderUpdateWithoutContractInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -789,6 +816,7 @@ export type ChangeOrderUncheckedUpdateWithoutContractInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -807,6 +835,7 @@ export type ChangeOrderUncheckedUpdateManyWithoutContractInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -828,6 +857,7 @@ export type ChangeOrderSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -848,6 +878,7 @@ export type ChangeOrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -868,6 +899,7 @@ export type ChangeOrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -888,12 +920,13 @@ export type ChangeOrderSelectScalar = {
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ChangeOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contractId" | "number" | "title" | "scopeDelta" | "priceDelta" | "status" | "htmlPath" | "signingToken" | "signingTokenExpiresAt" | "signerName" | "signedAt" | "signedPdfPath" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["changeOrder"]>
+export type ChangeOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contractId" | "number" | "title" | "scopeDelta" | "priceDelta" | "status" | "htmlPath" | "signingToken" | "signingTokenExpiresAt" | "signerName" | "signedAt" | "signedPdfPath" | "signerIp" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["changeOrder"]>
 export type ChangeOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contract?: boolean | Prisma.ContractDefaultArgs<ExtArgs>
 }
@@ -923,6 +956,7 @@ export type $ChangeOrderPayload<ExtArgs extends runtime.Types.Extensions.Interna
     signerName: string | null
     signedAt: Date | null
     signedPdfPath: string | null
+    signerIp: string | null
     sentAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1363,6 +1397,7 @@ export interface ChangeOrderFieldRefs {
   readonly signerName: Prisma.FieldRef<"ChangeOrder", 'String'>
   readonly signedAt: Prisma.FieldRef<"ChangeOrder", 'DateTime'>
   readonly signedPdfPath: Prisma.FieldRef<"ChangeOrder", 'String'>
+  readonly signerIp: Prisma.FieldRef<"ChangeOrder", 'String'>
   readonly sentAt: Prisma.FieldRef<"ChangeOrder", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"ChangeOrder", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ChangeOrder", 'DateTime'>

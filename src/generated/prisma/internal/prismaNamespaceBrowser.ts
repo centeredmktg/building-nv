@@ -193,6 +193,7 @@ export const ContractScalarFieldEnum = {
   signerName: 'signerName',
   signedAt: 'signedAt',
   signedPdfPath: 'signedPdfPath',
+  signerIp: 'signerIp',
   sentAt: 'sentAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -215,6 +216,7 @@ export const ChangeOrderScalarFieldEnum = {
   signerName: 'signerName',
   signedAt: 'signedAt',
   signedPdfPath: 'signedPdfPath',
+  signerIp: 'signerIp',
   sentAt: 'sentAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -58,6 +58,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   }
 
   const signedAt = new Date();
+  const signerIp = (req.headers.get('x-forwarded-for') ?? '').split(',')[0].trim() || null;
 
   await prisma.contract.update({
     where: { id: contract.id },
@@ -66,6 +67,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
       signerName: body.signerName,
       signedAt,
       signedPdfPath: pdfPath,
+      signerIp,
     },
   });
 

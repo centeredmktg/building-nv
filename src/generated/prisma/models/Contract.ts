@@ -46,6 +46,7 @@ export type ContractMinAggregateOutputType = {
   signerName: string | null
   signedAt: Date | null
   signedPdfPath: string | null
+  signerIp: string | null
   sentAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -63,6 +64,7 @@ export type ContractMaxAggregateOutputType = {
   signerName: string | null
   signedAt: Date | null
   signedPdfPath: string | null
+  signerIp: string | null
   sentAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -80,6 +82,7 @@ export type ContractCountAggregateOutputType = {
   signerName: number
   signedAt: number
   signedPdfPath: number
+  signerIp: number
   sentAt: number
   createdAt: number
   updatedAt: number
@@ -107,6 +110,7 @@ export type ContractMinAggregateInputType = {
   signerName?: true
   signedAt?: true
   signedPdfPath?: true
+  signerIp?: true
   sentAt?: true
   createdAt?: true
   updatedAt?: true
@@ -124,6 +128,7 @@ export type ContractMaxAggregateInputType = {
   signerName?: true
   signedAt?: true
   signedPdfPath?: true
+  signerIp?: true
   sentAt?: true
   createdAt?: true
   updatedAt?: true
@@ -141,6 +146,7 @@ export type ContractCountAggregateInputType = {
   signerName?: true
   signedAt?: true
   signedPdfPath?: true
+  signerIp?: true
   sentAt?: true
   createdAt?: true
   updatedAt?: true
@@ -245,6 +251,7 @@ export type ContractGroupByOutputType = {
   signerName: string | null
   signedAt: Date | null
   signedPdfPath: string | null
+  signerIp: string | null
   sentAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -285,6 +292,7 @@ export type ContractWhereInput = {
   signerName?: Prisma.StringNullableFilter<"Contract"> | string | null
   signedAt?: Prisma.DateTimeNullableFilter<"Contract"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableFilter<"Contract"> | string | null
+  signerIp?: Prisma.StringNullableFilter<"Contract"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"Contract"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Contract"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Contract"> | Date | string
@@ -305,6 +313,7 @@ export type ContractOrderByWithRelationInput = {
   signerName?: Prisma.SortOrderInput | Prisma.SortOrder
   signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  signerIp?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -328,6 +337,7 @@ export type ContractWhereUniqueInput = Prisma.AtLeast<{
   signerName?: Prisma.StringNullableFilter<"Contract"> | string | null
   signedAt?: Prisma.DateTimeNullableFilter<"Contract"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableFilter<"Contract"> | string | null
+  signerIp?: Prisma.StringNullableFilter<"Contract"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"Contract"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Contract"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Contract"> | Date | string
@@ -348,6 +358,7 @@ export type ContractOrderByWithAggregationInput = {
   signerName?: Prisma.SortOrderInput | Prisma.SortOrder
   signedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrderInput | Prisma.SortOrder
+  signerIp?: Prisma.SortOrderInput | Prisma.SortOrder
   sentAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -373,6 +384,7 @@ export type ContractScalarWhereWithAggregatesInput = {
   signerName?: Prisma.StringNullableWithAggregatesFilter<"Contract"> | string | null
   signedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Contract"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableWithAggregatesFilter<"Contract"> | string | null
+  signerIp?: Prisma.StringNullableWithAggregatesFilter<"Contract"> | string | null
   sentAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Contract"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Contract"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Contract"> | Date | string
@@ -388,6 +400,7 @@ export type ContractCreateInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -408,6 +421,7 @@ export type ContractUncheckedCreateInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -424,6 +438,7 @@ export type ContractUpdateInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,6 +459,7 @@ export type ContractUncheckedUpdateInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,6 +478,7 @@ export type ContractCreateManyInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -477,6 +494,7 @@ export type ContractUpdateManyMutationInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -494,6 +512,7 @@ export type ContractUncheckedUpdateManyInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -516,6 +535,7 @@ export type ContractCountOrderByAggregateInput = {
   signerName?: Prisma.SortOrder
   signedAt?: Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrder
+  signerIp?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -537,6 +557,7 @@ export type ContractMaxOrderByAggregateInput = {
   signerName?: Prisma.SortOrder
   signedAt?: Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrder
+  signerIp?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -554,6 +575,7 @@ export type ContractMinOrderByAggregateInput = {
   signerName?: Prisma.SortOrder
   signedAt?: Prisma.SortOrder
   signedPdfPath?: Prisma.SortOrder
+  signerIp?: Prisma.SortOrder
   sentAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -676,6 +698,7 @@ export type ContractCreateWithoutQuoteInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -694,6 +717,7 @@ export type ContractUncheckedCreateWithoutQuoteInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -726,6 +750,7 @@ export type ContractUpdateWithoutQuoteInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -744,6 +769,7 @@ export type ContractUncheckedUpdateWithoutQuoteInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -760,6 +786,7 @@ export type ContractCreateWithoutChangeOrdersInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -779,6 +806,7 @@ export type ContractUncheckedCreateWithoutChangeOrdersInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -810,6 +838,7 @@ export type ContractUpdateWithoutChangeOrdersInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -829,6 +858,7 @@ export type ContractUncheckedUpdateWithoutChangeOrdersInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -844,6 +874,7 @@ export type ContractCreateWithoutProjectInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -862,6 +893,7 @@ export type ContractUncheckedCreateWithoutProjectInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -908,6 +940,7 @@ export type ContractScalarWhereInput = {
   signerName?: Prisma.StringNullableFilter<"Contract"> | string | null
   signedAt?: Prisma.DateTimeNullableFilter<"Contract"> | Date | string | null
   signedPdfPath?: Prisma.StringNullableFilter<"Contract"> | string | null
+  signerIp?: Prisma.StringNullableFilter<"Contract"> | string | null
   sentAt?: Prisma.DateTimeNullableFilter<"Contract"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Contract"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Contract"> | Date | string
@@ -924,6 +957,7 @@ export type ContractCreateManyProjectInput = {
   signerName?: string | null
   signedAt?: Date | string | null
   signedPdfPath?: string | null
+  signerIp?: string | null
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -939,6 +973,7 @@ export type ContractUpdateWithoutProjectInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -957,6 +992,7 @@ export type ContractUncheckedUpdateWithoutProjectInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -974,6 +1010,7 @@ export type ContractUncheckedUpdateManyWithoutProjectInput = {
   signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1022,6 +1059,7 @@ export type ContractSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1043,6 +1081,7 @@ export type ContractSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1062,6 +1101,7 @@ export type ContractSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1081,12 +1121,13 @@ export type ContractSelectScalar = {
   signerName?: boolean
   signedAt?: boolean
   signedPdfPath?: boolean
+  signerIp?: boolean
   sentAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ContractOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "projectId" | "status" | "htmlPath" | "contractAmount" | "signingToken" | "signingTokenExpiresAt" | "signerName" | "signedAt" | "signedPdfPath" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["contract"]>
+export type ContractOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quoteId" | "projectId" | "status" | "htmlPath" | "contractAmount" | "signingToken" | "signingTokenExpiresAt" | "signerName" | "signedAt" | "signedPdfPath" | "signerIp" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["contract"]>
 export type ContractInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quote?: boolean | Prisma.QuoteDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Contract$projectArgs<ExtArgs>
@@ -1121,6 +1162,7 @@ export type $ContractPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     signerName: string | null
     signedAt: Date | null
     signedPdfPath: string | null
+    signerIp: string | null
     sentAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1561,6 +1603,7 @@ export interface ContractFieldRefs {
   readonly signerName: Prisma.FieldRef<"Contract", 'String'>
   readonly signedAt: Prisma.FieldRef<"Contract", 'DateTime'>
   readonly signedPdfPath: Prisma.FieldRef<"Contract", 'String'>
+  readonly signerIp: Prisma.FieldRef<"Contract", 'String'>
   readonly sentAt: Prisma.FieldRef<"Contract", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Contract", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Contract", 'DateTime'>
