@@ -189,6 +189,7 @@ export type QuoteContactOrderByWithRelationInput = {
 
 export type QuoteContactWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  quoteId_contactId?: Prisma.QuoteContactQuoteIdContactIdCompoundUniqueInput
   AND?: Prisma.QuoteContactWhereInput | Prisma.QuoteContactWhereInput[]
   OR?: Prisma.QuoteContactWhereInput[]
   NOT?: Prisma.QuoteContactWhereInput | Prisma.QuoteContactWhereInput[]
@@ -197,7 +198,7 @@ export type QuoteContactWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.StringFilter<"QuoteContact"> | string
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
   contact?: Prisma.XOR<Prisma.ContactScalarRelationFilter, Prisma.ContactWhereInput>
-}, "id">
+}, "id" | "quoteId_contactId">
 
 export type QuoteContactOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -274,6 +275,11 @@ export type QuoteContactListRelationFilter = {
 
 export type QuoteContactOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type QuoteContactQuoteIdContactIdCompoundUniqueInput = {
+  quoteId: string
+  contactId: string
 }
 
 export type QuoteContactCountOrderByAggregateInput = {

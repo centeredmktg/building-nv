@@ -236,6 +236,8 @@ model QuoteContact {
   contactId String
   contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
   role      String  @default("decision_maker") // decision_maker | site_contact | billing_contact
+
+  @@unique([quoteId, contactId])
 }
 
 model QuoteCompany {
@@ -245,6 +247,8 @@ model QuoteCompany {
   companyId String
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   role      String  @default("tenant") // tenant | landlord | property_manager | owner
+
+  @@unique([quoteId, companyId])
 }
 
 // ─── CPQ: Component Catalog ───────────────────────────────────────────────────

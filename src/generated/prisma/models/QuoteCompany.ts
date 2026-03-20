@@ -189,6 +189,7 @@ export type QuoteCompanyOrderByWithRelationInput = {
 
 export type QuoteCompanyWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  quoteId_companyId?: Prisma.QuoteCompanyQuoteIdCompanyIdCompoundUniqueInput
   AND?: Prisma.QuoteCompanyWhereInput | Prisma.QuoteCompanyWhereInput[]
   OR?: Prisma.QuoteCompanyWhereInput[]
   NOT?: Prisma.QuoteCompanyWhereInput | Prisma.QuoteCompanyWhereInput[]
@@ -197,7 +198,7 @@ export type QuoteCompanyWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.StringFilter<"QuoteCompany"> | string
   quote?: Prisma.XOR<Prisma.QuoteScalarRelationFilter, Prisma.QuoteWhereInput>
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
-}, "id">
+}, "id" | "quoteId_companyId">
 
 export type QuoteCompanyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -274,6 +275,11 @@ export type QuoteCompanyListRelationFilter = {
 
 export type QuoteCompanyOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type QuoteCompanyQuoteIdCompanyIdCompoundUniqueInput = {
+  quoteId: string
+  companyId: string
 }
 
 export type QuoteCompanyCountOrderByAggregateInput = {

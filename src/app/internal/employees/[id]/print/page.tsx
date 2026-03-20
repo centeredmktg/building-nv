@@ -68,7 +68,7 @@ export default async function EmployeeProfilePrintPage({
           <tr><td className="label">Type</td><td>{employee.employmentType === "W2" ? "W-2 Employee" : "1099 Contractor"}</td></tr>
           <tr><td className="label">Status</td><td style={{ textTransform: "capitalize" }}>{employee.activeStatus}</td></tr>
           <tr><td className="label">Hire Date</td><td>{employee.hireDate.toLocaleDateString()}</td></tr>
-          <tr><td className="label">Email</td><td>{employee.contact.email}</td></tr>
+          <tr><td className="label">Email</td><td>{employee.contact.email ?? "—"}</td></tr>
           <tr><td className="label">Phone</td><td>{employee.contact.phone ?? "—"}</td></tr>
         </tbody>
       </table>
