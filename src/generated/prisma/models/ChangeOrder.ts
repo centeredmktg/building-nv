@@ -334,6 +334,7 @@ export type ChangeOrderOrderByWithRelationInput = {
 export type ChangeOrderWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   signingToken?: string
+  contractId_number?: Prisma.ChangeOrderContractIdNumberCompoundUniqueInput
   AND?: Prisma.ChangeOrderWhereInput | Prisma.ChangeOrderWhereInput[]
   OR?: Prisma.ChangeOrderWhereInput[]
   NOT?: Prisma.ChangeOrderWhereInput | Prisma.ChangeOrderWhereInput[]
@@ -352,7 +353,7 @@ export type ChangeOrderWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   contract?: Prisma.XOR<Prisma.ContractScalarRelationFilter, Prisma.ContractWhereInput>
-}, "id" | "signingToken">
+}, "id" | "signingToken" | "contractId_number">
 
 export type ChangeOrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -540,6 +541,11 @@ export type ChangeOrderListRelationFilter = {
 
 export type ChangeOrderOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ChangeOrderContractIdNumberCompoundUniqueInput = {
+  contractId: string
+  number: number
 }
 
 export type ChangeOrderCountOrderByAggregateInput = {
