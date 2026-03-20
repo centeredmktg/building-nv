@@ -27,3 +27,13 @@ it('calculates revised contract amount', () => {
   const html = renderChangeOrderHtml(opts);
   expect(html).toContain('45,850');
 });
+
+it('renders negative price delta as credit', () => {
+  const html = renderChangeOrderHtml({
+    ...opts,
+    priceDelta: -500,
+    originalContractAmount: 45000,
+  });
+  expect(html).toContain('-$500');
+  expect(html).toContain('44,500'); // revised = 45000 - 500
+});

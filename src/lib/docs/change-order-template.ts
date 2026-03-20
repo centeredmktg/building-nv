@@ -20,7 +20,7 @@ export interface ChangeOrderOptions {
 
 export function renderChangeOrderHtml(opts: ChangeOrderOptions): string {
   const revised = opts.originalContractAmount + opts.priceDelta;
-  const sign = opts.priceDelta >= 0 ? '+' : '';
+  const sign = opts.priceDelta >= 0 ? '+' : '-';
   const fmt = (n: number) => n.toLocaleString('en-US', { minimumFractionDigits: 2 });
 
   return `<!DOCTYPE html>
