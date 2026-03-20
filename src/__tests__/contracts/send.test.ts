@@ -2,7 +2,6 @@ import { NextRequest } from 'next/server';
 
 jest.mock('@/lib/prisma', () => ({
   prisma: {
-    quote: { findUnique: jest.fn().mockResolvedValue(null) },
     contract: { findUnique: jest.fn().mockResolvedValue(null) },
   },
 }));
@@ -10,10 +9,10 @@ jest.mock('@/lib/prisma', () => ({
 jest.mock('next-auth', () => ({ getServerSession: jest.fn().mockResolvedValue(null) }));
 jest.mock('@/lib/auth', () => ({ authOptions: {} }));
 
-import { POST } from '@/app/api/quotes/[id]/convert-to-contract/route';
+import { POST } from '@/app/api/contracts/[id]/send/route';
 
 it('returns 401 when not authenticated', async () => {
-  const req = new NextRequest('http://localhost', { method: 'POST' });
+  const req = new NextRequest('http://localhost/api/contracts/bad-id/send', { method: 'POST' });
   const res = await POST(req, { params: Promise.resolve({ id: 'bad-id' }) });
   expect(res.status).toBe(401);
 });
