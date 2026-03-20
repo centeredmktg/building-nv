@@ -347,15 +347,25 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                 {quote.signedAt && (
                   <div className="flex justify-between items-center">
                     <span className="text-text-muted">Quote signed</span>
-                    <span className="text-green-400">✓ {new Date(quote.signedAt).toLocaleDateString()}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">✓ {new Date(quote.signedAt).toLocaleDateString()}</span>
+                      {quote.signedPdfPath && (
+                        <a href={`/api/quotes/${quote.id}/signed-pdf`} target="_blank" className="text-accent underline text-xs">Download PDF</a>
+                      )}
+                    </div>
                   </div>
                 )}
                 {quote.contract && (
                   <div className="flex justify-between items-center">
                     <span className="text-text-muted">Contract</span>
-                    <span className={quote.contract.status === 'executed' ? 'text-green-400' : 'text-accent'}>
-                      {quote.contract.status === 'executed' ? '✓ Executed' : quote.contract.status}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={quote.contract.status === 'executed' ? 'text-green-400' : 'text-accent'}>
+                        {quote.contract.status === 'executed' ? '✓ Executed' : quote.contract.status}
+                      </span>
+                      {quote.contract.signedPdfPath && (
+                        <a href={`/api/contracts/${quote.contract.id}/signed-pdf`} target="_blank" className="text-accent underline text-xs">Download PDF</a>
+                      )}
+                    </div>
                   </div>
                 )}
                 {quote.contract?.changeOrders?.map((co) => (
