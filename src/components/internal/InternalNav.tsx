@@ -7,11 +7,11 @@ import { usePathname } from "next/navigation";
 export default function InternalNav() {
   const pathname = usePathname();
 
-  const navLink = (href: string, label: string, exact: boolean = false) => (
+  const navLink = (href: string, label: string, exact = false) => (
     <Link
       href={href}
       className={`text-sm transition-colors ${
-        exact ? pathname === href : pathname.startsWith(href)
+        (exact ? pathname === href : pathname.startsWith(href))
           ? "text-text-primary font-semibold"
           : "text-text-muted hover:text-text-primary"
       }`}
