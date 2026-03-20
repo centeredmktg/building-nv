@@ -62,7 +62,6 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [sending, setSending] = useState(false);
-  const [signingUrl, setSigningUrl] = useState<string | null>(null);
 
   const allItems = quote.sections.flatMap((s) => s.items);
   const totals = calculateQuoteTotals(
@@ -136,13 +135,15 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
         alert(data.error ?? 'Failed to send signing link');
         return;
       }
-      setSigningUrl(data.signingUrl);
       setQuote((q) => ({ ...q, status: 'sent' }));
       if (!data.emailSent) {
         alert(`Email delivery failed. Signing link (copy manually):\n${data.signingUrl}`);
       } else {
         alert(`Signing link sent to ${quote.client.name}.\n\nLink: ${data.signingUrl}`);
       }
+    } catch (err: unknown) {
+      console.error('sendForSignature error:', err);
+      alert('Network error — could not send signing link. Check your connection and try again.');
     } finally {
       setSending(false);
     }
