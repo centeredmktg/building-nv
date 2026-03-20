@@ -138,6 +138,8 @@ model ChangeOrder {
   sentAt          DateTime?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  @@unique([contractId, number])
 }
 
 // ─── CRM ──────────────────────────────────────────────────────────────────────
