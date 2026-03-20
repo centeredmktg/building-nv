@@ -400,9 +400,9 @@ function ConvertToContractButton({ quoteId }: { quoteId: string }) {
     <button
       onClick={convert}
       disabled={loading}
-      className="bg-accent text-bg font-semibold px-4 py-2 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60"
+      className="bg-green-700 text-white font-semibold px-4 py-2 rounded-sm text-sm hover:bg-green-600 transition-colors disabled:opacity-60"
     >
-      {loading ? "Creating..." : "Convert to Contract →"}
+      {loading ? "Creating..." : "Convert to Contract"}
     </button>
   );
 }
