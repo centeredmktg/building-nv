@@ -5,6 +5,11 @@ import { calculateQuoteTotals } from '@/lib/pricing';
 
 type QuoteWithRelations = any;
 
+function esc(s: string | null | undefined): string {
+  if (!s) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 export function renderQuoteHtml(quote: QuoteWithRelations): string {
   const allItems = quote.sections.flatMap((s: any) =>
     s.items.map((i: any) => ({ unitPrice: i.unitPrice, quantity: i.quantity, isMaterial: i.isMaterial }))
@@ -16,12 +21,12 @@ export function renderQuoteHtml(quote: QuoteWithRelations): string {
     .map(
       (sec: any) => `
     <div style="margin-bottom:24px;">
-      <h2 style="font-weight:bold;text-decoration:underline;margin-bottom:12px;">${sec.title}:</h2>
+      <h2 style="font-weight:bold;text-decoration:underline;margin-bottom:12px;">${esc(sec.title)}:</h2>
       ${sec.items
         .map(
           (item: any) => `
         <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;">
-          <span>— ${item.description}</span>
+          <span>— ${esc(item.description)}</span>
           <span>$${(item.quantity * item.unitPrice).toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
         </div>`
         )
@@ -58,13 +63,13 @@ export function renderQuoteHtml(quote: QuoteWithRelations): string {
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid #e0e0e0;">
     <div>
       <p class="label">Project</p>
-      <p style="font-weight:600;margin:0;">${quote.title}</p>
-      <p style="color:#666;font-size:13px;margin:2px 0 0;">${quote.address}</p>
+      <p style="font-weight:600;margin:0;">${esc(quote.title)}</p>
+      <p style="color:#666;font-size:13px;margin:2px 0 0;">${esc(quote.address)}</p>
     </div>
     <div>
       <p class="label">Client</p>
-      <p style="font-weight:600;margin:0;">${quote.client.name}</p>
-      ${quote.client.company ? `<p style="color:#666;font-size:13px;margin:2px 0 0;">${quote.client.company}</p>` : ''}
+      <p style="font-weight:600;margin:0;">${esc(quote.client.name)}</p>
+      ${quote.client.company ? `<p style="color:#666;font-size:13px;margin:2px 0 0;">${esc(quote.client.company)}</p>` : ''}
     </div>
   </div>
 
@@ -74,21 +79,21 @@ export function renderQuoteHtml(quote: QuoteWithRelations): string {
 
   <hr class="divider">
 
-  ${totals.materialsMarkupAmount > 0 ? `<div class="total-row"><span>Materials Markup (${quote.materialMarkupPct}%)</span><span>$${totals.materialsMarkupAmount.toFixed(2)}</span></div>` : ''}
-  <div class="total-row"><span>Overhead (${quote.overheadPct}%)</span><span>$${totals.overheadAmount.toFixed(2)}</span></div>
-  <div class="total-row"><span>Profit (${quote.profitPct}%)</span><span>$${totals.profitAmount.toFixed(2)}</span></div>
+  ${totals.materialsMarkupAmount > 0 ? `<div class="total-row"><span>Materials Markup (${quote.materialMarkupPct}%)</span><span>$${totals.materialsMarkupAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></div>` : ''}
+  <div class="total-row"><span>Overhead (${quote.overheadPct}%)</span><span>$${totals.overheadAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></div>
+  <div class="total-row"><span>Profit (${quote.profitPct}%)</span><span>$${totals.profitAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></div>
   <div class="total-final"><span>Total Cost:</span><span>$${totals.total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span></div>
 
   <hr class="divider">
 
   <div style="margin-bottom:24px;">
     <h3 style="font-weight:bold;text-decoration:underline;margin-bottom:8px;">Note:</h3>
-    <p style="font-size:13px;">${quote.paymentTerms}</p>
+    <p style="font-size:13px;">${esc(quote.paymentTerms)}</p>
   </div>
 
   <div style="margin-bottom:24px;">
     <h3 style="font-weight:bold;text-decoration:underline;margin-bottom:8px;">Exclusions</h3>
-    <div style="border:1px solid #ccc;padding:12px;font-size:13px;">${quote.exclusions}</div>
+    <div style="border:1px solid #ccc;padding:12px;font-size:13px;">${esc(quote.exclusions)}</div>
   </div>
 
   <div style="margin-bottom:40px;font-size:12px;color:#555;">
