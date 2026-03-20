@@ -150,8 +150,6 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
 
   const inputClass = "bg-transparent border border-transparent hover:border-border focus:border-accent rounded px-2 py-1 text-sm text-text-primary focus:outline-none transition-colors w-full";
 
-  void signingUrl; // used via state; suppress unused warning
-
   return (
     <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
       {/* Line items — takes 3 cols */}
