@@ -17,6 +17,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 
   if (!contract) return NextResponse.json({ error: 'Not found' }, { status: 404 });
   if (contract.status === 'executed') return NextResponse.json({ error: 'Contract already executed' }, { status: 409 });
+  if (!contract.htmlPath) return NextResponse.json({ error: 'Contract document not generated yet' }, { status: 422 });
   if (!contract.quote.client.email) return NextResponse.json({ error: 'Client has no email address' }, { status: 422 });
 
   const token = randomUUID();

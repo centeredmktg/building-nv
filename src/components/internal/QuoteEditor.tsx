@@ -53,6 +53,7 @@ interface Quote {
       priceDelta: number;
       status: string;
       signedAt?: string | Date | null;
+      signedPdfPath?: string | null;
     }>;
   } | null;
 }
@@ -179,7 +180,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
               </button>
             ) : null}
             {quote.status === 'quote_signed' && !quote.contract ? (
-              <ConvertToContractButton quoteId={quote.id} />
+              <ConvertToContractButton quoteId={quote.id} saved={saved} />
             ) : null}
           </div>
         </div>
@@ -372,9 +373,14 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                 {quote.contract?.changeOrders?.map((co) => (
                   <div key={co.id} className="flex justify-between items-center">
                     <span className="text-text-muted">CO #{co.number}</span>
-                    <span className={co.status === 'executed' ? 'text-green-400' : 'text-accent'}>
-                      {co.status === 'executed' ? '✓' : co.status} {co.priceDelta >= 0 ? '+' : ''}{co.priceDelta.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={co.status === 'executed' ? 'text-green-400' : 'text-accent'}>
+                        {co.status === 'executed' ? '✓' : co.status} {co.priceDelta >= 0 ? '+' : ''}{co.priceDelta.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })}
+                      </span>
+                      {co.signedPdfPath && (
+                        <a href={`/api/change-orders/${co.id}/signed-pdf`} target="_blank" className="text-accent underline text-xs ml-2">Download PDF</a>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -386,10 +392,11 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
   );
 }
 
-function ConvertToContractButton({ quoteId }: { quoteId: string }) {
+function ConvertToContractButton({ quoteId, saved }: { quoteId: string; saved: boolean }) {
   const [loading, setLoading] = useState(false);
 
   const convert = async () => {
+    if (!saved && !confirm("You have unsaved changes. Convert anyway? Unsaved changes will be lost.")) return;
     if (!confirm("Convert this signed quote to a contract?")) return;
     setLoading(true);
     try {

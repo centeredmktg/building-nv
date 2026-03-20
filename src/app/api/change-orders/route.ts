@@ -13,8 +13,13 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-  const body = await req.json() as { contractId?: string; title?: string; scopeDelta?: string; priceDelta?: number };
-  if (!body.contractId || !body.title || !body.scopeDelta || body.priceDelta === undefined) {
+  let body: { contractId?: string; title?: string; scopeDelta?: string; priceDelta?: number };
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  }
+  if (!body.contractId || !body.title || !body.scopeDelta || typeof body.priceDelta !== 'number' || !isFinite(body.priceDelta)) {
     return NextResponse.json({ error: 'Missing required fields: contractId, title, scopeDelta, priceDelta' }, { status: 400 });
   }
 
