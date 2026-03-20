@@ -2,11 +2,18 @@
 
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import { CRMProject } from "@/lib/crmTypes";
+import { CRMProject, JobProject } from "@/lib/crmTypes";
+import { isAtRisk } from "@/lib/projectFinancials";
+
+type AnyProject = CRMProject | JobProject;
 
 interface LeadCardProps {
-  project: CRMProject;
-  onClick: (project: CRMProject) => void;
+  project: AnyProject;
+  onClick: (project: AnyProject) => void;
+}
+
+function isJobProject(p: AnyProject): p is JobProject {
+  return "milestones" in p;
 }
 
 export default function LeadCard({ project, onClick }: LeadCardProps) {
@@ -27,6 +34,8 @@ export default function LeadCard({ project, onClick }: LeadCardProps) {
     day: "numeric",
   });
 
+  const atRisk = isJobProject(project) && isAtRisk(project);
+
   return (
     <div
       ref={setNodeRef}
@@ -37,6 +46,11 @@ export default function LeadCard({ project, onClick }: LeadCardProps) {
       className="bg-surface-2 border border-border rounded-sm p-3 cursor-grab active:cursor-grabbing hover:border-accent/40 transition-colors"
     >
       <p className="text-text-primary font-semibold text-sm leading-tight">{project.name}</p>
+      {atRisk && (
+        <span className="inline-flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded text-xs font-medium bg-amber-500/15 text-amber-400">
+          ⚠ At Risk
+        </span>
+      )}
       {primaryCompany && (
         <p className="text-text-muted text-xs mt-0.5">{primaryCompany.name}</p>
       )}
