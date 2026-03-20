@@ -1,6 +1,5 @@
 // src/lib/docs/change-order-template.ts
-// Server-only.
-import 'server-only';
+// IMPORTANT: Review with Nevada attorney before using in live contracts.
 
 function esc(s: string | number | null | undefined): string {
   if (s === null || s === undefined) return '';
