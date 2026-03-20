@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ProjectSiteForm from "./ProjectSiteForm";
 import TeamAssignmentPanel from "./TeamAssignmentPanel";
+import FinancialSummarySection from "@/components/internal/FinancialSummarySection";
 
 export const dynamic = "force-dynamic";
 
@@ -89,6 +90,22 @@ export default async function ProjectDetailPage({
           }}
         />
       </section>
+
+      {/* Financial Summary */}
+      {["preconstruction", "active", "punch_list", "complete"].includes(project.stage) && (
+        <section className="border border-border rounded-sm p-6 mb-6">
+          <FinancialSummarySection
+            projectId={project.id}
+            initial={{
+              contractAmount: project.contractAmount ?? null,
+              targetCostAmount: project.targetCostAmount ?? null,
+              estimatedStartDate: project.estimatedStartDate?.toISOString() ?? null,
+              estimatedEndDate: project.estimatedEndDate?.toISOString() ?? null,
+              timingNotes: project.timingNotes ?? null,
+            }}
+          />
+        </section>
+      )}
 
       {/* Team */}
       <section className="border border-border rounded-sm p-6 mb-6">
