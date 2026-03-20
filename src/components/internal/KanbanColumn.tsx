@@ -1,14 +1,16 @@
 "use client";
 
 import { useDroppable } from "@dnd-kit/core";
-import { CRMProject } from "@/lib/crmTypes";
+import { CRMProject, JobProject } from "@/lib/crmTypes";
 import LeadCard from "./LeadCard";
+
+type AnyProject = CRMProject | JobProject;
 
 interface KanbanColumnProps {
   id: string;
   label: string;
-  projects: CRMProject[];
-  onCardClick: (project: CRMProject) => void;
+  projects: AnyProject[];
+  onCardClick: (project: AnyProject) => void;
 }
 
 export default function KanbanColumn({ id, label, projects, onCardClick }: KanbanColumnProps) {

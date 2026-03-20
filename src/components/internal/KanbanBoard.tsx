@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import { DndContext, DragEndEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { CRMProject, STAGES, StageId } from "@/lib/crmTypes";
+import { CRMProject, JobProject, STAGES, StageId } from "@/lib/crmTypes";
 import KanbanColumn from "./KanbanColumn";
 import LeadPanel from "./LeadPanel";
 
-export default function KanbanBoard({ initialProjects }: { initialProjects: CRMProject[] }) {
-  const [projects, setProjects] = useState<CRMProject[]>(initialProjects);
-  const [selected, setSelected] = useState<CRMProject | null>(null);
+type AnyProject = CRMProject | JobProject;
+
+export default function KanbanBoard({ initialProjects }: { initialProjects: AnyProject[] }) {
+  const [projects, setProjects] = useState<AnyProject[]>(initialProjects);
+  const [selected, setSelected] = useState<AnyProject | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } })
@@ -39,6 +41,11 @@ export default function KanbanBoard({ initialProjects }: { initialProjects: CRMP
       prev.map((p) => (p.id === id ? { ...p, stage: stage as StageId } : p))
     );
     setSelected((prev) => (prev?.id === id ? { ...prev, stage: stage as StageId } : prev));
+  };
+
+  const handleTargetCostUpdate = (id: string, targetCostAmount: number) => {
+    setProjects((prev) => prev.map((p) => (p.id === id ? { ...p, targetCostAmount } : p)));
+    setSelected((prev) => (prev?.id === id ? { ...prev, targetCostAmount } : prev));
   };
 
   const openCount = projects.filter(
@@ -78,6 +85,7 @@ export default function KanbanBoard({ initialProjects }: { initialProjects: CRMP
           onClose={() => setSelected(null)}
           onNotesUpdate={handleNotesUpdate}
           onStageChange={handleStageChange}
+          onTargetCostUpdate={handleTargetCostUpdate}
         />
       )}
     </div>
