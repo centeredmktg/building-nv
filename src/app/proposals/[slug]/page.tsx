@@ -132,7 +132,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
         {/* Acceptance */}
         <AcceptanceBlock
           slug={quote.slug}
-          signingToken={quote.signingToken ?? null}
+          token={quote.signingToken ?? undefined}
           accepted={!!quote.acceptance}
           signerName={quote.acceptance?.signerName}
           acceptedAt={quote.acceptance?.acceptedAt?.toString()}

@@ -1,95 +1,89 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import SignaturePad from 'signature_pad';
 
 export default function AcceptanceBlock({
   slug,
-  signingToken,
+  token,
   accepted,
-  signerName,
-  acceptedAt,
+  signerName: initialName,
+  acceptedAt: initialDate,
 }: {
   slug: string;
-  signingToken: string | null;
+  token?: string;
   accepted: boolean;
   signerName?: string;
   acceptedAt?: string;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const padRef = useRef<any>(null);
-  const [name, setName] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "done">(accepted ? "done" : "idle");
-  const [finalName, setFinalName] = useState(signerName || "");
-  const [finalDate, setFinalDate] = useState(acceptedAt || "");
-  const [error, setError] = useState<string | null>(null);
+  const padRef = useRef<SignaturePad | null>(null);
+  const [name, setName] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'done'>(accepted ? 'done' : 'idle');
+  const [finalName, setFinalName] = useState(initialName ?? '');
+  const [finalDate, setFinalDate] = useState(initialDate ?? '');
+  const [error, setError] = useState('');
 
-  // Initialize SignaturePad from public/signature_pad.min.js
   useEffect(() => {
-    if (status === "done") return;
-    const script = document.createElement("script");
-    script.src = "/signature_pad.min.js";
-    script.onload = () => {
-      if (canvasRef.current && (window as any).SignaturePad) {
-        padRef.current = new (window as any).SignaturePad(canvasRef.current, {
-          backgroundColor: "rgb(255, 255, 255)",
-          penColor: "rgb(0, 0, 0)",
-        });
-        resizeCanvas();
-      }
+    if (!canvasRef.current || status === 'done') return;
+    const canvas = canvasRef.current;
+    padRef.current = new SignaturePad(canvas, { backgroundColor: 'rgb(249,250,251)' });
+
+    const resize = () => {
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      const data = padRef.current?.toData();
+      canvas.width = canvas.offsetWidth * ratio;
+      canvas.height = canvas.offsetHeight * ratio;
+      canvas.getContext('2d')?.scale(ratio, ratio);
+      padRef.current?.clear();
+      if (data) padRef.current?.fromData(data);
     };
-    document.head.appendChild(script);
-    return () => { document.head.removeChild(script); };
+
+    window.addEventListener('resize', resize);
+    resize();
+    return () => window.removeEventListener('resize', resize);
   }, [status]);
 
-  function resizeCanvas() {
-    const canvas = canvasRef.current;
-    if (!canvas || !padRef.current) return;
-    const ratio = Math.max(window.devicePixelRatio || 1, 1);
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    (canvas.getContext("2d") as CanvasRenderingContext2D).scale(ratio, ratio);
-    padRef.current.clear();
-  }
+  const handleClear = () => padRef.current?.clear();
 
   const handleSubmit = async () => {
-    if (!name.trim()) { setError("Please enter your full name."); return; }
-    if (!padRef.current || padRef.current.isEmpty()) { setError("Please draw your signature."); return; }
-    setError(null);
-    setStatus("loading");
+    if (!name.trim()) { setError('Please enter your full name.'); return; }
+    if (!padRef.current || padRef.current.isEmpty()) { setError('Please sign before submitting.'); return; }
+    setError('');
+    setStatus('loading');
 
-    const signature = padRef.current.toDataURL("image/png");
+    const signature = padRef.current.toDataURL('image/png');
 
-    // Use new token-based route if available, else fall back to legacy accept route
-    const url = signingToken
-      ? `/api/sign/quote/${signingToken}`
+    // Use token-based route if token is available, otherwise fall back to legacy
+    const url = token
+      ? `/api/sign/quote/${token}`
       : `/api/proposals/${slug}/accept`;
 
-    const body = signingToken
+    const body = token
       ? JSON.stringify({ signature, signerName: name })
       : JSON.stringify({ signerName: name });
 
     const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body,
     });
 
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data.error || "Something went wrong. Please try again.");
-      setStatus("idle");
+      setError(data.error ?? 'Something went wrong. Please try again.');
+      setStatus('idle');
       return;
     }
 
     const data = await res.json();
     setFinalName(name);
     setFinalDate(data.signedAt ? new Date(data.signedAt).toLocaleString() : new Date().toLocaleString());
-    setStatus("done");
+    setStatus('done');
   };
 
-  if (status === "done") {
+  if (status === 'done') {
     return (
-      <div className="border border-green-800 bg-green-950/30 rounded-sm p-6 print:border-border print:bg-transparent">
+      <div className="border border-green-800 bg-green-950/30 rounded-sm p-6">
         <p className="text-green-400 font-semibold mb-1">Proposal Accepted</p>
         <p className="text-gray-600 text-sm">
           Signed by <span className="text-gray-900">{finalName}</span>
@@ -101,13 +95,13 @@ export default function AcceptanceBlock({
 
   return (
     <div className="border border-gray-300 rounded-sm p-6 print:hidden">
-      <h3 className="text-gray-900 font-semibold mb-1">Sign This Proposal</h3>
+      <h3 className="text-gray-900 font-semibold mb-1">Acceptance of Proposal</h3>
       <p className="text-gray-600 text-sm mb-4">
-        By signing below and entering your name, you authorize Building NV to proceed with the scope above and agree to the stated terms.
+        By signing below and clicking Submit, you authorize Building NV to furnish all materials and labor required to complete the work described above, and agree to the terms and payment schedule.
       </p>
 
       <div className="mb-4">
-        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Full Name</label>
+        <label className="block text-xs text-gray-500 uppercase tracking-widest mb-1">Full Name</label>
         <input
           type="text"
           placeholder="Your full name"
@@ -117,19 +111,22 @@ export default function AcceptanceBlock({
         />
       </div>
 
-      <div className="mb-4">
-        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Signature</label>
+      <div className="mb-2">
+        <label className="block text-xs text-gray-500 uppercase tracking-widest mb-1">Signature</label>
         <canvas
           ref={canvasRef}
-          className="w-full border border-gray-300 rounded-sm bg-white touch-none"
-          style={{ height: "160px" }}
+          className="w-full border border-gray-300 rounded-sm bg-gray-50"
+          style={{ height: '120px', touchAction: 'none' }}
         />
+      </div>
+
+      <div className="flex justify-between items-center mb-4">
         <button
           type="button"
-          onClick={() => padRef.current?.clear()}
-          className="text-xs text-gray-400 hover:text-gray-600 mt-1"
+          onClick={handleClear}
+          className="text-xs text-gray-400 hover:text-gray-600"
         >
-          Clear
+          Clear signature
         </button>
       </div>
 
@@ -137,10 +134,10 @@ export default function AcceptanceBlock({
 
       <button
         onClick={handleSubmit}
-        disabled={status === "loading"}
+        disabled={status === 'loading'}
         className="w-full bg-gray-900 text-white font-semibold px-6 py-3 rounded-sm text-sm hover:bg-gray-700 transition-colors disabled:opacity-60"
       >
-        {status === "loading" ? "Signing..." : "Sign This Proposal"}
+        {status === 'loading' ? 'Submitting\u2026' : 'Submit Signed Proposal'}
       </button>
     </div>
   );
