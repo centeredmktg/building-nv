@@ -8,6 +8,8 @@ export async function GET(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const q = req.nextUrl.searchParams.get('q') ?? '';
+  if (!q.trim()) return NextResponse.json([]);
+
   const contacts = await prisma.contact.findMany({
     where: {
       OR: [
@@ -38,14 +40,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'firstName is required' }, { status: 400 });
   }
 
-  const contact = await prisma.contact.create({
-    data: {
-      firstName: body.firstName.trim(),
-      lastName: body.lastName?.trim() || null,
-      email: body.email?.trim().toLowerCase() || null,
-      phone: body.phone?.trim() || null,
-      type: 'customer',
-    },
-  });
-  return NextResponse.json(contact, { status: 201 });
+  try {
+    const contact = await prisma.contact.create({
+      data: {
+        firstName: body.firstName.trim(),
+        lastName: body.lastName?.trim() || null,
+        email: body.email?.trim().toLowerCase() || null,
+        phone: body.phone?.trim() || null,
+        type: 'customer',
+      },
+    });
+    return NextResponse.json(contact, { status: 201 });
+  } catch (e) {
+    if (e instanceof Error && 'code' in e && e.code === 'P2002') {
+      return NextResponse.json({ error: 'A contact with this email already exists' }, { status: 409 });
+    }
+    throw e;
+  }
 }
