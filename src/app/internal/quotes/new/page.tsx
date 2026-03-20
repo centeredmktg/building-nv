@@ -130,6 +130,7 @@ export default function NewQuotePage() {
   }
 
   if (step === "review") {
+    const fmt = (n: number) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     return (
       <div className="max-w-3xl">
         <h1 className="text-2xl font-bold text-text-primary mb-2">Review Generated Quote</h1>
@@ -144,16 +145,34 @@ export default function NewQuotePage() {
                 {sec.items.map((item, ii) => (
                   <div key={ii} className="px-4 py-3 grid grid-cols-12 gap-3 items-center text-sm">
                     <span className="col-span-6 text-text-primary">{item.description}</span>
-                    <span className="col-span-2 text-text-muted text-right">{item.quantity} {item.unit}</span>
-                    <span className="col-span-2 text-text-muted text-right">${item.unitPrice}</span>
+                    <span className="col-span-2 text-text-muted text-right">
+                      {item.quantity === 1 && item.unit.toLowerCase() === "ls" ? "Flat Rate" : `${item.quantity.toLocaleString("en-US")} ${item.unit}`}
+                    </span>
+                    <span className="col-span-2 text-text-muted text-right">${fmt(item.unitPrice)}</span>
                     <span className="col-span-2 text-text-primary text-right font-medium">
-                      ${(item.quantity * item.unitPrice).toFixed(2)}
+                      ${fmt(item.quantity * item.unitPrice)}
                     </span>
                   </div>
                 ))}
+                <div className="px-4 py-3 grid grid-cols-12 gap-3 items-center text-sm bg-surface">
+                  <span className="col-span-6" />
+                  <span className="col-span-2" />
+                  <span className="col-span-2 text-text-muted text-right font-medium uppercase tracking-wider text-xs">Subtotal</span>
+                  <span className="col-span-2 text-text-primary text-right font-semibold">
+                    ${fmt(sec.items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0))}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
+        </div>
+        <div className="border border-border rounded-sm px-4 py-4 grid grid-cols-12 gap-3 items-center mb-8">
+          <span className="col-span-6" />
+          <span className="col-span-2" />
+          <span className="col-span-2 text-text-muted text-right text-sm font-semibold uppercase tracking-wider">Grand Total</span>
+          <span className="col-span-2 text-text-primary text-right text-xl font-bold">
+            ${fmt(sections.reduce((total, sec) => total + sec.items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0), 0))}
+          </span>
         </div>
         <div className="flex gap-3">
           <button
