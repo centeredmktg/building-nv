@@ -67,13 +67,15 @@ export default function LeadPanel({
     const parsed = parseFloat(targetCostDraft);
     if (isNaN(parsed)) return;
     setSavingCost(true);
-    await fetch(`/api/projects/${project.id}`, {
+    const res = await fetch(`/api/projects/${project.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ targetCostAmount: parsed }),
     });
-    onTargetCostUpdate(project.id, parsed);
-    setTargetCostDirty(false);
+    if (res.ok) {
+      onTargetCostUpdate(project.id, parsed);
+      setTargetCostDirty(false);
+    }
     setSavingCost(false);
   };
 

@@ -81,6 +81,7 @@ export default function KanbanBoard({ initialProjects }: { initialProjects: AnyP
 
       {selected && (
         <LeadPanel
+          key={selected.id}
           project={selected}
           onClose={() => setSelected(null)}
           onNotesUpdate={handleNotesUpdate}
