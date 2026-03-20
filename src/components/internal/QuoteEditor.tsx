@@ -33,6 +33,8 @@ interface Quote {
   paymentTerms: string;
   exclusions: string;
   notes: string;
+  estimatedStartDate: string | null;
+  estimatedDuration: string | null;
   client: { name: string; company: string };
   sections: Section[];
 }
@@ -254,6 +256,38 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
             <div className="border-t border-border pt-3 flex justify-between">
               <span className="text-text-primary font-semibold">Total</span>
               <span className="text-accent font-bold text-lg">${totals.total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          {/* Project Timeline */}
+          <div className="border-t border-border pt-4 mt-4">
+            <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest mb-3">
+              Project Timeline
+            </h3>
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <label className="text-text-muted text-xs mb-1 block">Est. Start Date</label>
+                <input
+                  type="date"
+                  value={quote.estimatedStartDate?.split("T")[0] ?? ""}
+                  onChange={(e) =>
+                    setQuote((q) => ({ ...q, estimatedStartDate: e.target.value || null }))
+                  }
+                  className="w-full bg-surface-2 border border-border rounded-sm px-3 py-2 text-sm text-text-primary"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="text-text-muted text-xs mb-1 block">Est. Duration</label>
+                <input
+                  type="text"
+                  value={quote.estimatedDuration ?? ""}
+                  onChange={(e) =>
+                    setQuote((q) => ({ ...q, estimatedDuration: e.target.value || null }))
+                  }
+                  placeholder="e.g. 8 weeks"
+                  className="w-full bg-surface-2 border border-border rounded-sm px-3 py-2 text-sm text-text-primary"
+                />
+              </div>
             </div>
           </div>
 

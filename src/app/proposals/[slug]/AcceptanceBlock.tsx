@@ -24,15 +24,16 @@ export default function AcceptanceBlock({
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!canvasRef.current || status === 'done') return;
+    if (!canvasRef.current) return;
     const canvas = canvasRef.current;
     padRef.current = new SignaturePad(canvas, { backgroundColor: 'rgb(249,250,251)' });
 
     const resize = () => {
       const ratio = Math.max(window.devicePixelRatio || 1, 1);
       const data = padRef.current?.toData();
+      const height = canvas.offsetHeight || 120; // fallback to CSS height
       canvas.width = canvas.offsetWidth * ratio;
-      canvas.height = canvas.offsetHeight * ratio;
+      canvas.height = height * ratio;
       canvas.getContext('2d')?.scale(ratio, ratio);
       padRef.current?.clear();
       if (data) padRef.current?.fromData(data);
@@ -41,7 +42,7 @@ export default function AcceptanceBlock({
     window.addEventListener('resize', resize);
     resize();
     return () => window.removeEventListener('resize', resize);
-  }, [status]);
+  }, []); // Run once on mount only — status change must not re-initialize the pad
 
   const handleClear = () => padRef.current?.clear();
 

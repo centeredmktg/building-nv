@@ -42,6 +42,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       notes: body.notes,
       status: body.status,
       sentAt: body.status === "sent" ? new Date() : undefined,
+      estimatedStartDate: body.estimatedStartDate ? new Date(body.estimatedStartDate) : undefined,
+      estimatedDuration: body.estimatedDuration ?? undefined,
     },
   });
 
