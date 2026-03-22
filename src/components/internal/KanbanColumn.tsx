@@ -11,10 +11,9 @@ interface KanbanColumnProps {
   label: string;
   projects: AnyProject[];
   onCardClick: (project: AnyProject) => void;
-  onActivate?: (project: AnyProject) => void;
 }
 
-export default function KanbanColumn({ id, label, projects, onCardClick, onActivate }: KanbanColumnProps) {
+export default function KanbanColumn({ id, label, projects, onCardClick }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
 
   return (
@@ -34,7 +33,7 @@ export default function KanbanColumn({ id, label, projects, onCardClick, onActiv
         }`}
       >
         {projects.map((p) => (
-          <LeadCard key={p.id} project={p} onClick={onCardClick} onActivate={onActivate} />
+          <LeadCard key={p.id} project={p} onClick={onCardClick} />
         ))}
       </div>
     </div>
