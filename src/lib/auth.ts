@@ -10,10 +10,14 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ profile }) {
-      const allowedDomain = process.env.GOOGLE_ALLOWED_DOMAIN;
-      if (!allowedDomain) return true; // no restriction if env not set
       const email = (profile as { email?: string })?.email ?? "";
-      return email.endsWith(`@${allowedDomain}`);
+      const allowedEmails = process.env.GOOGLE_ALLOWED_EMAILS?.split(",").map((e) => e.trim());
+      if (allowedEmails && allowedEmails.length > 0) {
+        return allowedEmails.includes(email);
+      }
+      const allowedDomain = process.env.GOOGLE_ALLOWED_DOMAIN;
+      if (allowedDomain) return email.endsWith(`@${allowedDomain}`);
+      return true;
     },
   },
   session: { strategy: "jwt" },
