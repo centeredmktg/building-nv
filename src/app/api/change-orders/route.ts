@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
   const coHtml = renderChangeOrderHtml({
     coNumber,
     projectTitle: contract.quote.title,
-    clientName: contract.quote.client.name,
+    clientName: contract.quote.client?.name ?? 'Client',
     contractDate,
     scopeDelta: body.scopeDelta,
     priceDelta: body.priceDelta,

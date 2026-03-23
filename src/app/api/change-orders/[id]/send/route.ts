@@ -20,7 +20,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   if (!changeOrder.htmlPath) {
     return NextResponse.json({ error: 'Change order document not generated yet' }, { status: 422 });
   }
-  if (!changeOrder.contract.quote.client.email) {
+  const client = changeOrder.contract.quote.client;
+  if (!client?.email) {
     return NextResponse.json({ error: 'Client has no email address' }, { status: 422 });
   }
 
@@ -43,8 +44,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   let emailSent = true;
   try {
     await sendSigningLink({
-      toEmail: changeOrder.contract.quote.client.email,
-      toName: changeOrder.contract.quote.client.name,
+      toEmail: client.email!,
+      toName: client.name,
       projectTitle: changeOrder.contract.quote.title,
       signingUrl,
       docLabel: 'Change Order',
