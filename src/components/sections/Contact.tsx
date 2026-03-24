@@ -72,10 +72,10 @@ export default function Contact() {
               </p>
               <div className="flex flex-col gap-4">
                 <a
-                  href="tel:+17752000000"
+                  href="tel:+17753038662"
                   className="flex items-center gap-3 text-text-primary hover:text-accent transition-colors group"
                 >
-                  <span className="text-2xl font-bold">(775) 200-0000</span>
+                  <span className="text-2xl font-bold">(775) 303-8662</span>
                 </a>
                 <p className="text-text-muted text-sm">Reno, Nevada</p>
               </div>
