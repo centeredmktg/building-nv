@@ -907,6 +907,7 @@ export type ContractCreateOrConnectWithoutProjectInput = {
 
 export type ContractCreateManyProjectInputEnvelope = {
   data: Prisma.ContractCreateManyProjectInput | Prisma.ContractCreateManyProjectInput[]
+  skipDuplicates?: boolean
 }
 
 export type ContractUpsertWithWhereUniqueWithoutProjectInput = {
@@ -1836,6 +1837,7 @@ export type ContractCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Contracts.
    */
   data: Prisma.ContractCreateManyInput | Prisma.ContractCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1854,6 +1856,7 @@ export type ContractCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Contracts.
    */
   data: Prisma.ContractCreateManyInput | Prisma.ContractCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -382,6 +382,7 @@ export type ProjectCompanyCreateOrConnectWithoutProjectInput = {
 
 export type ProjectCompanyCreateManyProjectInputEnvelope = {
   data: Prisma.ProjectCompanyCreateManyProjectInput | Prisma.ProjectCompanyCreateManyProjectInput[]
+  skipDuplicates?: boolean
 }
 
 export type ProjectCompanyUpsertWithWhereUniqueWithoutProjectInput = {
@@ -426,6 +427,7 @@ export type ProjectCompanyCreateOrConnectWithoutCompanyInput = {
 
 export type ProjectCompanyCreateManyCompanyInputEnvelope = {
   data: Prisma.ProjectCompanyCreateManyCompanyInput | Prisma.ProjectCompanyCreateManyCompanyInput[]
+  skipDuplicates?: boolean
 }
 
 export type ProjectCompanyUpsertWithWhereUniqueWithoutCompanyInput = {
@@ -1197,6 +1199,7 @@ export type ProjectCompanyCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many ProjectCompanies.
    */
   data: Prisma.ProjectCompanyCreateManyInput | Prisma.ProjectCompanyCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1215,6 +1218,7 @@ export type ProjectCompanyCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * The data used to create many ProjectCompanies.
    */
   data: Prisma.ProjectCompanyCreateManyInput | Prisma.ProjectCompanyCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

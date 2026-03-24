@@ -724,6 +724,7 @@ export type ChangeOrderCreateOrConnectWithoutContractInput = {
 
 export type ChangeOrderCreateManyContractInputEnvelope = {
   data: Prisma.ChangeOrderCreateManyContractInput | Prisma.ChangeOrderCreateManyContractInput[]
+  skipDuplicates?: boolean
 }
 
 export type ChangeOrderUpsertWithWhereUniqueWithoutContractInput = {
@@ -1630,6 +1631,7 @@ export type ChangeOrderCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * The data used to create many ChangeOrders.
    */
   data: Prisma.ChangeOrderCreateManyInput | Prisma.ChangeOrderCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1648,6 +1650,7 @@ export type ChangeOrderCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many ChangeOrders.
    */
   data: Prisma.ChangeOrderCreateManyInput | Prisma.ChangeOrderCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

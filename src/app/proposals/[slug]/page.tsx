@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { calculateQuoteTotals } from "@/lib/pricing";
 import AcceptanceBlock from "./AcceptanceBlock";
+import { resolveQuoteClient } from "@/lib/quote-client";
 
 export default async function ProposalPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -13,7 +14,8 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
       ],
     },
     include: {
-      client: true,
+      quoteContacts: { include: { contact: true } },
+      quoteCompanies: { include: { company: true } },
       sections: {
         include: { items: { orderBy: { position: "asc" } } },
         orderBy: { position: "asc" },
@@ -24,6 +26,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
 
   if (!quote) notFound();
 
+  const client = resolveQuoteClient(quote);
   const allItems = quote.sections.flatMap((s) =>
     s.items.map((i) => ({ unitPrice: i.unitPrice, quantity: i.quantity, isMaterial: i.isMaterial }))
   );
@@ -51,8 +54,8 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
         <div className="grid grid-cols-2 gap-8 mb-8 pb-8 border-b border-gray-200">
           <div>
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Client</p>
-            <p className="font-semibold text-gray-900">{quote.client.name}</p>
-            {quote.client.company && <p className="text-gray-600 text-sm">{quote.client.company}</p>}
+            <p className="font-semibold text-gray-900">{client.name}</p>
+            {client.company && <p className="text-gray-600 text-sm">{client.company}</p>}
           </div>
           <div>
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Job Site</p>

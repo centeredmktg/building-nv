@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { calculateQuoteTotals } from "@/lib/pricing";
+import { resolveQuoteClient } from "@/lib/quote-client";
 
 const UNITS = ["ea", "SF", "LF", "LS", "hr"];
 
@@ -35,7 +36,8 @@ interface Quote {
   notes: string;
   estimatedStartDate: string | null;
   estimatedDuration: string | null;
-  client: { name: string; company: string };
+  quoteContacts: { role: string; contact: { firstName: string; lastName?: string | null; email?: string | null } }[];
+  quoteCompanies: { company: { name: string } }[];
   sections: Section[];
   signingToken?: string | null;
   signedAt?: string | Date | null;
@@ -127,7 +129,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
   }, [quote]);
 
   const sendForSignature = async () => {
-    if (!confirm(`Send signing link to ${quote.client.name}?`)) return;
+    if (!confirm(`Send signing link to ${resolveQuoteClient(quote).name}?`)) return;
     setSending(true);
     try {
       const res = await fetch(`/api/quotes/${quote.id}/send`, { method: 'POST' });
@@ -140,7 +142,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
       if (!data.emailSent) {
         alert(`Email delivery failed. Signing link (copy manually):\n${data.signingUrl}`);
       } else {
-        alert(`Signing link sent to ${quote.client.name}.\n\nLink: ${data.signingUrl}`);
+        alert(`Signing link sent to ${resolveQuoteClient(quote).name}.\n\nLink: ${data.signingUrl}`);
       }
     } catch (err: unknown) {
       console.error('sendForSignature error:', err);
@@ -159,7 +161,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-xl font-bold text-text-primary">{quote.title}</h1>
-            <p className="text-text-muted text-sm">{quote.client.name}{quote.client.company ? ` · ${quote.client.company}` : ""}</p>
+            <p className="text-text-muted text-sm">{(() => { const c = resolveQuoteClient(quote); return c.name + (c.company ? ` · ${c.company}` : ""); })()}</p>
           </div>
           <div className="flex gap-3">
             <button onClick={save} disabled={saving}

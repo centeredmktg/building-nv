@@ -698,6 +698,7 @@ export type ComponentCreateOrConnectWithoutVendorInput = {
 
 export type ComponentCreateManyVendorInputEnvelope = {
   data: Prisma.ComponentCreateManyVendorInput | Prisma.ComponentCreateManyVendorInput[]
+  skipDuplicates?: boolean
 }
 
 export type ComponentUpsertWithWhereUniqueWithoutVendorInput = {
@@ -1586,6 +1587,7 @@ export type ComponentCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Components.
    */
   data: Prisma.ComponentCreateManyInput | Prisma.ComponentCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1604,6 +1606,7 @@ export type ComponentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many Components.
    */
   data: Prisma.ComponentCreateManyInput | Prisma.ComponentCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

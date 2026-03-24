@@ -5,6 +5,7 @@ import { sendSignedPDF } from '@/lib/docs/email';
 import { renderQuoteHtml } from '@/lib/docs/quote-template';
 import { writeFileSync, mkdirSync } from 'fs';
 import path from 'path';
+import { resolveQuoteClient } from '@/lib/quote-client';
 
 const DOCS_DIR = () => process.env.DOCS_DIR ?? path.join(process.cwd(), 'docs-storage');
 
@@ -19,7 +20,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   const quote = await prisma.quote.findFirst({
     where: { signingToken: token },
     include: {
-      client: true,
+      quoteContacts: { include: { contact: true } },
+      quoteCompanies: { include: { company: true } },
       sections: { include: { items: { orderBy: { position: 'asc' } } }, orderBy: { position: 'asc' } },
       acceptance: true,
     },
@@ -83,11 +85,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   });
 
   // Send PDF — don't fail request if email fails
-  if (quote.client.email) {
+  const client = resolveQuoteClient(quote);
+  if (client.email) {
     try {
       await sendSignedPDF({
-        toEmail: quote.client.email,
-        toName: quote.client.name,
+        toEmail: client.email,
+        toName: client.name,
         projectTitle: quote.title,
         signedPdfPath: pdfPath,
         docLabel: 'Proposal',

@@ -618,6 +618,7 @@ export type LineItemCreateOrConnectWithoutSectionInput = {
 
 export type LineItemCreateManySectionInputEnvelope = {
   data: Prisma.LineItemCreateManySectionInput | Prisma.LineItemCreateManySectionInput[]
+  skipDuplicates?: boolean
 }
 
 export type LineItemUpsertWithWhereUniqueWithoutSectionInput = {
@@ -683,6 +684,7 @@ export type LineItemCreateOrConnectWithoutComponentInput = {
 
 export type LineItemCreateManyComponentInputEnvelope = {
   data: Prisma.LineItemCreateManyComponentInput | Prisma.LineItemCreateManyComponentInput[]
+  skipDuplicates?: boolean
 }
 
 export type LineItemUpsertWithWhereUniqueWithoutComponentInput = {
@@ -1552,6 +1554,7 @@ export type LineItemCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many LineItems.
    */
   data: Prisma.LineItemCreateManyInput | Prisma.LineItemCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1570,6 +1573,7 @@ export type LineItemCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many LineItems.
    */
   data: Prisma.LineItemCreateManyInput | Prisma.LineItemCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

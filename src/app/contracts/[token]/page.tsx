@@ -1,16 +1,19 @@
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import ContractSigningBlock from './ContractSigningBlock';
+import { resolveQuoteClient } from '@/lib/quote-client';
 
 export default async function ContractSigningPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
 
   const contract = await prisma.contract.findFirst({
     where: { signingToken: token },
-    include: { quote: { include: { client: true } } },
+    include: { quote: { include: { quoteContacts: { include: { contact: true } }, quoteCompanies: { include: { company: true } } } } },
   });
 
   if (!contract) notFound();
+
+  const client = resolveQuoteClient(contract.quote);
 
   const isExpired = contract.signingTokenExpiresAt && new Date() > contract.signingTokenExpiresAt;
   const isExecuted = contract.status === 'executed';
@@ -21,8 +24,8 @@ export default async function ContractSigningPage({ params }: { params: Promise<
         <div className="mb-6">
           <h1 className="text-xl font-bold text-gray-900">Contract — {contract.quote.title}</h1>
           <p className="text-gray-500 text-sm mt-1">
-            {contract.quote.client.name}
-            {contract.quote.client.company && ` · ${contract.quote.client.company}`}
+            {client.name}
+            {client.company && ` · ${client.company}`}
           </p>
         </div>
 

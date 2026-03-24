@@ -4,6 +4,7 @@ import { generateSignedPDF } from '@/lib/docs/pdf';
 import { sendSignedPDF } from '@/lib/docs/email';
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import path from 'path';
+import { resolveQuoteClient } from '@/lib/quote-client';
 
 const DOCS_DIR = () => process.env.DOCS_DIR ?? path.join(process.cwd(), 'docs-storage');
 
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
 
   const changeOrder = await prisma.changeOrder.findFirst({
     where: { signingToken: token },
-    include: { contract: { include: { quote: { include: { client: true } } } } },
+    include: { contract: { include: { quote: { include: { quoteContacts: { include: { contact: true } }, quoteCompanies: { include: { company: true } } } } } } },
   });
 
   if (!changeOrder) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -82,11 +83,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ tok
   }
 
   // Send signed PDF (non-blocking)
-  if (changeOrder.contract.quote.client.email) {
+  const client = resolveQuoteClient(changeOrder.contract.quote);
+  if (client.email) {
     try {
       await sendSignedPDF({
-        toEmail: changeOrder.contract.quote.client.email,
-        toName: changeOrder.contract.quote.client.name,
+        toEmail: client.email,
+        toName: client.name,
         projectTitle: changeOrder.contract.quote.title,
         signedPdfPath: pdfPath,
         docLabel: 'Change Order',

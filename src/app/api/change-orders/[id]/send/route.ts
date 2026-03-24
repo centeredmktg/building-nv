@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { sendSigningLink } from '@/lib/docs/email';
 import { randomUUID } from 'crypto';
+import { resolveQuoteClient } from '@/lib/quote-client';
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const { id } = await params;
   const changeOrder = await prisma.changeOrder.findUnique({
     where: { id },
-    include: { contract: { include: { quote: { include: { client: true } } } } },
+    include: { contract: { include: { quote: { include: { quoteContacts: { include: { contact: true } }, quoteCompanies: { include: { company: true } } } } } } },
   });
 
   if (!changeOrder) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -20,8 +21,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   if (!changeOrder.htmlPath) {
     return NextResponse.json({ error: 'Change order document not generated yet' }, { status: 422 });
   }
-  const client = changeOrder.contract.quote.client;
-  if (!client?.email) {
+  const client = resolveQuoteClient(changeOrder.contract.quote);
+  if (!client.email) {
     return NextResponse.json({ error: 'Client has no email address' }, { status: 422 });
   }
 
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   let emailSent = true;
   try {
     await sendSigningLink({
-      toEmail: client.email!,
+      toEmail: client.email,
       toName: client.name,
       projectTitle: changeOrder.contract.quote.title,
       signingUrl,

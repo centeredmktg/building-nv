@@ -1039,6 +1039,7 @@ export type OnboardingInviteCreateManyArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many OnboardingInvites.
    */
   data: Prisma.OnboardingInviteCreateManyInput | Prisma.OnboardingInviteCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1057,6 +1058,7 @@ export type OnboardingInviteCreateManyAndReturnArgs<ExtArgs extends runtime.Type
    * The data used to create many OnboardingInvites.
    */
   data: Prisma.OnboardingInviteCreateManyInput | Prisma.OnboardingInviteCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

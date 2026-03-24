@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { resolveQuoteClient } from "@/lib/quote-client";
 
 export default async function QuotesPage() {
   const quotes = await prisma.quote.findMany({
-    include: { client: true },
+    include: { quoteContacts: { include: { contact: true } }, quoteCompanies: { include: { company: true } } },
     orderBy: { createdAt: "desc" },
   });
 
@@ -43,8 +44,7 @@ export default async function QuotesPage() {
               <div>
                 <p className="text-text-primary font-medium">{quote.title}</p>
                 <p className="text-text-muted text-sm mt-0.5">
-                  {quote.client.name}
-                  {quote.client.company ? ` · ${quote.client.company}` : ""}
+                  {(() => { const c = resolveQuoteClient(quote); return c.name + (c.company ? ` · ${c.company}` : ""); })()}
                 </p>
               </div>
               <div className="flex items-center gap-4">

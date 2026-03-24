@@ -476,6 +476,7 @@ export type CertificationCreateOrConnectWithoutEmployeeInput = {
 
 export type CertificationCreateManyEmployeeInputEnvelope = {
   data: Prisma.CertificationCreateManyEmployeeInput | Prisma.CertificationCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
 }
 
 export type CertificationUpsertWithWhereUniqueWithoutEmployeeInput = {
@@ -1294,6 +1295,7 @@ export type CertificationCreateManyArgs<ExtArgs extends runtime.Types.Extensions
    * The data used to create many Certifications.
    */
   data: Prisma.CertificationCreateManyInput | Prisma.CertificationCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1312,6 +1314,7 @@ export type CertificationCreateManyAndReturnArgs<ExtArgs extends runtime.Types.E
    * The data used to create many Certifications.
    */
   data: Prisma.CertificationCreateManyInput | Prisma.CertificationCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

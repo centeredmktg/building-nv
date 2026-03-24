@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { renderQuoteHtml } from '@/lib/docs/quote-template';
+import { resolveQuoteClient } from '@/lib/quote-client';
 import { renderMsaHtml } from '@/lib/docs/msa-template';
 import { calculateQuoteTotals } from '@/lib/pricing';
 import { writeFileSync, mkdirSync } from 'fs';
@@ -19,7 +20,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const quote = await prisma.quote.findUnique({
     where: { id },
     include: {
-      client: true,
+      quoteContacts: { include: { contact: true } },
+      quoteCompanies: { include: { company: true } },
       sections: { include: { items: { orderBy: { position: 'asc' } } }, orderBy: { position: 'asc' } },
     },
   });
@@ -38,7 +40,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   mkdirSync(docsDir, { recursive: true });
 
   const msaHtml = renderMsaHtml({
-    clientName: quote.client.name,
+    clientName: resolveQuoteClient(quote).name,
     projectTitle: quote.title,
     projectAddress: quote.address,
     contractorLicense: process.env.BNV_LICENSE ?? 'NV B2 #[LICENSE]',

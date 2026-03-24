@@ -410,6 +410,7 @@ export type OnboardingStepCreateOrConnectWithoutEmployeeInput = {
 
 export type OnboardingStepCreateManyEmployeeInputEnvelope = {
   data: Prisma.OnboardingStepCreateManyEmployeeInput | Prisma.OnboardingStepCreateManyEmployeeInput[]
+  skipDuplicates?: boolean
 }
 
 export type OnboardingStepUpsertWithWhereUniqueWithoutEmployeeInput = {
@@ -1195,6 +1196,7 @@ export type OnboardingStepCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many OnboardingSteps.
    */
   data: Prisma.OnboardingStepCreateManyInput | Prisma.OnboardingStepCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1213,6 +1215,7 @@ export type OnboardingStepCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * The data used to create many OnboardingSteps.
    */
   data: Prisma.OnboardingStepCreateManyInput | Prisma.OnboardingStepCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

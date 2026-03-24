@@ -2,6 +2,7 @@
 // Server-only. Never import in client components.
 import 'server-only';
 import { calculateQuoteTotals } from '@/lib/pricing';
+import { resolveQuoteClient } from '@/lib/quote-client';
 
 type QuoteWithRelations = any;
 
@@ -11,6 +12,7 @@ function esc(s: string | null | undefined): string {
 }
 
 export function renderQuoteHtml(quote: QuoteWithRelations): string {
+  const resolvedClient = resolveQuoteClient(quote);
   const allItems = quote.sections.flatMap((s: any) =>
     s.items.map((i: any) => ({ unitPrice: i.unitPrice, quantity: i.quantity, isMaterial: i.isMaterial }))
   );
@@ -68,8 +70,8 @@ export function renderQuoteHtml(quote: QuoteWithRelations): string {
     </div>
     <div>
       <p class="label">Client</p>
-      <p style="font-weight:600;margin:0;">${esc(quote.client.name)}</p>
-      ${quote.client.company ? `<p style="color:#666;font-size:13px;margin:2px 0 0;">${esc(quote.client.company)}</p>` : ''}
+      <p style="font-weight:600;margin:0;">${esc(resolvedClient.name)}</p>
+      ${resolvedClient.company ? `<p style="color:#666;font-size:13px;margin:2px 0 0;">${esc(resolvedClient.company)}</p>` : ''}
     </div>
   </div>
 

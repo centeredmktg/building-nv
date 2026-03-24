@@ -2162,6 +2162,7 @@ export type EmployeeCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Employees.
    */
   data: Prisma.EmployeeCreateManyInput | Prisma.EmployeeCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -2180,6 +2181,7 @@ export type EmployeeCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Employees.
    */
   data: Prisma.EmployeeCreateManyInput | Prisma.EmployeeCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

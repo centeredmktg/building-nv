@@ -6,6 +6,7 @@ import { renderChangeOrderHtml } from '@/lib/docs/change-order-template';
 import { writeFileSync, mkdirSync } from 'fs';
 import { randomUUID } from 'crypto';
 import path from 'path';
+import { resolveQuoteClient } from '@/lib/quote-client';
 
 const DOCS_DIR = () => process.env.DOCS_DIR ?? path.join(process.cwd(), 'docs-storage');
 
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
 
   const contract = await prisma.contract.findUnique({
     where: { id: body.contractId },
-    include: { quote: { include: { client: true } } },
+    include: { quote: { include: { quoteContacts: { include: { contact: true } }, quoteCompanies: { include: { company: true } } } } },
   });
 
   if (!contract) return NextResponse.json({ error: 'Contract not found' }, { status: 404 });
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest) {
   const coHtml = renderChangeOrderHtml({
     coNumber,
     projectTitle: contract.quote.title,
-    clientName: contract.quote.client?.name ?? 'Client',
+    clientName: resolveQuoteClient(contract.quote).name,
     contractDate,
     scopeDelta: body.scopeDelta,
     priceDelta: body.priceDelta,

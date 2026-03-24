@@ -1121,6 +1121,7 @@ export type VendorCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * The data used to create many Vendors.
    */
   data: Prisma.VendorCreateManyInput | Prisma.VendorCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1139,6 +1140,7 @@ export type VendorCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many Vendors.
    */
   data: Prisma.VendorCreateManyInput | Prisma.VendorCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**

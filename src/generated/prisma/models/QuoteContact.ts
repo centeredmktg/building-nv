@@ -406,6 +406,7 @@ export type QuoteContactCreateOrConnectWithoutQuoteInput = {
 
 export type QuoteContactCreateManyQuoteInputEnvelope = {
   data: Prisma.QuoteContactCreateManyQuoteInput | Prisma.QuoteContactCreateManyQuoteInput[]
+  skipDuplicates?: boolean
 }
 
 export type QuoteContactUpsertWithWhereUniqueWithoutQuoteInput = {
@@ -453,6 +454,7 @@ export type QuoteContactCreateOrConnectWithoutContactInput = {
 
 export type QuoteContactCreateManyContactInputEnvelope = {
   data: Prisma.QuoteContactCreateManyContactInput | Prisma.QuoteContactCreateManyContactInput[]
+  skipDuplicates?: boolean
 }
 
 export type QuoteContactUpsertWithWhereUniqueWithoutContactInput = {
@@ -1238,6 +1240,7 @@ export type QuoteContactCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many QuoteContacts.
    */
   data: Prisma.QuoteContactCreateManyInput | Prisma.QuoteContactCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1256,6 +1259,7 @@ export type QuoteContactCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * The data used to create many QuoteContacts.
    */
   data: Prisma.QuoteContactCreateManyInput | Prisma.QuoteContactCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

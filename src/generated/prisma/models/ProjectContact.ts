@@ -382,6 +382,7 @@ export type ProjectContactCreateOrConnectWithoutProjectInput = {
 
 export type ProjectContactCreateManyProjectInputEnvelope = {
   data: Prisma.ProjectContactCreateManyProjectInput | Prisma.ProjectContactCreateManyProjectInput[]
+  skipDuplicates?: boolean
 }
 
 export type ProjectContactUpsertWithWhereUniqueWithoutProjectInput = {
@@ -426,6 +427,7 @@ export type ProjectContactCreateOrConnectWithoutContactInput = {
 
 export type ProjectContactCreateManyContactInputEnvelope = {
   data: Prisma.ProjectContactCreateManyContactInput | Prisma.ProjectContactCreateManyContactInput[]
+  skipDuplicates?: boolean
 }
 
 export type ProjectContactUpsertWithWhereUniqueWithoutContactInput = {
@@ -1197,6 +1199,7 @@ export type ProjectContactCreateManyArgs<ExtArgs extends runtime.Types.Extension
    * The data used to create many ProjectContacts.
    */
   data: Prisma.ProjectContactCreateManyInput | Prisma.ProjectContactCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1215,6 +1218,7 @@ export type ProjectContactCreateManyAndReturnArgs<ExtArgs extends runtime.Types.
    * The data used to create many ProjectContacts.
    */
   data: Prisma.ProjectContactCreateManyInput | Prisma.ProjectContactCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

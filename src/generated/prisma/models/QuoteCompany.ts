@@ -406,6 +406,7 @@ export type QuoteCompanyCreateOrConnectWithoutQuoteInput = {
 
 export type QuoteCompanyCreateManyQuoteInputEnvelope = {
   data: Prisma.QuoteCompanyCreateManyQuoteInput | Prisma.QuoteCompanyCreateManyQuoteInput[]
+  skipDuplicates?: boolean
 }
 
 export type QuoteCompanyUpsertWithWhereUniqueWithoutQuoteInput = {
@@ -453,6 +454,7 @@ export type QuoteCompanyCreateOrConnectWithoutCompanyInput = {
 
 export type QuoteCompanyCreateManyCompanyInputEnvelope = {
   data: Prisma.QuoteCompanyCreateManyCompanyInput | Prisma.QuoteCompanyCreateManyCompanyInput[]
+  skipDuplicates?: boolean
 }
 
 export type QuoteCompanyUpsertWithWhereUniqueWithoutCompanyInput = {
@@ -1238,6 +1240,7 @@ export type QuoteCompanyCreateManyArgs<ExtArgs extends runtime.Types.Extensions.
    * The data used to create many QuoteCompanies.
    */
   data: Prisma.QuoteCompanyCreateManyInput | Prisma.QuoteCompanyCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1256,6 +1259,7 @@ export type QuoteCompanyCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ex
    * The data used to create many QuoteCompanies.
    */
   data: Prisma.QuoteCompanyCreateManyInput | Prisma.QuoteCompanyCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
