@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 // OSHA_10 and OSHA_30 require a card photo to be verified.
 // verifiedStatus is computed server-side — never trusted from client.
@@ -15,6 +17,8 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const session = await getServerSession(authOptions);
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const { id: employeeId } = await params;
   const body = await req.json();
   const { type, issueDate, expirationDate, cardPhotoUrl } = body as {
