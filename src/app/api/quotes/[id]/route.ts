@@ -11,7 +11,8 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
   const quote = await prisma.quote.findUnique({
     where: { id },
     include: {
-      client: true,
+      quoteContacts: { include: { contact: true } },
+      quoteCompanies: { include: { company: true } },
       sections: {
         include: { items: { orderBy: { position: "asc" } } },
         orderBy: { position: "asc" },

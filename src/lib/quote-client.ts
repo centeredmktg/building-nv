@@ -1,5 +1,4 @@
 // Resolves the primary client info from a quote's quoteContacts/quoteCompanies.
-// Replaces the defunct quote.client relation (clientId is always null for new quotes).
 
 type QuoteContact = {
   role: string;

@@ -8,7 +8,6 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Client'
 export type * from './models/Quote'
 export type * from './models/Milestone'
 export type * from './models/LineItemSection'

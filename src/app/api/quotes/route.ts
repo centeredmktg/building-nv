@@ -52,7 +52,6 @@ export async function POST(req: NextRequest) {
       title: `${body.address} — ${body.projectType}`,
       address: body.address.trim(),
       projectType: body.projectType.trim(),
-      clientId: null,
       projectId: body.projectId ?? null,
       quoteContacts: body.contacts?.length
         ? { create: body.contacts.map((c) => ({ contactId: c.contactId, role: c.role })) }

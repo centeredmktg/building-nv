@@ -9,16 +9,6 @@ datasource db {
 
 // ─── Quoting Engine (existing) ────────────────────────────────────────────────
 
-model Client {
-  id        String   @id @default(cuid())
-  name      String
-  company   String?
-  email     String?
-  phone     String?
-  createdAt DateTime @default(now())
-  quotes    Quote[]
-}
-
 model Quote {
   id                String          @id @default(cuid())
   slug              String          @unique
@@ -33,8 +23,6 @@ model Quote {
   paymentTerms      String          @default("10% due at signing. 25% due after materials purchased. Balance due net 30.")
   exclusions        String          @default("Plans. Permit fees. Any work not specifically described above. All valuables and personal property to be removed from work areas prior to work.")
   notes             String?
-  clientId          String?
-  client            Client?         @relation(fields: [clientId], references: [id])
   quoteContacts     QuoteContact[]
   quoteCompanies    QuoteCompany[]
   // CRM link — optional until we migrate existing quotes
