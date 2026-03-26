@@ -2407,6 +2407,8 @@ export const InvoiceScalarFieldEnum = {
   viewedAt: 'viewedAt',
   paidAt: 'paidAt',
   paidMethod: 'paidMethod',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

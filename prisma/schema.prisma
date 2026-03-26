@@ -182,6 +182,8 @@ model Invoice {
   viewedAt              DateTime?
   paidAt                DateTime?
   paidMethod            String?             // check | ach | other
+  stripeCheckoutSessionId String?
+  stripePaymentIntentId   String?
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
   invoiceMilestones     InvoiceMilestone[]

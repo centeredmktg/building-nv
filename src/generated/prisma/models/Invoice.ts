@@ -62,6 +62,8 @@ export type InvoiceMinAggregateOutputType = {
   viewedAt: Date | null
   paidAt: Date | null
   paidMethod: string | null
+  stripeCheckoutSessionId: string | null
+  stripePaymentIntentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -90,6 +92,8 @@ export type InvoiceMaxAggregateOutputType = {
   viewedAt: Date | null
   paidAt: Date | null
   paidMethod: string | null
+  stripeCheckoutSessionId: string | null
+  stripePaymentIntentId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -118,6 +122,8 @@ export type InvoiceCountAggregateOutputType = {
   viewedAt: number
   paidAt: number
   paidMethod: number
+  stripeCheckoutSessionId: number
+  stripePaymentIntentId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -160,6 +166,8 @@ export type InvoiceMinAggregateInputType = {
   viewedAt?: true
   paidAt?: true
   paidMethod?: true
+  stripeCheckoutSessionId?: true
+  stripePaymentIntentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -188,6 +196,8 @@ export type InvoiceMaxAggregateInputType = {
   viewedAt?: true
   paidAt?: true
   paidMethod?: true
+  stripeCheckoutSessionId?: true
+  stripePaymentIntentId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -216,6 +226,8 @@ export type InvoiceCountAggregateInputType = {
   viewedAt?: true
   paidAt?: true
   paidMethod?: true
+  stripeCheckoutSessionId?: true
+  stripePaymentIntentId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -331,6 +343,8 @@ export type InvoiceGroupByOutputType = {
   viewedAt: Date | null
   paidAt: Date | null
   paidMethod: string | null
+  stripeCheckoutSessionId: string | null
+  stripePaymentIntentId: string | null
   createdAt: Date
   updatedAt: Date
   _count: InvoiceCountAggregateOutputType | null
@@ -382,6 +396,8 @@ export type InvoiceWhereInput = {
   viewedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   paidMethod?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  stripeCheckoutSessionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  stripePaymentIntentId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
@@ -416,6 +432,8 @@ export type InvoiceOrderByWithRelationInput = {
   viewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paidMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeCheckoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripePaymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   project?: Prisma.ProjectOrderByWithRelationInput
@@ -453,6 +471,8 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   viewedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   paidMethod?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  stripeCheckoutSessionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  stripePaymentIntentId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
@@ -487,6 +507,8 @@ export type InvoiceOrderByWithAggregationInput = {
   viewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   paidMethod?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeCheckoutSessionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripePaymentIntentId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.InvoiceCountOrderByAggregateInput
@@ -523,6 +545,8 @@ export type InvoiceScalarWhereWithAggregatesInput = {
   viewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
   paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Invoice"> | Date | string | null
   paidMethod?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  stripeCheckoutSessionId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
+  stripePaymentIntentId?: Prisma.StringNullableWithAggregatesFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Invoice"> | Date | string
 }
@@ -546,6 +570,8 @@ export type InvoiceCreateInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutInvoicesInput
@@ -580,6 +606,8 @@ export type InvoiceUncheckedCreateInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutInvoiceInput
@@ -604,6 +632,8 @@ export type InvoiceUpdateInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutInvoicesNestedInput
@@ -638,6 +668,8 @@ export type InvoiceUncheckedUpdateInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -667,6 +699,8 @@ export type InvoiceCreateManyInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -690,6 +724,8 @@ export type InvoiceUpdateManyMutationInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -718,6 +754,8 @@ export type InvoiceUncheckedUpdateManyInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -756,6 +794,8 @@ export type InvoiceCountOrderByAggregateInput = {
   viewedAt?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   paidMethod?: Prisma.SortOrder
+  stripeCheckoutSessionId?: Prisma.SortOrder
+  stripePaymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -790,6 +830,8 @@ export type InvoiceMaxOrderByAggregateInput = {
   viewedAt?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   paidMethod?: Prisma.SortOrder
+  stripeCheckoutSessionId?: Prisma.SortOrder
+  stripePaymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -818,6 +860,8 @@ export type InvoiceMinOrderByAggregateInput = {
   viewedAt?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   paidMethod?: Prisma.SortOrder
+  stripeCheckoutSessionId?: Prisma.SortOrder
+  stripePaymentIntentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -1076,6 +1120,8 @@ export type InvoiceCreateWithoutContractInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutInvoicesInput
@@ -1108,6 +1154,8 @@ export type InvoiceUncheckedCreateWithoutContractInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1166,6 +1214,8 @@ export type InvoiceScalarWhereInput = {
   viewedAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   paidAt?: Prisma.DateTimeNullableFilter<"Invoice"> | Date | string | null
   paidMethod?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  stripeCheckoutSessionId?: Prisma.StringNullableFilter<"Invoice"> | string | null
+  stripePaymentIntentId?: Prisma.StringNullableFilter<"Invoice"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
 }
@@ -1189,6 +1239,8 @@ export type InvoiceCreateWithoutChangeOrderInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutInvoicesInput
@@ -1221,6 +1273,8 @@ export type InvoiceUncheckedCreateWithoutChangeOrderInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1271,6 +1325,8 @@ export type InvoiceCreateWithoutInvoiceMilestonesInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutInvoicesInput
@@ -1304,6 +1360,8 @@ export type InvoiceUncheckedCreateWithoutInvoiceMilestonesInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1343,6 +1401,8 @@ export type InvoiceUpdateWithoutInvoiceMilestonesInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutInvoicesNestedInput
@@ -1376,6 +1436,8 @@ export type InvoiceUncheckedUpdateWithoutInvoiceMilestonesInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1399,6 +1461,8 @@ export type InvoiceCreateWithoutProjectInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contract: Prisma.ContractCreateNestedOneWithoutInvoicesInput
@@ -1431,6 +1495,8 @@ export type InvoiceUncheckedCreateWithoutProjectInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1481,6 +1547,8 @@ export type InvoiceCreateWithoutBillingContactInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutInvoicesInput
@@ -1513,6 +1581,8 @@ export type InvoiceUncheckedCreateWithoutBillingContactInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1563,6 +1633,8 @@ export type InvoiceCreateWithoutBillingCompanyInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutInvoicesInput
@@ -1595,6 +1667,8 @@ export type InvoiceUncheckedCreateWithoutBillingCompanyInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutInvoiceInput
@@ -1649,6 +1723,8 @@ export type InvoiceCreateManyContractInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1672,6 +1748,8 @@ export type InvoiceUpdateWithoutContractInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutInvoicesNestedInput
@@ -1704,6 +1782,8 @@ export type InvoiceUncheckedUpdateWithoutContractInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -1732,6 +1812,8 @@ export type InvoiceUncheckedUpdateManyWithoutContractInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1759,6 +1841,8 @@ export type InvoiceCreateManyChangeOrderInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1782,6 +1866,8 @@ export type InvoiceUpdateWithoutChangeOrderInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutInvoicesNestedInput
@@ -1814,6 +1900,8 @@ export type InvoiceUncheckedUpdateWithoutChangeOrderInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -1842,6 +1930,8 @@ export type InvoiceUncheckedUpdateManyWithoutChangeOrderInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1869,6 +1959,8 @@ export type InvoiceCreateManyProjectInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1892,6 +1984,8 @@ export type InvoiceUpdateWithoutProjectInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contract?: Prisma.ContractUpdateOneRequiredWithoutInvoicesNestedInput
@@ -1924,6 +2018,8 @@ export type InvoiceUncheckedUpdateWithoutProjectInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -1952,6 +2048,8 @@ export type InvoiceUncheckedUpdateManyWithoutProjectInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1979,6 +2077,8 @@ export type InvoiceCreateManyBillingContactInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2002,6 +2102,8 @@ export type InvoiceUpdateWithoutBillingContactInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutInvoicesNestedInput
@@ -2034,6 +2136,8 @@ export type InvoiceUncheckedUpdateWithoutBillingContactInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -2062,6 +2166,8 @@ export type InvoiceUncheckedUpdateManyWithoutBillingContactInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2089,6 +2195,8 @@ export type InvoiceCreateManyBillingCompanyInput = {
   viewedAt?: Date | string | null
   paidAt?: Date | string | null
   paidMethod?: string | null
+  stripeCheckoutSessionId?: string | null
+  stripePaymentIntentId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2112,6 +2220,8 @@ export type InvoiceUpdateWithoutBillingCompanyInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutInvoicesNestedInput
@@ -2144,6 +2254,8 @@ export type InvoiceUncheckedUpdateWithoutBillingCompanyInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutInvoiceNestedInput
@@ -2172,6 +2284,8 @@ export type InvoiceUncheckedUpdateManyWithoutBillingCompanyInput = {
   viewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   paidMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeCheckoutSessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripePaymentIntentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2231,6 +2345,8 @@ export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   viewedAt?: boolean
   paidAt?: boolean
   paidMethod?: boolean
+  stripeCheckoutSessionId?: boolean
+  stripePaymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -2266,6 +2382,8 @@ export type InvoiceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   viewedAt?: boolean
   paidAt?: boolean
   paidMethod?: boolean
+  stripeCheckoutSessionId?: boolean
+  stripePaymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -2299,6 +2417,8 @@ export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   viewedAt?: boolean
   paidAt?: boolean
   paidMethod?: boolean
+  stripeCheckoutSessionId?: boolean
+  stripePaymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -2332,11 +2452,13 @@ export type InvoiceSelectScalar = {
   viewedAt?: boolean
   paidAt?: boolean
   paidMethod?: boolean
+  stripeCheckoutSessionId?: boolean
+  stripePaymentIntentId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "sequenceNumber" | "projectId" | "contractId" | "changeOrderId" | "billingContactId" | "billingCompanyId" | "amount" | "amountAdjustmentNote" | "issueDate" | "dueDate" | "notes" | "status" | "htmlPath" | "viewToken" | "passcode" | "passcodeFailures" | "passcodeLockedUntil" | "sentAt" | "viewedAt" | "paidAt" | "paidMethod" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
+export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "invoiceNumber" | "sequenceNumber" | "projectId" | "contractId" | "changeOrderId" | "billingContactId" | "billingCompanyId" | "amount" | "amountAdjustmentNote" | "issueDate" | "dueDate" | "notes" | "status" | "htmlPath" | "viewToken" | "passcode" | "passcodeFailures" | "passcodeLockedUntil" | "sentAt" | "viewedAt" | "paidAt" | "paidMethod" | "stripeCheckoutSessionId" | "stripePaymentIntentId" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
 export type InvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   contract?: boolean | Prisma.ContractDefaultArgs<ExtArgs>
@@ -2395,6 +2517,8 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     viewedAt: Date | null
     paidAt: Date | null
     paidMethod: string | null
+    stripeCheckoutSessionId: string | null
+    stripePaymentIntentId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["invoice"]>
@@ -2849,6 +2973,8 @@ export interface InvoiceFieldRefs {
   readonly viewedAt: Prisma.FieldRef<"Invoice", 'DateTime'>
   readonly paidAt: Prisma.FieldRef<"Invoice", 'DateTime'>
   readonly paidMethod: Prisma.FieldRef<"Invoice", 'String'>
+  readonly stripeCheckoutSessionId: Prisma.FieldRef<"Invoice", 'String'>
+  readonly stripePaymentIntentId: Prisma.FieldRef<"Invoice", 'String'>
   readonly createdAt: Prisma.FieldRef<"Invoice", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Invoice", 'DateTime'>
 }
