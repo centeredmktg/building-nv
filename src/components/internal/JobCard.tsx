@@ -73,7 +73,11 @@ export default function JobCard({ project }: { project: JobProject }) {
         </div>
         <div>
           <p className="text-text-muted text-xs">Uninvoiced</p>
-          <p className="text-text-primary text-sm font-medium">{formatCurrency(project.contractAmount)}</p>
+          <p className="text-text-primary text-sm font-medium">
+            {project.contractAmount != null
+              ? formatCurrency(project.contractAmount - (project.invoicedTotal ?? 0))
+              : '—'}
+          </p>
         </div>
       </div>
 
