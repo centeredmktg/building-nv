@@ -41,3 +41,31 @@ export async function generateSignedPDF(
     await browser.close();
   }
 }
+
+/**
+ * Simple HTML → PDF conversion (no signature injection).
+ * Used for invoice PDF downloads.
+ */
+export async function generatePDF(
+  documentHtml: string,
+  outputPath: string,
+): Promise<void> {
+  mkdirSync(dirname(outputPath), { recursive: true });
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+  });
+  try {
+    const page = await browser.newPage();
+    await page.setContent(documentHtml, { waitUntil: 'networkidle0' });
+    await page.pdf({
+      path: outputPath,
+      format: 'Letter',
+      margin: { top: '0.75in', bottom: '0.75in', left: '0.75in', right: '0.75in' },
+    });
+  } finally {
+    await browser.close();
+  }
+}
