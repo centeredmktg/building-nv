@@ -1,8 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import { calculateQuoteTotals } from "@/lib/pricing";
+import { calculateQuoteTotals, calculatePaymentSchedule } from "@/lib/pricing";
 import AcceptanceBlock from "./AcceptanceBlock";
 import { resolveQuoteClient } from "@/lib/quote-client";
+import { durationToWeeks } from "@/lib/milestone-defaults";
+
+const fmt = (n: number) =>
+  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export default async function ProposalPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -21,6 +25,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
         orderBy: { position: "asc" },
       },
       acceptance: true,
+      milestones: { orderBy: { position: "asc" } },
     },
   });
 
@@ -31,105 +36,310 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
     s.items.map((i) => ({ unitPrice: i.unitPrice, quantity: i.quantity, isMaterial: i.isMaterial }))
   );
   const totals = calculateQuoteTotals(allItems, quote.materialMarkupPct, quote.overheadPct, quote.profitPct);
+  const dateStr = new Date(quote.createdAt).toLocaleDateString("en-US", {
+    year: "numeric", month: "long", day: "numeric",
+  });
+
+  const schedule = calculatePaymentSchedule(
+    quote.milestones.map((m) => ({
+      name: m.name,
+      weekNumber: m.weekNumber,
+      paymentPct: m.paymentPct,
+      paymentLabel: m.paymentLabel,
+    })),
+    totals.total
+  );
+  const maxWeek = quote.milestones.length > 0
+    ? Math.max(...quote.milestones.map((m) => m.weekNumber)) + 1
+    : 0;
+  const anchorDate = quote.estimatedStartDate
+    ? new Date(quote.estimatedStartDate)
+    : new Date();
+  const weekDate = (wk: number) => {
+    const d = new Date(anchorDate);
+    d.setDate(d.getDate() + wk * 7);
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 print:bg-white">
-      <div className="max-w-3xl mx-auto px-8 py-12 print:px-0 print:py-8">
+    <div className="min-h-screen bg-[#F7F5F0] text-[#1A1917] print:bg-white">
 
-        {/* Header */}
-        <div className="flex items-start justify-between mb-8 pb-8 border-b border-gray-200">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Building NV</h1>
-            <p className="text-gray-500 text-sm">Commercial Tenant Improvement · Reno, Nevada</p>
+      {/* Hero header band */}
+      <div className="bg-[#1E2A38] print:bg-[#1E2A38]">
+        <div className="max-w-3xl mx-auto px-8 pt-10 pb-8 print:px-6 print:pt-6 print:pb-4">
+          <div className="flex items-end justify-between">
+            <div>
+              <div className="flex items-center gap-3 mb-1">
+                <div className="w-8 h-0.5 bg-[#C17F3A]" />
+                <span className="text-[#C17F3A] text-[11px] font-semibold uppercase tracking-[0.2em]">
+                  Proposal
+                </span>
+              </div>
+              <h1 className="text-[28px] font-bold text-white tracking-tight leading-tight">
+                Building NV
+              </h1>
+              <p className="text-[#8A9BB0] text-sm mt-0.5">
+                Commercial Tenant Improvement &middot; Reno, Nevada
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-white/40 text-[11px] uppercase tracking-[0.15em] mb-0.5">Date</p>
+              <p className="text-white text-sm font-medium">{dateStr}</p>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="text-xl font-bold text-gray-900">PROPOSAL</p>
-            <p className="text-gray-500 text-sm">
-              {new Date(quote.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-            </p>
+        </div>
+      </div>
+
+      {/* Copper accent line */}
+      <div className="h-[3px] bg-gradient-to-r from-[#C17F3A] via-[#D4973F] to-[#C17F3A]" />
+
+      <div className="max-w-3xl mx-auto px-8 print:px-6">
+
+        {/* Client + Job Site cards */}
+        <div className="grid grid-cols-2 gap-6 -mt-5 mb-10 print:mb-6">
+          <div className="bg-white rounded shadow-sm border border-[#E8E4DD] px-5 py-4 print:shadow-none">
+            <p className="text-[10px] font-bold text-[#C17F3A] uppercase tracking-[0.2em] mb-2">Client</p>
+            <p className="font-semibold text-[#1A1917] text-[15px] leading-snug">{client.name}</p>
+            {client.company && (
+              <p className="text-[#6B6560] text-sm mt-0.5">{client.company}</p>
+            )}
+          </div>
+          <div className="bg-white rounded shadow-sm border border-[#E8E4DD] px-5 py-4 print:shadow-none">
+            <p className="text-[10px] font-bold text-[#C17F3A] uppercase tracking-[0.2em] mb-2">Job Site</p>
+            <p className="font-semibold text-[#1A1917] text-[15px] leading-snug">{quote.address}</p>
+            <p className="text-[#6B6560] text-sm mt-0.5">{quote.projectType}</p>
           </div>
         </div>
 
-        {/* Client + Job Site */}
-        <div className="grid grid-cols-2 gap-8 mb-8 pb-8 border-b border-gray-200">
-          <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Client</p>
-            <p className="font-semibold text-gray-900">{client.name}</p>
-            {client.company && <p className="text-gray-600 text-sm">{client.company}</p>}
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Job Site</p>
-            <p className="font-semibold text-gray-900">{quote.address}</p>
-            <p className="text-gray-600 text-sm">{quote.projectType}</p>
-          </div>
-        </div>
-
-        <p className="text-gray-700 mb-8">
+        {/* Intro */}
+        <p className="text-[#4A4540] leading-relaxed mb-10 print:mb-6">
           Thank you for the opportunity to provide this proposal. Building NV proposes to perform the following work as outlined below.
         </p>
 
-        {/* Line Items */}
-        {quote.sections.map((sec) => (
-          <div key={sec.id} className="mb-6">
-            <h2 className="font-bold text-gray-900 underline mb-3">{sec.title}:</h2>
-            <div className="space-y-1">
-              {sec.items.map((item) => (
-                <div key={item.id} className="flex items-baseline justify-between text-sm">
-                  <span className="text-gray-700 flex-1 pr-4">— {item.description}</span>
-                  <span className="text-gray-900 font-medium whitespace-nowrap">
-                    ${(item.quantity * item.unitPrice).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+        {/* Scope sections */}
+        <div className="space-y-8 mb-10 print:space-y-4 print:mb-6">
+          {quote.sections.map((sec, si) => (
+            <div key={sec.id}>
+              {/* Section header */}
+              <div className="flex items-center gap-3 mb-4">
+                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#1E2A38] text-white text-xs font-bold shrink-0">
+                  {si + 1}
+                </span>
+                <h2 className="text-[17px] font-bold text-[#1A1917] tracking-tight">
+                  {sec.title}
+                </h2>
+                <div className="flex-1 h-px bg-[#DDD8D0]" />
+              </div>
+
+              {/* Line items */}
+              <div className="bg-white rounded border border-[#E8E4DD] overflow-hidden print:border-[#ccc]">
+                {sec.items.map((item, ii) => {
+                  const lineTotal = item.quantity * item.unitPrice;
+                  return (
+                    <div
+                      key={item.id}
+                      className={`flex items-baseline justify-between px-5 py-2.5 text-sm ${
+                        ii % 2 === 0 ? "bg-white" : "bg-[#FAFAF7]"
+                      } ${ii > 0 ? "border-t border-[#F0EDE8]" : ""}`}
+                    >
+                      <span className="text-[#3A3530] flex-1 pr-6 leading-snug">
+                        {item.description}
+                      </span>
+                      <span className="text-[#1A1917] font-semibold tabular-nums whitespace-nowrap">
+                        {lineTotal > 0 ? `$${fmt(lineTotal)}` : "\u2014"}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Totals */}
+        <div className="bg-white rounded border border-[#E8E4DD] overflow-hidden mb-10 print:mb-6">
+          <div className="px-5 py-3 space-y-2">
+            {totals.materialsMarkupAmount > 0 && (
+              <div className="flex justify-between text-sm">
+                <span className="text-[#6B6560]">Materials Markup ({quote.materialMarkupPct}%)</span>
+                <span className="text-[#3A3530] tabular-nums">${fmt(totals.materialsMarkupAmount)}</span>
+              </div>
+            )}
+            <div className="flex justify-between text-sm">
+              <span className="text-[#6B6560]">Overhead ({quote.overheadPct}%)</span>
+              <span className="text-[#3A3530] tabular-nums">${fmt(totals.overheadAmount)}</span>
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-[#6B6560]">Profit ({quote.profitPct}%)</span>
+              <span className="text-[#3A3530] tabular-nums">${fmt(totals.profitAmount)}</span>
+            </div>
+          </div>
+          <div className="border-t-2 border-[#C17F3A] bg-[#1E2A38] px-5 py-4 flex justify-between items-center">
+            <span className="text-white/70 text-sm font-medium uppercase tracking-wider">
+              Total Investment
+            </span>
+            <span className="text-white text-xl font-bold tabular-nums">
+              ${fmt(totals.total)}
+            </span>
+          </div>
+        </div>
+
+        {/* Project Timeline — Bar Chart */}
+        {quote.milestones.length > 0 && (
+          <div className="mb-10 print:mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-1 h-4 bg-[#C17F3A] rounded-full" />
+              <h3 className="text-sm font-bold text-[#1A1917] uppercase tracking-wider">Project Timeline</h3>
+            </div>
+
+            <div className="bg-white rounded border border-[#E8E4DD] p-5 print:p-3">
+              {/* Week header row */}
+              <div className="flex mb-1" style={{ paddingLeft: "140px" }}>
+                {Array.from({ length: maxWeek + 1 }, (_, wk) => (
+                  <div key={wk} className="flex-1 text-center">
+                    <div className="text-[10px] font-bold text-[#6B6560]">WK {wk}</div>
+                    <div className="text-[9px] text-[#9A9591]">{weekDate(wk)}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Phase bars */}
+              <div className="flex flex-col gap-1.5 mt-2">
+                {quote.milestones.filter((m) => m.position > 0).map((m) => {
+                  const widthWeeks = Math.max(durationToWeeks(m.duration), 0.3);
+                  const startPct = (m.weekNumber / (maxWeek + 1)) * 100;
+                  const widthPct = (widthWeeks / (maxWeek + 1)) * 100;
+                  const hasPayment = m.paymentPct != null && m.paymentPct > 0;
+
+                  return (
+                    <div key={m.id} className="flex items-center">
+                      <div className="w-[140px] shrink-0 pr-3 text-right">
+                        <span className="text-xs text-[#3A3530] font-medium">{m.name}</span>
+                      </div>
+                      <div className="flex-1 relative h-7">
+                        {/* Background grid lines */}
+                        <div className="absolute inset-0 flex">
+                          {Array.from({ length: maxWeek + 1 }, (_, wk) => (
+                            <div key={wk} className="flex-1 border-l border-[#F0EDE8]" />
+                          ))}
+                        </div>
+                        {/* Phase bar */}
+                        <div
+                          className="absolute top-0.5 h-6 rounded"
+                          style={{
+                            left: `${startPct}%`,
+                            width: `${Math.min(widthPct, 100 - startPct)}%`,
+                            backgroundColor: "#1E2A38",
+                            borderLeft: hasPayment ? "3px solid #C17F3A" : undefined,
+                          }}
+                        >
+                          {m.duration && (
+                            <span className="text-[9px] text-white/70 px-2 leading-6 whitespace-nowrap">
+                              {m.duration}
+                            </span>
+                          )}
+                        </div>
+                        {/* Payment diamond marker */}
+                        {hasPayment && (
+                          <div
+                            className="absolute w-2.5 h-2.5 bg-[#C17F3A] rotate-45"
+                            style={{ left: `calc(${startPct}% - 5px)`, top: "-4px" }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <p className="text-[10px] text-[#9A9591] mt-4 italic">
+                Timeline assumes project start of {weekDate(0)}. Actual dates may vary based on material availability and scheduling.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Payment Schedule */}
+        {schedule.length > 0 && (
+          <div className="mb-10 print:mb-6">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-1 h-4 bg-[#C17F3A] rounded-full" />
+              <h3 className="text-sm font-bold text-[#1A1917] uppercase tracking-wider">Payment Schedule</h3>
+            </div>
+
+            <div className="bg-white rounded border border-[#E8E4DD] overflow-hidden">
+              {/* Table header */}
+              <div className="grid grid-cols-12 gap-2 px-5 py-2 bg-[#F7F5F0] text-[10px] font-bold text-[#6B6560] uppercase tracking-wider border-b border-[#E8E4DD]">
+                <span className="col-span-4">Milestone</span>
+                <span className="col-span-2 text-center">Week</span>
+                <span className="col-span-2 text-right">Payment</span>
+                <span className="col-span-2 text-right">Amount</span>
+                <span className="col-span-2 text-right">Balance</span>
+              </div>
+
+              {schedule.map((row, i) => (
+                <div
+                  key={i}
+                  className={`grid grid-cols-12 gap-2 px-5 py-2.5 text-sm ${
+                    i % 2 === 0 ? "bg-white" : "bg-[#FAFAF7]"
+                  } ${i > 0 ? "border-t border-[#F0EDE8]" : ""}`}
+                >
+                  <div className="col-span-4">
+                    <span className="text-[#3A3530] font-medium">{row.name}</span>
+                    {row.paymentLabel && (
+                      <span className="text-[#9A9591] text-xs ml-1.5">({row.paymentLabel})</span>
+                    )}
+                  </div>
+                  <span className="col-span-2 text-center text-[#6B6560]">{row.weekNumber}</span>
+                  <span className="col-span-2 text-right text-[#6B6560]">{row.paymentPct}%</span>
+                  <span className="col-span-2 text-right text-[#1A1917] font-semibold tabular-nums">
+                    ${fmt(row.amount)}
+                  </span>
+                  <span className="col-span-2 text-right text-[#6B6560] tabular-nums">
+                    ${fmt(row.balance)}
                   </span>
                 </div>
               ))}
             </div>
           </div>
-        ))}
-
-        {/* Totals */}
-        <div className="border-t border-gray-200 pt-6 mt-6 mb-8">
-          {totals.materialsMarkupAmount > 0 && (
-            <div className="flex justify-between text-sm text-gray-600 mb-2">
-              <span>Materials Markup ({quote.materialMarkupPct}%)</span>
-              <span>${totals.materialsMarkupAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-            </div>
-          )}
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
-            <span>Overhead ({quote.overheadPct}%)</span>
-            <span>${totals.overheadAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-          </div>
-          <div className="flex justify-between text-sm text-gray-600 mb-4">
-            <span>Profit ({quote.profitPct}%)</span>
-            <span>${totals.profitAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-          </div>
-          <div className="flex justify-between font-bold text-lg text-gray-900 border-t border-gray-300 pt-3">
-            <span>Total Cost:</span>
-            <span>${totals.total.toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
-          </div>
-        </div>
+        )}
 
         {/* Payment Terms */}
-        <div className="mb-6">
-          <h3 className="font-bold text-gray-900 underline mb-2">Note:</h3>
-          <p className="text-sm text-gray-700">{quote.paymentTerms}</p>
+        <div className="mb-8 print:mb-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-1 h-4 bg-[#C17F3A] rounded-full" />
+            <h3 className="text-sm font-bold text-[#1A1917] uppercase tracking-wider">Payment Terms</h3>
+          </div>
+          <p className="text-sm text-[#4A4540] leading-relaxed pl-3 border-l-2 border-[#E8E4DD]">
+            {quote.paymentTerms}
+          </p>
         </div>
 
         {/* Exclusions */}
-        <div className="mb-6">
-          <h3 className="font-bold text-gray-900 underline mb-2">Exclusions</h3>
-          <div className="border border-gray-300 p-3 text-sm text-gray-700">
+        <div className="mb-8 print:mb-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-1 h-4 bg-[#C17F3A] rounded-full" />
+            <h3 className="text-sm font-bold text-[#1A1917] uppercase tracking-wider">Exclusions</h3>
+          </div>
+          <div className="bg-[#F0EDE8] rounded px-4 py-3 text-sm text-[#4A4540] leading-relaxed">
             {quote.exclusions}
           </div>
         </div>
 
-        {/* Terms */}
-        <div className="mb-10 text-xs text-gray-600 space-y-2">
-          <h3 className="font-bold text-gray-900 text-sm underline mb-2">Terms & Conditions:</h3>
-          <p><strong>A.</strong> Interest of 2% per month will be added on all overdue accounts beginning on the day of delinquency.</p>
-          <p><strong>B.</strong> Any alteration or deviation from the above specifications requiring extra cost will become an extra charge via written change order.</p>
-          <p><strong>C.</strong> All agreements contingent upon strikes, accidents, or delays beyond our control including material availability and pricing changes.</p>
-          <p><strong>D.</strong> Warranty void by earthquake, tornado, or other act of God, or by non-payment. Warranty coverage begins at time of final payment.</p>
-          <p><strong>E.</strong> This proposal does not include labor or material for unforeseen conditions. Additional repair fees will be added via change order.</p>
-          <p><strong>F.</strong> Payment due within thirty days of date of invoice (net 30).</p>
+        {/* Terms & Conditions */}
+        <div className="mb-12 print:mb-6">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-1 h-4 bg-[#C17F3A] rounded-full" />
+            <h3 className="text-sm font-bold text-[#1A1917] uppercase tracking-wider">Terms &amp; Conditions</h3>
+          </div>
+          <div className="text-xs text-[#6B6560] space-y-1.5 leading-relaxed">
+            <p><span className="font-semibold text-[#4A4540]">A.</span> Interest of 2% per month will be added on all overdue accounts beginning on the day of delinquency.</p>
+            <p><span className="font-semibold text-[#4A4540]">B.</span> Any alteration or deviation from the above specifications requiring extra cost will become an extra charge via written change order.</p>
+            <p><span className="font-semibold text-[#4A4540]">C.</span> All agreements contingent upon strikes, accidents, or delays beyond our control including material availability and pricing changes.</p>
+            <p><span className="font-semibold text-[#4A4540]">D.</span> Warranty void by earthquake, tornado, or other act of God, or by non-payment. Warranty coverage begins at time of final payment.</p>
+            <p><span className="font-semibold text-[#4A4540]">E.</span> This proposal does not include labor or material for unforeseen conditions. Additional repair fees will be added via change order.</p>
+            <p><span className="font-semibold text-[#4A4540]">F.</span> Payment due within thirty days of date of invoice (net 30).</p>
+          </div>
         </div>
 
         {/* Acceptance */}
@@ -141,12 +351,22 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
           acceptedAt={quote.acceptance?.acceptedAt?.toString()}
         />
 
+        {/* Footer */}
+        <div className="mt-12 mb-8 pt-6 border-t border-[#DDD8D0] flex items-center justify-between print:mt-6">
+          <div>
+            <p className="text-xs font-bold text-[#1A1917] tracking-wide">Building NV</p>
+            <p className="text-[11px] text-[#9A9591]">NV License #0092515</p>
+          </div>
+          <p className="text-[11px] text-[#9A9591]">
+            buildingnv.us
+          </p>
+        </div>
       </div>
 
       {/* Print styles */}
       <style>{`
         @media print {
-          body { background: white !important; }
+          body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
           .print\\:hidden { display: none !important; }
         }
       `}</style>
