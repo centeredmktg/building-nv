@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { calculateQuoteTotals } from "@/lib/pricing";
 import { resolveQuoteClient } from "@/lib/quote-client";
+import { generateMilestones } from "@/lib/milestone-defaults";
 
 const UNITS = ["ea", "SF", "LF", "LS", "hr"];
 
@@ -19,6 +20,15 @@ interface Section {
   id?: string;
   title: string;
   items: LineItem[];
+}
+
+interface Milestone {
+  id?: string;
+  name: string;
+  weekNumber: number;
+  duration: string | null;
+  paymentPct: number | null;
+  paymentLabel: string | null;
 }
 
 interface Quote {
@@ -39,6 +49,7 @@ interface Quote {
   quoteContacts: { role: string; contact: { firstName: string; lastName?: string | null; email?: string | null } }[];
   quoteCompanies: { company: { name: string } }[];
   sections: Section[];
+  milestones: Milestone[];
   signingToken?: string | null;
   signedAt?: string | Date | null;
   signedPdfPath?: string | null;
@@ -113,6 +124,30 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
     setQuote((q) => ({
       ...q,
       sections: [...q.sections, { title: "New Section", items: [] }],
+    }));
+  };
+
+  const updateMilestone = (idx: number, field: keyof Milestone, value: string | number | null) => {
+    setQuote((q) => ({
+      ...q,
+      milestones: q.milestones.map((m, i) =>
+        i !== idx ? m : { ...m, [field]: value }
+      ),
+    }));
+  };
+
+  const regenerateMilestones = () => {
+    if (!confirm("Regenerate milestones from current sections? This will replace all existing milestones.")) return;
+    const generated = generateMilestones(quote.sections.map((s) => ({ title: s.title })));
+    setQuote((q) => ({
+      ...q,
+      milestones: generated.map((m) => ({
+        name: m.name,
+        weekNumber: m.weekNumber,
+        duration: m.duration,
+        paymentPct: m.paymentPct,
+        paymentLabel: m.paymentLabel,
+      })),
     }));
   };
 
@@ -331,6 +366,68 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                 />
               </div>
             </div>
+          </div>
+
+          {/* Milestone Editor */}
+          <div className="border-t border-border pt-4 mt-4">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest">
+                Milestones &amp; Payments
+              </h3>
+              <button
+                onClick={regenerateMilestones}
+                className="text-[10px] text-accent hover:text-accent/80 transition-colors"
+              >
+                Regenerate
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              {quote.milestones.map((m, idx) => (
+                <div key={idx} className="bg-surface-2 rounded px-2.5 py-2 text-xs">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-text-primary font-medium truncate flex-1 mr-2">{m.name}</span>
+                    <input
+                      type="number"
+                      value={m.weekNumber}
+                      onChange={(e) => updateMilestone(idx, "weekNumber", parseInt(e.target.value) || 0)}
+                      className="w-10 bg-surface border border-border rounded px-1 py-0.5 text-[10px] text-text-primary text-center focus:outline-none focus:border-accent"
+                      title="Week"
+                    />
+                    <span className="text-text-muted text-[10px] ml-1">wk</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      value={m.duration ?? ""}
+                      onChange={(e) => updateMilestone(idx, "duration", e.target.value || null)}
+                      placeholder="Duration"
+                      className="flex-1 bg-surface border border-border rounded px-1.5 py-0.5 text-[10px] text-text-primary focus:outline-none focus:border-accent"
+                    />
+                    <input
+                      type="number"
+                      value={m.paymentPct ?? ""}
+                      onChange={(e) => updateMilestone(idx, "paymentPct", e.target.value ? parseFloat(e.target.value) : null)}
+                      placeholder="%"
+                      className="w-12 bg-surface border border-border rounded px-1 py-0.5 text-[10px] text-text-primary text-right focus:outline-none focus:border-accent"
+                    />
+                    <span className="text-text-muted text-[10px]">%</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {quote.milestones.length > 0 && (() => {
+              const totalPct = quote.milestones.reduce((sum, m) => sum + (m.paymentPct ?? 0), 0);
+              const isValid = Math.abs(totalPct - 100) < 0.01;
+              return (
+                <div className={`mt-2 text-[10px] text-right font-medium ${
+                  isValid ? "text-green-400" : totalPct > 100 ? "text-red-400" : "text-amber-400"
+                }`}>
+                  Payment total: {totalPct}%{!isValid && (totalPct > 100 ? " (over 100%)" : " (under 100%)")}
+                </div>
+              );
+            })()}
           </div>
 
           <div className="border-t border-border pt-4 flex flex-col gap-2">
