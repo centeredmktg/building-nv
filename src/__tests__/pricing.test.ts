@@ -1,4 +1,4 @@
-import { calculateQuoteTotals } from "@/lib/pricing";
+import { calculateQuoteTotals, calculatePaymentSchedule } from "@/lib/pricing";
 
 describe("calculateQuoteTotals", () => {
   const baseItems = [
@@ -39,5 +39,38 @@ describe("calculateQuoteTotals", () => {
   it("handles empty line items", () => {
     const result = calculateQuoteTotals([], 10, 10, 10);
     expect(result.total).toBe(0);
+  });
+});
+
+describe("calculatePaymentSchedule", () => {
+  it("calculates amounts and running balance from milestones", () => {
+    const milestones = [
+      { name: "Contract Signed", weekNumber: 0, paymentPct: 10, paymentLabel: "Signing" },
+      { name: "Demolition", weekNumber: 1, paymentPct: 25, paymentLabel: "Materials" },
+      { name: "Flooring", weekNumber: 2, paymentPct: 60, paymentLabel: "Phase 2" },
+      { name: "Punch List", weekNumber: 3, paymentPct: 5, paymentLabel: "Completion" },
+    ];
+    const total = 10000;
+
+    const schedule = calculatePaymentSchedule(milestones, total);
+
+    expect(schedule).toHaveLength(4);
+    expect(schedule[0]).toEqual({ name: "Contract Signed", weekNumber: 0, paymentLabel: "Signing", paymentPct: 10, amount: 1000, balance: 9000 });
+    expect(schedule[1]).toEqual({ name: "Demolition", weekNumber: 1, paymentLabel: "Materials", paymentPct: 25, amount: 2500, balance: 6500 });
+    expect(schedule[2]).toEqual({ name: "Flooring", weekNumber: 2, paymentLabel: "Phase 2", paymentPct: 60, amount: 6000, balance: 500 });
+    expect(schedule[3]).toEqual({ name: "Punch List", weekNumber: 3, paymentLabel: "Completion", paymentPct: 5, amount: 500, balance: 0 });
+  });
+
+  it("skips milestones with no paymentPct", () => {
+    const milestones = [
+      { name: "Signing", weekNumber: 0, paymentPct: 100, paymentLabel: "Full" },
+      { name: "Work", weekNumber: 1, paymentPct: null, paymentLabel: null },
+    ];
+
+    const schedule = calculatePaymentSchedule(milestones, 5000);
+
+    expect(schedule).toHaveLength(1);
+    expect(schedule[0].amount).toBe(5000);
+    expect(schedule[0].balance).toBe(0);
   });
 });

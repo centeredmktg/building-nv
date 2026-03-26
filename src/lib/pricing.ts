@@ -42,3 +42,40 @@ export function calculateQuoteTotals(
 function round2(n: number): number {
   return Math.round(n * 100) / 100;
 }
+
+export interface PaymentMilestone {
+  name: string;
+  weekNumber: number;
+  paymentPct: number | null;
+  paymentLabel: string | null;
+}
+
+export interface PaymentScheduleRow {
+  name: string;
+  weekNumber: number;
+  paymentLabel: string | null;
+  paymentPct: number;
+  amount: number;
+  balance: number;
+}
+
+export function calculatePaymentSchedule(
+  milestones: PaymentMilestone[],
+  total: number
+): PaymentScheduleRow[] {
+  const paying = milestones.filter((m) => m.paymentPct != null && m.paymentPct > 0);
+  let remaining = round2(total);
+  return paying.map((m, i) => {
+    const amount = round2((m.paymentPct! / 100) * total);
+    remaining = round2(remaining - amount);
+    if (i === paying.length - 1) remaining = 0;
+    return {
+      name: m.name,
+      weekNumber: m.weekNumber,
+      paymentLabel: m.paymentLabel,
+      paymentPct: m.paymentPct!,
+      amount,
+      balance: remaining,
+    };
+  });
+}
