@@ -40,6 +40,21 @@ model Quote {
   sentAt              DateTime?
   estimatedDuration   String?
   estimatedStartDate  DateTime?
+  milestones        QuoteMilestone[]
+}
+
+model QuoteMilestone {
+  id           String  @id @default(cuid())
+  quoteId      String
+  quote        Quote   @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  name         String
+  weekNumber   Int
+  duration     String?
+  paymentPct   Float?
+  paymentLabel String?
+  position     Int
+
+  @@unique([quoteId, position])
 }
 
 model Milestone {
