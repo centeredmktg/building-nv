@@ -23,9 +23,11 @@ function toDateInput(val: string | null | undefined): string {
 export default function FinancialSummarySection({
   projectId,
   initial,
+  invoicedTotal,
 }: {
   projectId: string;
   initial: FinancialFields;
+  invoicedTotal?: number;
 }) {
   const [fields, setFields] = useState(initial);
   const [saving, setSaving] = useState(false);
@@ -72,8 +74,10 @@ export default function FinancialSummarySection({
         </div>
         <div>
           <p className="text-text-muted text-xs mb-1">Uninvoiced</p>
-          <p className="text-text-muted text-sm">
-            {fields.contractAmount != null ? `$${fields.contractAmount.toLocaleString()}` : "—"}
+          <p className="text-text-primary text-sm font-medium">
+            {fields.contractAmount != null
+              ? `$${(fields.contractAmount - (invoicedTotal ?? 0)).toLocaleString()}`
+              : '—'}
           </p>
         </div>
       </div>
