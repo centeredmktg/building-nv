@@ -66,7 +66,7 @@ export default async function ComponentsPage() {
                     </div>
                     <p className="text-text-muted text-sm">{c.unit}</p>
                     <p className="text-text-primary font-semibold text-sm tabular-nums">
-                      ${c.vendorCost.toFixed(2)}
+                      ${c.vendorCost.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </p>
                     {c.sdsUrl ? (
                       <a

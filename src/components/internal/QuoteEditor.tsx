@@ -236,7 +236,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                         className={`${inputClass} text-right`} />
                     </div>
                     <div className="col-span-2 text-right text-sm text-text-primary font-medium pr-2">
-                      ${(item.quantity * item.unitPrice).toFixed(2)}
+                      ${(item.quantity * item.unitPrice).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
                     <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button onClick={() => removeItem(si, ii)}
@@ -266,7 +266,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
           <div className="flex flex-col gap-3 text-sm mb-4">
             <div className="flex justify-between">
               <span className="text-text-muted">Subtotal</span>
-              <span className="text-text-primary">${totals.subtotal.toFixed(2)}</span>
+              <span className="text-text-primary">${totals.subtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-text-muted">Materials markup</span>
@@ -297,7 +297,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
             </div>
             <div className="border-t border-border pt-3 flex justify-between">
               <span className="text-text-primary font-semibold">Total</span>
-              <span className="text-accent font-bold text-lg">${totals.total.toFixed(2)}</span>
+              <span className="text-accent font-bold text-lg">${totals.total.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           </div>
 

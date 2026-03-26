@@ -90,16 +90,16 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
           {totals.materialsMarkupAmount > 0 && (
             <div className="flex justify-between text-sm text-gray-600 mb-2">
               <span>Materials Markup ({quote.materialMarkupPct}%)</span>
-              <span>${totals.materialsMarkupAmount.toFixed(2)}</span>
+              <span>${totals.materialsMarkupAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           )}
           <div className="flex justify-between text-sm text-gray-600 mb-2">
             <span>Overhead ({quote.overheadPct}%)</span>
-            <span>${totals.overheadAmount.toFixed(2)}</span>
+            <span>${totals.overheadAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
           <div className="flex justify-between text-sm text-gray-600 mb-4">
             <span>Profit ({quote.profitPct}%)</span>
-            <span>${totals.profitAmount.toFixed(2)}</span>
+            <span>${totals.profitAmount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
           <div className="flex justify-between font-bold text-lg text-gray-900 border-t border-gray-300 pt-3">
             <span>Total Cost:</span>
