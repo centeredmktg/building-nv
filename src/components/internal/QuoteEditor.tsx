@@ -292,10 +292,11 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                         {UNITS.map((u) => <option key={u}>{u}</option>)}
                       </select>
                     </div>
-                    <div className="col-span-2">
+                    <div className="col-span-2 flex items-center">
+                      <span className="text-text-muted text-sm mr-0.5 select-none">$</span>
                       <input type="number" value={item.unitPrice}
                         onChange={(e) => updateItem(si, ii, "unitPrice", parseFloat(e.target.value) || 0)}
-                        className={`${inputClass} text-right`} />
+                        className={`${inputClass} text-right flex-1`} />
                     </div>
                     <div className="col-span-2 text-right text-sm text-text-primary font-medium pr-2">
                       ${(item.quantity * item.unitPrice).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
