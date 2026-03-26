@@ -392,6 +392,8 @@ export const ModelName = {
   Acceptance: 'Acceptance',
   Contract: 'Contract',
   ChangeOrder: 'ChangeOrder',
+  Invoice: 'Invoice',
+  InvoiceMilestone: 'InvoiceMilestone',
   Project: 'Project',
   Contact: 'Contact',
   Company: 'Company',
@@ -421,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
+    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "invoice" | "invoiceMilestone" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1014,6 +1016,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ChangeOrderCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ChangeOrderCountAggregateOutputType> | number
+        }
+      }
+    }
+    Invoice: {
+      payload: Prisma.$InvoicePayload<ExtArgs>
+      fields: Prisma.InvoiceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvoiceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvoiceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>
+        }
+        findFirst: {
+          args: Prisma.InvoiceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvoiceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>
+        }
+        findMany: {
+          args: Prisma.InvoiceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>[]
+        }
+        create: {
+          args: Prisma.InvoiceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>
+        }
+        createMany: {
+          args: Prisma.InvoiceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvoiceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>[]
+        }
+        delete: {
+          args: Prisma.InvoiceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>
+        }
+        update: {
+          args: Prisma.InvoiceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>
+        }
+        deleteMany: {
+          args: Prisma.InvoiceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvoiceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvoiceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>[]
+        }
+        upsert: {
+          args: Prisma.InvoiceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoicePayload>
+        }
+        aggregate: {
+          args: Prisma.InvoiceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvoice>
+        }
+        groupBy: {
+          args: Prisma.InvoiceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvoiceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceCountAggregateOutputType> | number
+        }
+      }
+    }
+    InvoiceMilestone: {
+      payload: Prisma.$InvoiceMilestonePayload<ExtArgs>
+      fields: Prisma.InvoiceMilestoneFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvoiceMilestoneFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvoiceMilestoneFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>
+        }
+        findFirst: {
+          args: Prisma.InvoiceMilestoneFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvoiceMilestoneFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>
+        }
+        findMany: {
+          args: Prisma.InvoiceMilestoneFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>[]
+        }
+        create: {
+          args: Prisma.InvoiceMilestoneCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>
+        }
+        createMany: {
+          args: Prisma.InvoiceMilestoneCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvoiceMilestoneCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>[]
+        }
+        delete: {
+          args: Prisma.InvoiceMilestoneDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>
+        }
+        update: {
+          args: Prisma.InvoiceMilestoneUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>
+        }
+        deleteMany: {
+          args: Prisma.InvoiceMilestoneDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvoiceMilestoneUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvoiceMilestoneUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>[]
+        }
+        upsert: {
+          args: Prisma.InvoiceMilestoneUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvoiceMilestonePayload>
+        }
+        aggregate: {
+          args: Prisma.InvoiceMilestoneAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvoiceMilestone>
+        }
+        groupBy: {
+          args: Prisma.InvoiceMilestoneGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceMilestoneGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvoiceMilestoneCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvoiceMilestoneCountAggregateOutputType> | number
         }
       }
     }
@@ -2143,6 +2293,7 @@ export const MilestoneScalarFieldEnum = {
   completedAt: 'completedAt',
   position: 'position',
   notes: 'notes',
+  billingAmount: 'billingAmount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2232,9 +2383,50 @@ export const ChangeOrderScalarFieldEnum = {
 export type ChangeOrderScalarFieldEnum = (typeof ChangeOrderScalarFieldEnum)[keyof typeof ChangeOrderScalarFieldEnum]
 
 
+export const InvoiceScalarFieldEnum = {
+  id: 'id',
+  invoiceNumber: 'invoiceNumber',
+  sequenceNumber: 'sequenceNumber',
+  projectId: 'projectId',
+  contractId: 'contractId',
+  changeOrderId: 'changeOrderId',
+  billingContactId: 'billingContactId',
+  billingCompanyId: 'billingCompanyId',
+  amount: 'amount',
+  amountAdjustmentNote: 'amountAdjustmentNote',
+  issueDate: 'issueDate',
+  dueDate: 'dueDate',
+  notes: 'notes',
+  status: 'status',
+  htmlPath: 'htmlPath',
+  viewToken: 'viewToken',
+  passcode: 'passcode',
+  passcodeFailures: 'passcodeFailures',
+  passcodeLockedUntil: 'passcodeLockedUntil',
+  sentAt: 'sentAt',
+  viewedAt: 'viewedAt',
+  paidAt: 'paidAt',
+  paidMethod: 'paidMethod',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
+
+
+export const InvoiceMilestoneScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  milestoneId: 'milestoneId'
+} as const
+
+export type InvoiceMilestoneScalarFieldEnum = (typeof InvoiceMilestoneScalarFieldEnum)[keyof typeof InvoiceMilestoneScalarFieldEnum]
+
+
 export const ProjectScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortCode: 'shortCode',
   stage: 'stage',
   projectType: 'projectType',
   message: 'message',
@@ -2628,6 +2820,8 @@ export type GlobalOmitConfig = {
   acceptance?: Prisma.AcceptanceOmit
   contract?: Prisma.ContractOmit
   changeOrder?: Prisma.ChangeOrderOmit
+  invoice?: Prisma.InvoiceOmit
+  invoiceMilestone?: Prisma.InvoiceMilestoneOmit
   project?: Prisma.ProjectOmit
   contact?: Prisma.ContactOmit
   company?: Prisma.CompanyOmit

@@ -66,8 +66,10 @@ model Milestone {
   completedAt DateTime?
   position    Int
   notes       String?
+  billingAmount Float?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  invoiceMilestones InvoiceMilestone[]
 }
 
 model LineItemSection {
@@ -124,6 +126,7 @@ model Contract {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   changeOrders    ChangeOrder[]
+  invoices         Invoice[]
 }
 
 model ChangeOrder {
@@ -145,8 +148,53 @@ model ChangeOrder {
   sentAt          DateTime?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  invoices         Invoice[]
 
   @@unique([contractId, number])
+}
+
+model Invoice {
+  id                    String              @id @default(cuid())
+  invoiceNumber         String              @unique
+  sequenceNumber        Int
+  projectId             String
+  project               Project             @relation(fields: [projectId], references: [id])
+  contractId            String
+  contract              Contract            @relation(fields: [contractId], references: [id])
+  changeOrderId         String?
+  changeOrder           ChangeOrder?        @relation(fields: [changeOrderId], references: [id])
+  billingContactId      String
+  billingContact        Contact             @relation(fields: [billingContactId], references: [id])
+  billingCompanyId      String?
+  billingCompany        Company?            @relation(fields: [billingCompanyId], references: [id])
+  amount                Float
+  amountAdjustmentNote  String?
+  issueDate             DateTime            @default(now())
+  dueDate               DateTime
+  notes                 String?
+  status                String              @default("draft") // draft | sent | viewed | paid
+  htmlPath              String
+  viewToken             String?             @unique
+  passcode              String?
+  passcodeFailures      Int                 @default(0)
+  passcodeLockedUntil   DateTime?
+  sentAt                DateTime?
+  viewedAt              DateTime?
+  paidAt                DateTime?
+  paidMethod            String?             // check | ach | other
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  invoiceMilestones     InvoiceMilestone[]
+}
+
+model InvoiceMilestone {
+  id          String    @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  milestoneId String    @unique // globally unique — prevents double-billing
+  milestone   Milestone @relation(fields: [milestoneId], references: [id])
+
+  @@unique([invoiceId, milestoneId])
 }
 
 // ─── CRM ──────────────────────────────────────────────────────────────────────
@@ -156,6 +204,7 @@ model ChangeOrder {
 model Project {
   id               String              @id @default(cuid())
   name             String
+  shortCode        String?
   stage            String              @default("opportunity_identified")
   projectType      String?
   message          String?             // original inbound message from contact form
@@ -181,6 +230,7 @@ model Project {
   quotes           Quote[]
   contracts        Contract[]
   teamMembers      ProjectTeamMember[]
+  invoices         Invoice[]
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
 }
@@ -197,6 +247,7 @@ model Contact {
   projectContacts  ProjectContact[]
   quoteContacts    QuoteContact[]
   employee         Employee?
+  invoices         Invoice[]
   createdAt        DateTime         @default(now())
 }
 
@@ -209,6 +260,7 @@ model Company {
   contacts         Contact[]
   projectCompanies ProjectCompany[]
   quoteCompanies   QuoteCompany[]
+  invoices         Invoice[]
   createdAt        DateTime         @default(now())
 }
 

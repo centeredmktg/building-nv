@@ -82,6 +82,16 @@ export type Contract = Prisma.ContractModel
  */
 export type ChangeOrder = Prisma.ChangeOrderModel
 /**
+ * Model Invoice
+ * 
+ */
+export type Invoice = Prisma.InvoiceModel
+/**
+ * Model InvoiceMilestone
+ * 
+ */
+export type InvoiceMilestone = Prisma.InvoiceMilestoneModel
+/**
  * Model Project
  * 
  */

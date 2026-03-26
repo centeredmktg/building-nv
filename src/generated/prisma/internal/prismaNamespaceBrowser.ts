@@ -59,6 +59,8 @@ export const ModelName = {
   Acceptance: 'Acceptance',
   Contract: 'Contract',
   ChangeOrder: 'ChangeOrder',
+  Invoice: 'Invoice',
+  InvoiceMilestone: 'InvoiceMilestone',
   Project: 'Project',
   Contact: 'Contact',
   Company: 'Company',
@@ -142,6 +144,7 @@ export const MilestoneScalarFieldEnum = {
   completedAt: 'completedAt',
   position: 'position',
   notes: 'notes',
+  billingAmount: 'billingAmount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -231,9 +234,50 @@ export const ChangeOrderScalarFieldEnum = {
 export type ChangeOrderScalarFieldEnum = (typeof ChangeOrderScalarFieldEnum)[keyof typeof ChangeOrderScalarFieldEnum]
 
 
+export const InvoiceScalarFieldEnum = {
+  id: 'id',
+  invoiceNumber: 'invoiceNumber',
+  sequenceNumber: 'sequenceNumber',
+  projectId: 'projectId',
+  contractId: 'contractId',
+  changeOrderId: 'changeOrderId',
+  billingContactId: 'billingContactId',
+  billingCompanyId: 'billingCompanyId',
+  amount: 'amount',
+  amountAdjustmentNote: 'amountAdjustmentNote',
+  issueDate: 'issueDate',
+  dueDate: 'dueDate',
+  notes: 'notes',
+  status: 'status',
+  htmlPath: 'htmlPath',
+  viewToken: 'viewToken',
+  passcode: 'passcode',
+  passcodeFailures: 'passcodeFailures',
+  passcodeLockedUntil: 'passcodeLockedUntil',
+  sentAt: 'sentAt',
+  viewedAt: 'viewedAt',
+  paidAt: 'paidAt',
+  paidMethod: 'paidMethod',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
+
+
+export const InvoiceMilestoneScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  milestoneId: 'milestoneId'
+} as const
+
+export type InvoiceMilestoneScalarFieldEnum = (typeof InvoiceMilestoneScalarFieldEnum)[keyof typeof InvoiceMilestoneScalarFieldEnum]
+
+
 export const ProjectScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortCode: 'shortCode',
   stage: 'stage',
   projectType: 'projectType',
   message: 'message',

@@ -39,6 +39,7 @@ export type ProjectSumAggregateOutputType = {
 export type ProjectMinAggregateOutputType = {
   id: string | null
   name: string | null
+  shortCode: string | null
   stage: string | null
   projectType: string | null
   message: string | null
@@ -65,6 +66,7 @@ export type ProjectMinAggregateOutputType = {
 export type ProjectMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  shortCode: string | null
   stage: string | null
   projectType: string | null
   message: string | null
@@ -91,6 +93,7 @@ export type ProjectMaxAggregateOutputType = {
 export type ProjectCountAggregateOutputType = {
   id: number
   name: number
+  shortCode: number
   stage: number
   projectType: number
   message: number
@@ -129,6 +132,7 @@ export type ProjectSumAggregateInputType = {
 export type ProjectMinAggregateInputType = {
   id?: true
   name?: true
+  shortCode?: true
   stage?: true
   projectType?: true
   message?: true
@@ -155,6 +159,7 @@ export type ProjectMinAggregateInputType = {
 export type ProjectMaxAggregateInputType = {
   id?: true
   name?: true
+  shortCode?: true
   stage?: true
   projectType?: true
   message?: true
@@ -181,6 +186,7 @@ export type ProjectMaxAggregateInputType = {
 export type ProjectCountAggregateInputType = {
   id?: true
   name?: true
+  shortCode?: true
   stage?: true
   projectType?: true
   message?: true
@@ -294,6 +300,7 @@ export type ProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type ProjectGroupByOutputType = {
   id: string
   name: string
+  shortCode: string | null
   stage: string
   projectType: string | null
   message: string | null
@@ -343,6 +350,7 @@ export type ProjectWhereInput = {
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   id?: Prisma.StringFilter<"Project"> | string
   name?: Prisma.StringFilter<"Project"> | string
+  shortCode?: Prisma.StringNullableFilter<"Project"> | string | null
   stage?: Prisma.StringFilter<"Project"> | string
   projectType?: Prisma.StringNullableFilter<"Project"> | string | null
   message?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -370,11 +378,13 @@ export type ProjectWhereInput = {
   quotes?: Prisma.QuoteListRelationFilter
   contracts?: Prisma.ContractListRelationFilter
   teamMembers?: Prisma.ProjectTeamMemberListRelationFilter
+  invoices?: Prisma.InvoiceListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortCode?: Prisma.SortOrderInput | Prisma.SortOrder
   stage?: Prisma.SortOrder
   projectType?: Prisma.SortOrderInput | Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -402,6 +412,7 @@ export type ProjectOrderByWithRelationInput = {
   quotes?: Prisma.QuoteOrderByRelationAggregateInput
   contracts?: Prisma.ContractOrderByRelationAggregateInput
   teamMembers?: Prisma.ProjectTeamMemberOrderByRelationAggregateInput
+  invoices?: Prisma.InvoiceOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -410,6 +421,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   name?: Prisma.StringFilter<"Project"> | string
+  shortCode?: Prisma.StringNullableFilter<"Project"> | string | null
   stage?: Prisma.StringFilter<"Project"> | string
   projectType?: Prisma.StringNullableFilter<"Project"> | string | null
   message?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -437,11 +449,13 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   quotes?: Prisma.QuoteListRelationFilter
   contracts?: Prisma.ContractListRelationFilter
   teamMembers?: Prisma.ProjectTeamMemberListRelationFilter
+  invoices?: Prisma.InvoiceListRelationFilter
 }, "id">
 
 export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortCode?: Prisma.SortOrderInput | Prisma.SortOrder
   stage?: Prisma.SortOrder
   projectType?: Prisma.SortOrderInput | Prisma.SortOrder
   message?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -476,6 +490,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Project"> | string
   name?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  shortCode?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   stage?: Prisma.StringWithAggregatesFilter<"Project"> | string
   projectType?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   message?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
@@ -502,6 +517,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
 export type ProjectCreateInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -529,11 +545,13 @@ export type ProjectCreateInput = {
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -561,11 +579,13 @@ export type ProjectUncheckedCreateInput = {
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -593,11 +613,13 @@ export type ProjectUpdateInput = {
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -625,11 +647,13 @@ export type ProjectUncheckedUpdateInput = {
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -656,6 +680,7 @@ export type ProjectCreateManyInput = {
 export type ProjectUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -682,6 +707,7 @@ export type ProjectUpdateManyMutationInput = {
 export type ProjectUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -718,6 +744,7 @@ export type ProjectScalarRelationFilter = {
 export type ProjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortCode?: Prisma.SortOrder
   stage?: Prisma.SortOrder
   projectType?: Prisma.SortOrder
   message?: Prisma.SortOrder
@@ -749,6 +776,7 @@ export type ProjectAvgOrderByAggregateInput = {
 export type ProjectMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortCode?: Prisma.SortOrder
   stage?: Prisma.SortOrder
   projectType?: Prisma.SortOrder
   message?: Prisma.SortOrder
@@ -775,6 +803,7 @@ export type ProjectMaxOrderByAggregateInput = {
 export type ProjectMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  shortCode?: Prisma.SortOrder
   stage?: Prisma.SortOrder
   projectType?: Prisma.SortOrder
   message?: Prisma.SortOrder
@@ -849,6 +878,20 @@ export type ProjectUpdateOneWithoutContractsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutContractsInput, Prisma.ProjectUpdateWithoutContractsInput>, Prisma.ProjectUncheckedUpdateWithoutContractsInput>
 }
 
+export type ProjectCreateNestedOneWithoutInvoicesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutInvoicesInput, Prisma.ProjectUncheckedCreateWithoutInvoicesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutInvoicesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutInvoicesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutInvoicesInput, Prisma.ProjectUncheckedCreateWithoutInvoicesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutInvoicesInput
+  upsert?: Prisma.ProjectUpsertWithoutInvoicesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutInvoicesInput, Prisma.ProjectUpdateWithoutInvoicesInput>, Prisma.ProjectUncheckedUpdateWithoutInvoicesInput>
+}
+
 export type ProjectCreateNestedOneWithoutProjectContactsInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutProjectContactsInput, Prisma.ProjectUncheckedCreateWithoutProjectContactsInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutProjectContactsInput
@@ -894,6 +937,7 @@ export type ProjectUpdateOneRequiredWithoutTeamMembersNestedInput = {
 export type ProjectCreateWithoutQuotesInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -920,11 +964,13 @@ export type ProjectCreateWithoutQuotesInput = {
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutQuotesInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -951,6 +997,7 @@ export type ProjectUncheckedCreateWithoutQuotesInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutQuotesInput = {
@@ -972,6 +1019,7 @@ export type ProjectUpdateToOneWithWhereWithoutQuotesInput = {
 export type ProjectUpdateWithoutQuotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -998,11 +1046,13 @@ export type ProjectUpdateWithoutQuotesInput = {
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutQuotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1029,11 +1079,13 @@ export type ProjectUncheckedUpdateWithoutQuotesInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutMilestonesInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1060,11 +1112,13 @@ export type ProjectCreateWithoutMilestonesInput = {
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutMilestonesInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1091,6 +1145,7 @@ export type ProjectUncheckedCreateWithoutMilestonesInput = {
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutMilestonesInput = {
@@ -1112,6 +1167,7 @@ export type ProjectUpdateToOneWithWhereWithoutMilestonesInput = {
 export type ProjectUpdateWithoutMilestonesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1138,11 +1194,13 @@ export type ProjectUpdateWithoutMilestonesInput = {
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutMilestonesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1169,11 +1227,13 @@ export type ProjectUncheckedUpdateWithoutMilestonesInput = {
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutContractsInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1200,11 +1260,13 @@ export type ProjectCreateWithoutContractsInput = {
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutContractsInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1231,6 +1293,7 @@ export type ProjectUncheckedCreateWithoutContractsInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutContractsInput = {
@@ -1252,6 +1315,7 @@ export type ProjectUpdateToOneWithWhereWithoutContractsInput = {
 export type ProjectUpdateWithoutContractsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1278,11 +1342,13 @@ export type ProjectUpdateWithoutContractsInput = {
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutContractsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1309,11 +1375,161 @@ export type ProjectUncheckedUpdateWithoutContractsInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutInvoicesInput = {
+  id?: string
+  name: string
+  shortCode?: string | null
+  stage?: string
+  projectType?: string | null
+  message?: string | null
+  notes?: string | null
+  attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteState?: string | null
+  siteZip?: string | null
+  hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProjectInput
+  projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
+  contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
+  teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutInvoicesInput = {
+  id?: string
+  name: string
+  shortCode?: string | null
+  stage?: string
+  projectType?: string | null
+  message?: string | null
+  notes?: string | null
+  attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteState?: string | null
+  siteZip?: string | null
+  hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProjectInput
+  projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
+  contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
+  teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutInvoicesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutInvoicesInput, Prisma.ProjectUncheckedCreateWithoutInvoicesInput>
+}
+
+export type ProjectUpsertWithoutInvoicesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutInvoicesInput, Prisma.ProjectUncheckedUpdateWithoutInvoicesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutInvoicesInput, Prisma.ProjectUncheckedCreateWithoutInvoicesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutInvoicesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutInvoicesInput, Prisma.ProjectUncheckedUpdateWithoutInvoicesInput>
+}
+
+export type ProjectUpdateWithoutInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUpdateManyWithoutProjectNestedInput
+  projectContacts?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
+  contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
+  teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
+  contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
+  teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutProjectContactsInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1340,11 +1556,13 @@ export type ProjectCreateWithoutProjectContactsInput = {
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutProjectContactsInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1371,6 +1589,7 @@ export type ProjectUncheckedCreateWithoutProjectContactsInput = {
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutProjectContactsInput = {
@@ -1392,6 +1611,7 @@ export type ProjectUpdateToOneWithWhereWithoutProjectContactsInput = {
 export type ProjectUpdateWithoutProjectContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1418,11 +1638,13 @@ export type ProjectUpdateWithoutProjectContactsInput = {
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutProjectContactsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1449,11 +1671,13 @@ export type ProjectUncheckedUpdateWithoutProjectContactsInput = {
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutProjectCompaniesInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1480,11 +1704,13 @@ export type ProjectCreateWithoutProjectCompaniesInput = {
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutProjectCompaniesInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1511,6 +1737,7 @@ export type ProjectUncheckedCreateWithoutProjectCompaniesInput = {
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutProjectCompaniesInput = {
@@ -1532,6 +1759,7 @@ export type ProjectUpdateToOneWithWhereWithoutProjectCompaniesInput = {
 export type ProjectUpdateWithoutProjectCompaniesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1558,11 +1786,13 @@ export type ProjectUpdateWithoutProjectCompaniesInput = {
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutProjectCompaniesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1589,11 +1819,13 @@ export type ProjectUncheckedUpdateWithoutProjectCompaniesInput = {
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
   teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutTeamMembersInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1620,11 +1852,13 @@ export type ProjectCreateWithoutTeamMembersInput = {
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutTeamMembersInput = {
   id?: string
   name: string
+  shortCode?: string | null
   stage?: string
   projectType?: string | null
   message?: string | null
@@ -1651,6 +1885,7 @@ export type ProjectUncheckedCreateWithoutTeamMembersInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
   contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutTeamMembersInput = {
@@ -1672,6 +1907,7 @@ export type ProjectUpdateToOneWithWhereWithoutTeamMembersInput = {
 export type ProjectUpdateWithoutTeamMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1698,11 +1934,13 @@ export type ProjectUpdateWithoutTeamMembersInput = {
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutTeamMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stage?: Prisma.StringFieldUpdateOperationsInput | string
   projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1729,6 +1967,7 @@ export type ProjectUncheckedUpdateWithoutTeamMembersInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
   contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 
@@ -1743,6 +1982,7 @@ export type ProjectCountOutputType = {
   quotes: number
   contracts: number
   teamMembers: number
+  invoices: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1752,6 +1992,7 @@ export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   quotes?: boolean | ProjectCountOutputTypeCountQuotesArgs
   contracts?: boolean | ProjectCountOutputTypeCountContractsArgs
   teamMembers?: boolean | ProjectCountOutputTypeCountTeamMembersArgs
+  invoices?: boolean | ProjectCountOutputTypeCountInvoicesArgs
 }
 
 /**
@@ -1806,10 +2047,18 @@ export type ProjectCountOutputTypeCountTeamMembersArgs<ExtArgs extends runtime.T
   where?: Prisma.ProjectTeamMemberWhereInput
 }
 
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceWhereInput
+}
+
 
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  shortCode?: boolean
   stage?: boolean
   projectType?: boolean
   message?: boolean
@@ -1837,12 +2086,14 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   quotes?: boolean | Prisma.Project$quotesArgs<ExtArgs>
   contracts?: boolean | Prisma.Project$contractsArgs<ExtArgs>
   teamMembers?: boolean | Prisma.Project$teamMembersArgs<ExtArgs>
+  invoices?: boolean | Prisma.Project$invoicesArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
 export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  shortCode?: boolean
   stage?: boolean
   projectType?: boolean
   message?: boolean
@@ -1869,6 +2120,7 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  shortCode?: boolean
   stage?: boolean
   projectType?: boolean
   message?: boolean
@@ -1895,6 +2147,7 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type ProjectSelectScalar = {
   id?: boolean
   name?: boolean
+  shortCode?: boolean
   stage?: boolean
   projectType?: boolean
   message?: boolean
@@ -1918,7 +2171,7 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "stage" | "projectType" | "message" | "notes" | "attachmentUrl" | "estimatedCloseDate" | "contractAmount" | "targetCostAmount" | "estimatedStartDate" | "estimatedEndDate" | "timingNotes" | "siteAddress" | "siteCity" | "siteState" | "siteZip" | "hazardNotes" | "nearestER" | "nearestERAddress" | "assemblyPoint" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "shortCode" | "stage" | "projectType" | "message" | "notes" | "attachmentUrl" | "estimatedCloseDate" | "contractAmount" | "targetCostAmount" | "estimatedStartDate" | "estimatedEndDate" | "timingNotes" | "siteAddress" | "siteCity" | "siteState" | "siteZip" | "hazardNotes" | "nearestER" | "nearestERAddress" | "assemblyPoint" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
   projectContacts?: boolean | Prisma.Project$projectContactsArgs<ExtArgs>
@@ -1926,6 +2179,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   quotes?: boolean | Prisma.Project$quotesArgs<ExtArgs>
   contracts?: boolean | Prisma.Project$contractsArgs<ExtArgs>
   teamMembers?: boolean | Prisma.Project$teamMembersArgs<ExtArgs>
+  invoices?: boolean | Prisma.Project$invoicesArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1940,10 +2194,12 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     quotes: Prisma.$QuotePayload<ExtArgs>[]
     contracts: Prisma.$ContractPayload<ExtArgs>[]
     teamMembers: Prisma.$ProjectTeamMemberPayload<ExtArgs>[]
+    invoices: Prisma.$InvoicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    shortCode: string | null
     stage: string
     projectType: string | null
     message: string | null
@@ -2365,6 +2621,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   quotes<T extends Prisma.Project$quotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$quotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   contracts<T extends Prisma.Project$contractsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$contractsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teamMembers<T extends Prisma.Project$teamMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$teamMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectTeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  invoices<T extends Prisma.Project$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2396,6 +2653,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
 export interface ProjectFieldRefs {
   readonly id: Prisma.FieldRef<"Project", 'String'>
   readonly name: Prisma.FieldRef<"Project", 'String'>
+  readonly shortCode: Prisma.FieldRef<"Project", 'String'>
   readonly stage: Prisma.FieldRef<"Project", 'String'>
   readonly projectType: Prisma.FieldRef<"Project", 'String'>
   readonly message: Prisma.FieldRef<"Project", 'String'>
@@ -2946,6 +3204,30 @@ export type Project$teamMembersArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ProjectTeamMemberScalarFieldEnum | Prisma.ProjectTeamMemberScalarFieldEnum[]
+}
+
+/**
+ * Project.invoices
+ */
+export type Project$invoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Invoice
+   */
+  select?: Prisma.InvoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Invoice
+   */
+  omit?: Prisma.InvoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceInclude<ExtArgs> | null
+  where?: Prisma.InvoiceWhereInput
+  orderBy?: Prisma.InvoiceOrderByWithRelationInput | Prisma.InvoiceOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
 }
 
 /**

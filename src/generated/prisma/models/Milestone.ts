@@ -28,10 +28,12 @@ export type AggregateMilestone = {
 
 export type MilestoneAvgAggregateOutputType = {
   position: number | null
+  billingAmount: number | null
 }
 
 export type MilestoneSumAggregateOutputType = {
   position: number | null
+  billingAmount: number | null
 }
 
 export type MilestoneMinAggregateOutputType = {
@@ -42,6 +44,7 @@ export type MilestoneMinAggregateOutputType = {
   completedAt: Date | null
   position: number | null
   notes: string | null
+  billingAmount: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +57,7 @@ export type MilestoneMaxAggregateOutputType = {
   completedAt: Date | null
   position: number | null
   notes: string | null
+  billingAmount: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -66,6 +70,7 @@ export type MilestoneCountAggregateOutputType = {
   completedAt: number
   position: number
   notes: number
+  billingAmount: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,10 +79,12 @@ export type MilestoneCountAggregateOutputType = {
 
 export type MilestoneAvgAggregateInputType = {
   position?: true
+  billingAmount?: true
 }
 
 export type MilestoneSumAggregateInputType = {
   position?: true
+  billingAmount?: true
 }
 
 export type MilestoneMinAggregateInputType = {
@@ -88,6 +95,7 @@ export type MilestoneMinAggregateInputType = {
   completedAt?: true
   position?: true
   notes?: true
+  billingAmount?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,6 +108,7 @@ export type MilestoneMaxAggregateInputType = {
   completedAt?: true
   position?: true
   notes?: true
+  billingAmount?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -112,6 +121,7 @@ export type MilestoneCountAggregateInputType = {
   completedAt?: true
   position?: true
   notes?: true
+  billingAmount?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -211,6 +221,7 @@ export type MilestoneGroupByOutputType = {
   completedAt: Date | null
   position: number
   notes: string | null
+  billingAmount: number | null
   createdAt: Date
   updatedAt: Date
   _count: MilestoneCountAggregateOutputType | null
@@ -246,9 +257,11 @@ export type MilestoneWhereInput = {
   completedAt?: Prisma.DateTimeNullableFilter<"Milestone"> | Date | string | null
   position?: Prisma.IntFilter<"Milestone"> | number
   notes?: Prisma.StringNullableFilter<"Milestone"> | string | null
+  billingAmount?: Prisma.FloatNullableFilter<"Milestone"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  invoiceMilestones?: Prisma.InvoiceMilestoneListRelationFilter
 }
 
 export type MilestoneOrderByWithRelationInput = {
@@ -259,9 +272,11 @@ export type MilestoneOrderByWithRelationInput = {
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   position?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   project?: Prisma.ProjectOrderByWithRelationInput
+  invoiceMilestones?: Prisma.InvoiceMilestoneOrderByRelationAggregateInput
 }
 
 export type MilestoneWhereUniqueInput = Prisma.AtLeast<{
@@ -275,9 +290,11 @@ export type MilestoneWhereUniqueInput = Prisma.AtLeast<{
   completedAt?: Prisma.DateTimeNullableFilter<"Milestone"> | Date | string | null
   position?: Prisma.IntFilter<"Milestone"> | number
   notes?: Prisma.StringNullableFilter<"Milestone"> | string | null
+  billingAmount?: Prisma.FloatNullableFilter<"Milestone"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
+  invoiceMilestones?: Prisma.InvoiceMilestoneListRelationFilter
 }, "id">
 
 export type MilestoneOrderByWithAggregationInput = {
@@ -288,6 +305,7 @@ export type MilestoneOrderByWithAggregationInput = {
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   position?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  billingAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.MilestoneCountOrderByAggregateInput
@@ -308,6 +326,7 @@ export type MilestoneScalarWhereWithAggregatesInput = {
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Milestone"> | Date | string | null
   position?: Prisma.IntWithAggregatesFilter<"Milestone"> | number
   notes?: Prisma.StringNullableWithAggregatesFilter<"Milestone"> | string | null
+  billingAmount?: Prisma.FloatNullableWithAggregatesFilter<"Milestone"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Milestone"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Milestone"> | Date | string
 }
@@ -319,9 +338,11 @@ export type MilestoneCreateInput = {
   completedAt?: Date | string | null
   position: number
   notes?: string | null
+  billingAmount?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutMilestonesInput
+  invoiceMilestones?: Prisma.InvoiceMilestoneCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneUncheckedCreateInput = {
@@ -332,8 +353,10 @@ export type MilestoneUncheckedCreateInput = {
   completedAt?: Date | string | null
   position: number
   notes?: string | null
+  billingAmount?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneUpdateInput = {
@@ -343,9 +366,11 @@ export type MilestoneUpdateInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutMilestonesNestedInput
+  invoiceMilestones?: Prisma.InvoiceMilestoneUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneUncheckedUpdateInput = {
@@ -356,8 +381,10 @@ export type MilestoneUncheckedUpdateInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneCreateManyInput = {
@@ -368,6 +395,7 @@ export type MilestoneCreateManyInput = {
   completedAt?: Date | string | null
   position: number
   notes?: string | null
+  billingAmount?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -379,6 +407,7 @@ export type MilestoneUpdateManyMutationInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -391,6 +420,7 @@ export type MilestoneUncheckedUpdateManyInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -403,12 +433,14 @@ export type MilestoneCountOrderByAggregateInput = {
   completedAt?: Prisma.SortOrder
   position?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  billingAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type MilestoneAvgOrderByAggregateInput = {
   position?: Prisma.SortOrder
+  billingAmount?: Prisma.SortOrder
 }
 
 export type MilestoneMaxOrderByAggregateInput = {
@@ -419,6 +451,7 @@ export type MilestoneMaxOrderByAggregateInput = {
   completedAt?: Prisma.SortOrder
   position?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  billingAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -431,12 +464,19 @@ export type MilestoneMinOrderByAggregateInput = {
   completedAt?: Prisma.SortOrder
   position?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  billingAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type MilestoneSumOrderByAggregateInput = {
   position?: Prisma.SortOrder
+  billingAmount?: Prisma.SortOrder
+}
+
+export type MilestoneScalarRelationFilter = {
+  is?: Prisma.MilestoneWhereInput
+  isNot?: Prisma.MilestoneWhereInput
 }
 
 export type MilestoneListRelationFilter = {
@@ -447,6 +487,20 @@ export type MilestoneListRelationFilter = {
 
 export type MilestoneOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type MilestoneCreateNestedOneWithoutInvoiceMilestonesInput = {
+  create?: Prisma.XOR<Prisma.MilestoneCreateWithoutInvoiceMilestonesInput, Prisma.MilestoneUncheckedCreateWithoutInvoiceMilestonesInput>
+  connectOrCreate?: Prisma.MilestoneCreateOrConnectWithoutInvoiceMilestonesInput
+  connect?: Prisma.MilestoneWhereUniqueInput
+}
+
+export type MilestoneUpdateOneRequiredWithoutInvoiceMilestonesNestedInput = {
+  create?: Prisma.XOR<Prisma.MilestoneCreateWithoutInvoiceMilestonesInput, Prisma.MilestoneUncheckedCreateWithoutInvoiceMilestonesInput>
+  connectOrCreate?: Prisma.MilestoneCreateOrConnectWithoutInvoiceMilestonesInput
+  upsert?: Prisma.MilestoneUpsertWithoutInvoiceMilestonesInput
+  connect?: Prisma.MilestoneWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.MilestoneUpdateToOneWithWhereWithoutInvoiceMilestonesInput, Prisma.MilestoneUpdateWithoutInvoiceMilestonesInput>, Prisma.MilestoneUncheckedUpdateWithoutInvoiceMilestonesInput>
 }
 
 export type MilestoneCreateNestedManyWithoutProjectInput = {
@@ -491,6 +545,74 @@ export type MilestoneUncheckedUpdateManyWithoutProjectNestedInput = {
   deleteMany?: Prisma.MilestoneScalarWhereInput | Prisma.MilestoneScalarWhereInput[]
 }
 
+export type MilestoneCreateWithoutInvoiceMilestonesInput = {
+  id?: string
+  name: string
+  plannedDate?: Date | string | null
+  completedAt?: Date | string | null
+  position: number
+  notes?: string | null
+  billingAmount?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  project: Prisma.ProjectCreateNestedOneWithoutMilestonesInput
+}
+
+export type MilestoneUncheckedCreateWithoutInvoiceMilestonesInput = {
+  id?: string
+  projectId: string
+  name: string
+  plannedDate?: Date | string | null
+  completedAt?: Date | string | null
+  position: number
+  notes?: string | null
+  billingAmount?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type MilestoneCreateOrConnectWithoutInvoiceMilestonesInput = {
+  where: Prisma.MilestoneWhereUniqueInput
+  create: Prisma.XOR<Prisma.MilestoneCreateWithoutInvoiceMilestonesInput, Prisma.MilestoneUncheckedCreateWithoutInvoiceMilestonesInput>
+}
+
+export type MilestoneUpsertWithoutInvoiceMilestonesInput = {
+  update: Prisma.XOR<Prisma.MilestoneUpdateWithoutInvoiceMilestonesInput, Prisma.MilestoneUncheckedUpdateWithoutInvoiceMilestonesInput>
+  create: Prisma.XOR<Prisma.MilestoneCreateWithoutInvoiceMilestonesInput, Prisma.MilestoneUncheckedCreateWithoutInvoiceMilestonesInput>
+  where?: Prisma.MilestoneWhereInput
+}
+
+export type MilestoneUpdateToOneWithWhereWithoutInvoiceMilestonesInput = {
+  where?: Prisma.MilestoneWhereInput
+  data: Prisma.XOR<Prisma.MilestoneUpdateWithoutInvoiceMilestonesInput, Prisma.MilestoneUncheckedUpdateWithoutInvoiceMilestonesInput>
+}
+
+export type MilestoneUpdateWithoutInvoiceMilestonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  project?: Prisma.ProjectUpdateOneRequiredWithoutMilestonesNestedInput
+}
+
+export type MilestoneUncheckedUpdateWithoutInvoiceMilestonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  plannedDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type MilestoneCreateWithoutProjectInput = {
   id?: string
   name: string
@@ -498,8 +620,10 @@ export type MilestoneCreateWithoutProjectInput = {
   completedAt?: Date | string | null
   position: number
   notes?: string | null
+  billingAmount?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invoiceMilestones?: Prisma.InvoiceMilestoneCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneUncheckedCreateWithoutProjectInput = {
@@ -509,8 +633,10 @@ export type MilestoneUncheckedCreateWithoutProjectInput = {
   completedAt?: Date | string | null
   position: number
   notes?: string | null
+  billingAmount?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedCreateNestedManyWithoutMilestoneInput
 }
 
 export type MilestoneCreateOrConnectWithoutProjectInput = {
@@ -550,6 +676,7 @@ export type MilestoneScalarWhereInput = {
   completedAt?: Prisma.DateTimeNullableFilter<"Milestone"> | Date | string | null
   position?: Prisma.IntFilter<"Milestone"> | number
   notes?: Prisma.StringNullableFilter<"Milestone"> | string | null
+  billingAmount?: Prisma.FloatNullableFilter<"Milestone"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Milestone"> | Date | string
 }
@@ -561,6 +688,7 @@ export type MilestoneCreateManyProjectInput = {
   completedAt?: Date | string | null
   position: number
   notes?: string | null
+  billingAmount?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -572,8 +700,10 @@ export type MilestoneUpdateWithoutProjectInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoiceMilestones?: Prisma.InvoiceMilestoneUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneUncheckedUpdateWithoutProjectInput = {
@@ -583,8 +713,10 @@ export type MilestoneUncheckedUpdateWithoutProjectInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoiceMilestones?: Prisma.InvoiceMilestoneUncheckedUpdateManyWithoutMilestoneNestedInput
 }
 
 export type MilestoneUncheckedUpdateManyWithoutProjectInput = {
@@ -594,10 +726,40 @@ export type MilestoneUncheckedUpdateManyWithoutProjectInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   position?: Prisma.IntFieldUpdateOperationsInput | number
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type MilestoneCountOutputType
+ */
+
+export type MilestoneCountOutputType = {
+  invoiceMilestones: number
+}
+
+export type MilestoneCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  invoiceMilestones?: boolean | MilestoneCountOutputTypeCountInvoiceMilestonesArgs
+}
+
+/**
+ * MilestoneCountOutputType without action
+ */
+export type MilestoneCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MilestoneCountOutputType
+   */
+  select?: Prisma.MilestoneCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * MilestoneCountOutputType without action
+ */
+export type MilestoneCountOutputTypeCountInvoiceMilestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceMilestoneWhereInput
+}
 
 
 export type MilestoneSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -608,9 +770,12 @@ export type MilestoneSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   completedAt?: boolean
   position?: boolean
   notes?: boolean
+  billingAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  invoiceMilestones?: boolean | Prisma.Milestone$invoiceMilestonesArgs<ExtArgs>
+  _count?: boolean | Prisma.MilestoneCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["milestone"]>
 
 export type MilestoneSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -621,6 +786,7 @@ export type MilestoneSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   completedAt?: boolean
   position?: boolean
   notes?: boolean
+  billingAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -634,6 +800,7 @@ export type MilestoneSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   completedAt?: boolean
   position?: boolean
   notes?: boolean
+  billingAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -647,13 +814,16 @@ export type MilestoneSelectScalar = {
   completedAt?: boolean
   position?: boolean
   notes?: boolean
+  billingAmount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type MilestoneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "name" | "plannedDate" | "completedAt" | "position" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["milestone"]>
+export type MilestoneOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "name" | "plannedDate" | "completedAt" | "position" | "notes" | "billingAmount" | "createdAt" | "updatedAt", ExtArgs["result"]["milestone"]>
 export type MilestoneInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
+  invoiceMilestones?: boolean | Prisma.Milestone$invoiceMilestonesArgs<ExtArgs>
+  _count?: boolean | Prisma.MilestoneCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MilestoneIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -666,6 +836,7 @@ export type $MilestonePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Milestone"
   objects: {
     project: Prisma.$ProjectPayload<ExtArgs>
+    invoiceMilestones: Prisma.$InvoiceMilestonePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -675,6 +846,7 @@ export type $MilestonePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     completedAt: Date | null
     position: number
     notes: string | null
+    billingAmount: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["milestone"]>
@@ -1072,6 +1244,7 @@ readonly fields: MilestoneFieldRefs;
 export interface Prisma__MilestoneClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  invoiceMilestones<T extends Prisma.Milestone$invoiceMilestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Milestone$invoiceMilestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoiceMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1108,6 +1281,7 @@ export interface MilestoneFieldRefs {
   readonly completedAt: Prisma.FieldRef<"Milestone", 'DateTime'>
   readonly position: Prisma.FieldRef<"Milestone", 'Int'>
   readonly notes: Prisma.FieldRef<"Milestone", 'String'>
+  readonly billingAmount: Prisma.FieldRef<"Milestone", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Milestone", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Milestone", 'DateTime'>
 }
@@ -1503,6 +1677,30 @@ export type MilestoneDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Milestones to delete.
    */
   limit?: number
+}
+
+/**
+ * Milestone.invoiceMilestones
+ */
+export type Milestone$invoiceMilestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvoiceMilestone
+   */
+  select?: Prisma.InvoiceMilestoneSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvoiceMilestone
+   */
+  omit?: Prisma.InvoiceMilestoneOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceMilestoneInclude<ExtArgs> | null
+  where?: Prisma.InvoiceMilestoneWhereInput
+  orderBy?: Prisma.InvoiceMilestoneOrderByWithRelationInput | Prisma.InvoiceMilestoneOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceMilestoneWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceMilestoneScalarFieldEnum | Prisma.InvoiceMilestoneScalarFieldEnum[]
 }
 
 /**

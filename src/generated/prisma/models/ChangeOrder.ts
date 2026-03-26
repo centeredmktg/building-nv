@@ -317,6 +317,7 @@ export type ChangeOrderWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   contract?: Prisma.XOR<Prisma.ContractScalarRelationFilter, Prisma.ContractWhereInput>
+  invoices?: Prisma.InvoiceListRelationFilter
 }
 
 export type ChangeOrderOrderByWithRelationInput = {
@@ -338,6 +339,7 @@ export type ChangeOrderOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   contract?: Prisma.ContractOrderByWithRelationInput
+  invoices?: Prisma.InvoiceOrderByRelationAggregateInput
 }
 
 export type ChangeOrderWhereUniqueInput = Prisma.AtLeast<{
@@ -363,6 +365,7 @@ export type ChangeOrderWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
   contract?: Prisma.XOR<Prisma.ContractScalarRelationFilter, Prisma.ContractWhereInput>
+  invoices?: Prisma.InvoiceListRelationFilter
 }, "id" | "signingToken" | "contractId_number">
 
 export type ChangeOrderOrderByWithAggregationInput = {
@@ -431,6 +434,7 @@ export type ChangeOrderCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   contract: Prisma.ContractCreateNestedOneWithoutChangeOrdersInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutChangeOrderInput
 }
 
 export type ChangeOrderUncheckedCreateInput = {
@@ -451,6 +455,7 @@ export type ChangeOrderUncheckedCreateInput = {
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutChangeOrderInput
 }
 
 export type ChangeOrderUpdateInput = {
@@ -471,6 +476,7 @@ export type ChangeOrderUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contract?: Prisma.ContractUpdateOneRequiredWithoutChangeOrdersNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutChangeOrderNestedInput
 }
 
 export type ChangeOrderUncheckedUpdateInput = {
@@ -491,6 +497,7 @@ export type ChangeOrderUncheckedUpdateInput = {
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutChangeOrderNestedInput
 }
 
 export type ChangeOrderCreateManyInput = {
@@ -637,6 +644,11 @@ export type ChangeOrderSumOrderByAggregateInput = {
   priceDelta?: Prisma.SortOrder
 }
 
+export type ChangeOrderNullableScalarRelationFilter = {
+  is?: Prisma.ChangeOrderWhereInput | null
+  isNot?: Prisma.ChangeOrderWhereInput | null
+}
+
 export type ChangeOrderCreateNestedManyWithoutContractInput = {
   create?: Prisma.XOR<Prisma.ChangeOrderCreateWithoutContractInput, Prisma.ChangeOrderUncheckedCreateWithoutContractInput> | Prisma.ChangeOrderCreateWithoutContractInput[] | Prisma.ChangeOrderUncheckedCreateWithoutContractInput[]
   connectOrCreate?: Prisma.ChangeOrderCreateOrConnectWithoutContractInput | Prisma.ChangeOrderCreateOrConnectWithoutContractInput[]
@@ -679,6 +691,22 @@ export type ChangeOrderUncheckedUpdateManyWithoutContractNestedInput = {
   deleteMany?: Prisma.ChangeOrderScalarWhereInput | Prisma.ChangeOrderScalarWhereInput[]
 }
 
+export type ChangeOrderCreateNestedOneWithoutInvoicesInput = {
+  create?: Prisma.XOR<Prisma.ChangeOrderCreateWithoutInvoicesInput, Prisma.ChangeOrderUncheckedCreateWithoutInvoicesInput>
+  connectOrCreate?: Prisma.ChangeOrderCreateOrConnectWithoutInvoicesInput
+  connect?: Prisma.ChangeOrderWhereUniqueInput
+}
+
+export type ChangeOrderUpdateOneWithoutInvoicesNestedInput = {
+  create?: Prisma.XOR<Prisma.ChangeOrderCreateWithoutInvoicesInput, Prisma.ChangeOrderUncheckedCreateWithoutInvoicesInput>
+  connectOrCreate?: Prisma.ChangeOrderCreateOrConnectWithoutInvoicesInput
+  upsert?: Prisma.ChangeOrderUpsertWithoutInvoicesInput
+  disconnect?: Prisma.ChangeOrderWhereInput | boolean
+  delete?: Prisma.ChangeOrderWhereInput | boolean
+  connect?: Prisma.ChangeOrderWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChangeOrderUpdateToOneWithWhereWithoutInvoicesInput, Prisma.ChangeOrderUpdateWithoutInvoicesInput>, Prisma.ChangeOrderUncheckedUpdateWithoutInvoicesInput>
+}
+
 export type ChangeOrderCreateWithoutContractInput = {
   id?: string
   number: number
@@ -696,6 +724,7 @@ export type ChangeOrderCreateWithoutContractInput = {
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutChangeOrderInput
 }
 
 export type ChangeOrderUncheckedCreateWithoutContractInput = {
@@ -715,6 +744,7 @@ export type ChangeOrderUncheckedCreateWithoutContractInput = {
   sentAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutChangeOrderInput
 }
 
 export type ChangeOrderCreateOrConnectWithoutContractInput = {
@@ -766,6 +796,102 @@ export type ChangeOrderScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ChangeOrder"> | Date | string
 }
 
+export type ChangeOrderCreateWithoutInvoicesInput = {
+  id?: string
+  number: number
+  title: string
+  scopeDelta: string
+  priceDelta: number
+  status?: string
+  htmlPath?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signerName?: string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
+  signerIp?: string | null
+  sentAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contract: Prisma.ContractCreateNestedOneWithoutChangeOrdersInput
+}
+
+export type ChangeOrderUncheckedCreateWithoutInvoicesInput = {
+  id?: string
+  contractId: string
+  number: number
+  title: string
+  scopeDelta: string
+  priceDelta: number
+  status?: string
+  htmlPath?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signerName?: string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
+  signerIp?: string | null
+  sentAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ChangeOrderCreateOrConnectWithoutInvoicesInput = {
+  where: Prisma.ChangeOrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChangeOrderCreateWithoutInvoicesInput, Prisma.ChangeOrderUncheckedCreateWithoutInvoicesInput>
+}
+
+export type ChangeOrderUpsertWithoutInvoicesInput = {
+  update: Prisma.XOR<Prisma.ChangeOrderUpdateWithoutInvoicesInput, Prisma.ChangeOrderUncheckedUpdateWithoutInvoicesInput>
+  create: Prisma.XOR<Prisma.ChangeOrderCreateWithoutInvoicesInput, Prisma.ChangeOrderUncheckedCreateWithoutInvoicesInput>
+  where?: Prisma.ChangeOrderWhereInput
+}
+
+export type ChangeOrderUpdateToOneWithWhereWithoutInvoicesInput = {
+  where?: Prisma.ChangeOrderWhereInput
+  data: Prisma.XOR<Prisma.ChangeOrderUpdateWithoutInvoicesInput, Prisma.ChangeOrderUncheckedUpdateWithoutInvoicesInput>
+}
+
+export type ChangeOrderUpdateWithoutInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeDelta?: Prisma.StringFieldUpdateOperationsInput | string
+  priceDelta?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  htmlPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contract?: Prisma.ContractUpdateOneRequiredWithoutChangeOrdersNestedInput
+}
+
+export type ChangeOrderUncheckedUpdateWithoutInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  contractId?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeDelta?: Prisma.StringFieldUpdateOperationsInput | string
+  priceDelta?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  htmlPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signerIp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ChangeOrderCreateManyContractInput = {
   id?: string
   number: number
@@ -802,6 +928,7 @@ export type ChangeOrderUpdateWithoutContractInput = {
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoices?: Prisma.InvoiceUpdateManyWithoutChangeOrderNestedInput
 }
 
 export type ChangeOrderUncheckedUpdateWithoutContractInput = {
@@ -821,6 +948,7 @@ export type ChangeOrderUncheckedUpdateWithoutContractInput = {
   sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutChangeOrderNestedInput
 }
 
 export type ChangeOrderUncheckedUpdateManyWithoutContractInput = {
@@ -843,6 +971,35 @@ export type ChangeOrderUncheckedUpdateManyWithoutContractInput = {
 }
 
 
+/**
+ * Count Type ChangeOrderCountOutputType
+ */
+
+export type ChangeOrderCountOutputType = {
+  invoices: number
+}
+
+export type ChangeOrderCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  invoices?: boolean | ChangeOrderCountOutputTypeCountInvoicesArgs
+}
+
+/**
+ * ChangeOrderCountOutputType without action
+ */
+export type ChangeOrderCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChangeOrderCountOutputType
+   */
+  select?: Prisma.ChangeOrderCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ChangeOrderCountOutputType without action
+ */
+export type ChangeOrderCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InvoiceWhereInput
+}
+
 
 export type ChangeOrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -863,6 +1020,8 @@ export type ChangeOrderSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   createdAt?: boolean
   updatedAt?: boolean
   contract?: boolean | Prisma.ContractDefaultArgs<ExtArgs>
+  invoices?: boolean | Prisma.ChangeOrder$invoicesArgs<ExtArgs>
+  _count?: boolean | Prisma.ChangeOrderCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["changeOrder"]>
 
 export type ChangeOrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -930,6 +1089,8 @@ export type ChangeOrderSelectScalar = {
 export type ChangeOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "contractId" | "number" | "title" | "scopeDelta" | "priceDelta" | "status" | "htmlPath" | "signingToken" | "signingTokenExpiresAt" | "signerName" | "signedAt" | "signedPdfPath" | "signerIp" | "sentAt" | "createdAt" | "updatedAt", ExtArgs["result"]["changeOrder"]>
 export type ChangeOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contract?: boolean | Prisma.ContractDefaultArgs<ExtArgs>
+  invoices?: boolean | Prisma.ChangeOrder$invoicesArgs<ExtArgs>
+  _count?: boolean | Prisma.ChangeOrderCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChangeOrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contract?: boolean | Prisma.ContractDefaultArgs<ExtArgs>
@@ -942,6 +1103,7 @@ export type $ChangeOrderPayload<ExtArgs extends runtime.Types.Extensions.Interna
   name: "ChangeOrder"
   objects: {
     contract: Prisma.$ContractPayload<ExtArgs>
+    invoices: Prisma.$InvoicePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1356,6 +1518,7 @@ readonly fields: ChangeOrderFieldRefs;
 export interface Prisma__ChangeOrderClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   contract<T extends Prisma.ContractDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ContractDefaultArgs<ExtArgs>>): Prisma.Prisma__ContractClient<runtime.Types.Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  invoices<T extends Prisma.ChangeOrder$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChangeOrder$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1795,6 +1958,30 @@ export type ChangeOrderDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many ChangeOrders to delete.
    */
   limit?: number
+}
+
+/**
+ * ChangeOrder.invoices
+ */
+export type ChangeOrder$invoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Invoice
+   */
+  select?: Prisma.InvoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Invoice
+   */
+  omit?: Prisma.InvoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvoiceInclude<ExtArgs> | null
+  where?: Prisma.InvoiceWhereInput
+  orderBy?: Prisma.InvoiceOrderByWithRelationInput | Prisma.InvoiceOrderByWithRelationInput[]
+  cursor?: Prisma.InvoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
 }
 
 /**
