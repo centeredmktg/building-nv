@@ -72,6 +72,61 @@ export async function sendSigningLink(opts: {
   });
 }
 
+export function buildInvoiceEmail(opts: {
+  recipientFirstName: string;
+  projectTitle: string;
+  invoiceNumber: string;
+  amount: number;
+  dueDate: string; // formatted date string
+  viewUrl: string;
+  senderName: string;
+}): string {
+  const amountStr = `$${opts.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  return `
+<p>Hi ${opts.recipientFirstName},</p>
+<p>Please find Invoice <strong>${opts.invoiceNumber}</strong> for <strong>${opts.projectTitle}</strong>.</p>
+<table style="font-size:14px;margin:16px 0;border-collapse:collapse;">
+  <tr><td style="padding:4px 16px 4px 0;color:#666;">Amount</td><td style="font-weight:600;">${amountStr}</td></tr>
+  <tr><td style="padding:4px 16px 4px 0;color:#666;">Due Date</td><td>${opts.dueDate}</td></tr>
+</table>
+<p>
+  <a href="${opts.viewUrl}"
+     style="background:#111110;color:white;padding:12px 24px;text-decoration:none;border-radius:4px;display:inline-block;font-family:sans-serif;">
+    View Invoice
+  </a>
+</p>
+<p style="color:#666;font-size:13px;">A passcode will be sent separately to access the invoice.</p>
+<p>— ${opts.senderName}<br>Building NV</p>`;
+}
+
+export async function sendInvoiceLink(opts: {
+  toEmail: string;
+  toName: string;
+  projectTitle: string;
+  invoiceNumber: string;
+  amount: number;
+  dueDate: string;
+  viewUrl: string;
+}): Promise<void> {
+  const firstName = opts.toName.split(' ')[0] ?? opts.toName;
+  const r = resend();
+  await r.emails.send({
+    from: FROM(),
+    to: [opts.toEmail],
+    bcc: BCC() ? [BCC()] : [],
+    subject: `Invoice ${opts.invoiceNumber} — ${opts.projectTitle}`,
+    html: buildInvoiceEmail({
+      recipientFirstName: firstName,
+      projectTitle: opts.projectTitle,
+      invoiceNumber: opts.invoiceNumber,
+      amount: opts.amount,
+      dueDate: opts.dueDate,
+      viewUrl: opts.viewUrl,
+      senderName: process.env.RESEND_FROM_NAME ?? 'Building NV',
+    }),
+  });
+}
+
 export async function sendSignedPDF(opts: {
   toEmail: string;
   toName: string;
