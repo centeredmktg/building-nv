@@ -166,6 +166,13 @@ function MilestoneRow({
         className={`flex-1 bg-transparent text-sm text-text-primary border-none outline-none hover:bg-surface-2 focus:bg-surface-2 rounded-sm px-1 py-0.5 ${milestone.completedAt ? "line-through text-text-muted" : ""}`}
       />
 
+      {/* Billing amount */}
+      {milestone.billingAmount != null && (
+        <span className="text-text-muted text-xs">
+          ${milestone.billingAmount.toLocaleString()}
+        </span>
+      )}
+
       {/* Planned date */}
       <input
         type="date"

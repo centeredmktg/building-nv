@@ -124,6 +124,7 @@ export default async function ProjectDetailPage({
             projectId={project.id}
             initialMilestones={(project.milestones ?? []).map((m) => ({
               ...m,
+              billingAmount: m.billingAmount ?? null,
               plannedDate: m.plannedDate?.toISOString() ?? null,
               completedAt: m.completedAt?.toISOString() ?? null,
               createdAt: m.createdAt.toISOString(),
