@@ -75,10 +75,25 @@ export interface Milestone {
   completedAt: string | null;
   position: number;
   notes: string | null;
+  billingAmount: number | null;
   createdAt: string;
   updatedAt: string;
 }
 
+export interface CRMInvoice {
+  id: string;
+  invoiceNumber: string;
+  amount: number;
+  status: string;
+  issueDate: string;
+  dueDate: string;
+  sentAt: string | null;
+  viewedAt: string | null;
+  paidAt: string | null;
+  paidMethod: string | null;
+}
+
 export interface JobProject extends CRMProject {
   milestones: Milestone[];
+  invoicedTotal?: number;
 }
