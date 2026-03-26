@@ -7,6 +7,33 @@ import { generateMilestones } from "@/lib/milestone-defaults";
 
 const UNITS = ["ea", "SF", "LF", "LS", "hr"];
 
+const SECTION_DEFAULT_UNITS: Record<string, string> = {
+  demolition: "LS",
+  flooring: "SF",
+  ceiling: "SF",
+  "paint & drywall": "SF",
+  painting: "SF",
+  drywall: "SF",
+  framing: "LF",
+  electrical: "ea",
+  plumbing: "ea",
+  tile: "SF",
+  insulation: "SF",
+  roofing: "SF",
+  siding: "SF",
+  cabinets: "ea",
+  countertops: "SF",
+  "finish carpentry": "LF",
+};
+
+function defaultUnitForSection(title: string): string {
+  const key = title.toLowerCase().trim();
+  for (const [section, unit] of Object.entries(SECTION_DEFAULT_UNITS)) {
+    if (key.includes(section) || section.includes(key)) return unit;
+  }
+  return "ea";
+}
+
 interface LineItem {
   id?: string;
   description: string;
@@ -105,7 +132,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
       sections: q.sections.map((s, sIdx) =>
         sIdx !== si ? s : {
           ...s,
-          items: [...s.items, { description: "", quantity: 1, unit: "ea", unitPrice: 0, isMaterial: false }],
+          items: [...s.items, { description: "", quantity: 1, unit: defaultUnitForSection(s.title), unitPrice: 0, isMaterial: false }],
         }
       ),
     }));
