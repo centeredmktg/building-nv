@@ -205,10 +205,19 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
 
               {/* Phase bars */}
               <div className="flex flex-col gap-1.5 mt-2">
-                {quote.milestones.filter((m) => m.position > 0).map((m) => {
-                  const widthWeeks = Math.max(durationToWeeks(m.duration), 0.3);
-                  const startPct = (m.weekNumber / (maxWeek + 1)) * 100;
-                  const widthPct = (widthWeeks / (maxWeek + 1)) * 100;
+                {(() => {
+                  const phases = quote.milestones.filter((m) => m.position > 0);
+                  const totalWeeks = maxWeek + 1;
+                  // Calculate cumulative start positions so bars butt up against each other
+                  let cursor = 0;
+                  const bars = phases.map((m) => {
+                    const widthWeeks = Math.max(durationToWeeks(m.duration), 0.3);
+                    const startPct = (cursor / totalWeeks) * 100;
+                    const widthPct = (widthWeeks / totalWeeks) * 100;
+                    cursor += widthWeeks;
+                    return { ...m, startPct, widthPct };
+                  });
+                  return bars.map((m) => {
                   const hasPayment = m.paymentPct != null && m.paymentPct > 0;
 
                   return (
@@ -219,7 +228,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
                       <div className="flex-1 relative h-7">
                         {/* Background grid lines */}
                         <div className="absolute inset-0 flex">
-                          {Array.from({ length: maxWeek + 1 }, (_, wk) => (
+                          {Array.from({ length: totalWeeks }, (_, wk) => (
                             <div key={wk} className="flex-1 border-l border-[#F0EDE8]" />
                           ))}
                         </div>
@@ -227,8 +236,8 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
                         <div
                           className="absolute top-0.5 h-6 rounded"
                           style={{
-                            left: `${startPct}%`,
-                            width: `${Math.min(widthPct, 100 - startPct)}%`,
+                            left: `${m.startPct}%`,
+                            width: `${Math.min(m.widthPct, 100 - m.startPct)}%`,
                             backgroundColor: "#1E2A38",
                             borderLeft: hasPayment ? "3px solid #C17F3A" : undefined,
                           }}
@@ -243,13 +252,14 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
                         {hasPayment && (
                           <div
                             className="absolute w-2.5 h-2.5 bg-[#C17F3A] rotate-45"
-                            style={{ left: `calc(${startPct}% - 5px)`, top: "-4px" }}
+                            style={{ left: `calc(${m.startPct}% - 5px)`, top: "-4px" }}
                           />
                         )}
                       </div>
                     </div>
                   );
-                })}
+                });
+                })()}
               </div>
 
               <p className="text-[10px] text-[#9A9591] mt-4 italic">
