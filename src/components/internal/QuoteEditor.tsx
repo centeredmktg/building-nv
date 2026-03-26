@@ -72,7 +72,7 @@ interface Quote {
 }
 
 export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
-  const [quote, setQuote] = useState(initial);
+  const [quote, setQuote] = useState({ ...initial, milestones: initial.milestones ?? [] });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [sending, setSending] = useState(false);

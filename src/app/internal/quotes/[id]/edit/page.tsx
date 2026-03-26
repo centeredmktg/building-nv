@@ -17,6 +17,7 @@ export default async function EditQuotePage({ params }: { params: Promise<{ id: 
       contract: {
         include: { changeOrders: { orderBy: { number: 'asc' } } },
       },
+      milestones: { orderBy: { position: "asc" } },
     },
   });
 
