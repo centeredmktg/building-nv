@@ -34,6 +34,7 @@ export default async function PublicInvoicePage({
           invoiceId={invoice.id}
           token={token}
           alreadyViewed={!!invoice.viewedAt}
+          invoiceStatus={invoice.status}
         />
       </div>
     </div>
