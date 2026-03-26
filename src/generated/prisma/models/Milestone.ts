@@ -449,14 +449,6 @@ export type MilestoneOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type MilestoneCreateNestedManyWithoutProjectInput = {
   create?: Prisma.XOR<Prisma.MilestoneCreateWithoutProjectInput, Prisma.MilestoneUncheckedCreateWithoutProjectInput> | Prisma.MilestoneCreateWithoutProjectInput[] | Prisma.MilestoneUncheckedCreateWithoutProjectInput[]
   connectOrCreate?: Prisma.MilestoneCreateOrConnectWithoutProjectInput | Prisma.MilestoneCreateOrConnectWithoutProjectInput[]

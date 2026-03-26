@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type Quote = Prisma.QuoteModel
 /**
+ * Model QuoteMilestone
+ * 
+ */
+export type QuoteMilestone = Prisma.QuoteMilestoneModel
+/**
  * Model Milestone
  * 
  */

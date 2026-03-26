@@ -533,14 +533,6 @@ export type LineItemUncheckedUpdateManyWithoutSectionNestedInput = {
   deleteMany?: Prisma.LineItemScalarWhereInput | Prisma.LineItemScalarWhereInput[]
 }
 
-export type NullableFloatFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }

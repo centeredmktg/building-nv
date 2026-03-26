@@ -18,6 +18,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
         orderBy: { position: "asc" },
       },
       acceptance: true,
+      milestones: { orderBy: { position: "asc" } },
     },
   });
 
@@ -73,5 +74,35 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     }
   }
 
-  return NextResponse.json(quote);
+  if (body.milestones) {
+    await prisma.quoteMilestone.deleteMany({ where: { quoteId: id } });
+    for (let i = 0; i < body.milestones.length; i++) {
+      const m = body.milestones[i];
+      await prisma.quoteMilestone.create({
+        data: {
+          quoteId: id,
+          name: m.name,
+          weekNumber: m.weekNumber,
+          duration: m.duration ?? null,
+          paymentPct: m.paymentPct ?? null,
+          paymentLabel: m.paymentLabel ?? null,
+          position: i,
+        },
+      });
+    }
+  }
+
+  const updated = await prisma.quote.findUnique({
+    where: { id },
+    include: {
+      quoteContacts: { include: { contact: true } },
+      quoteCompanies: { include: { company: true } },
+      sections: {
+        include: { items: { orderBy: { position: "asc" } } },
+        orderBy: { position: "asc" },
+      },
+      milestones: { orderBy: { position: "asc" } },
+    },
+  });
+  return NextResponse.json(updated);
 }

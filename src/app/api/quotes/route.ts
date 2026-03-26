@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { generateQuoteSlug } from "@/lib/slug";
+import { generateMilestones } from "@/lib/milestone-defaults";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
@@ -9,7 +10,7 @@ export async function GET() {
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const quotes = await prisma.quote.findMany({
-    include: { quoteContacts: { include: { contact: true } }, quoteCompanies: { include: { company: true } } },
+    include: { quoteContacts: { include: { contact: true } }, quoteCompanies: { include: { company: true } }, milestones: { orderBy: { position: "asc" } } },
     orderBy: { createdAt: "desc" },
   });
   return NextResponse.json(quotes);
@@ -86,6 +87,23 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  if (body.sections?.length) {
+    const milestoneDefaults = generateMilestones(body.sections.map((s: { title: string }) => ({ title: s.title })));
+    for (const m of milestoneDefaults) {
+      await prisma.quoteMilestone.create({
+        data: {
+          quoteId: quote.id,
+          name: m.name,
+          weekNumber: m.weekNumber,
+          duration: m.duration,
+          paymentPct: m.paymentPct,
+          paymentLabel: m.paymentLabel,
+          position: m.position,
+        },
+      });
+    }
+  }
+
   // Re-fetch to include all relations
   const finalQuote = await prisma.quote.findUnique({
     where: { id: quote.id },
@@ -96,6 +114,7 @@ export async function POST(req: NextRequest) {
         include: { items: { orderBy: { position: "asc" } } },
         orderBy: { position: "asc" },
       },
+      milestones: { orderBy: { position: "asc" } },
     },
   });
   return NextResponse.json(finalQuote, { status: 201 });

@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Quote: 'Quote',
+  QuoteMilestone: 'QuoteMilestone',
   Milestone: 'Milestone',
   LineItemSection: 'LineItemSection',
   LineItem: 'LineItem',
@@ -117,6 +118,20 @@ export const QuoteScalarFieldEnum = {
 } as const
 
 export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const QuoteMilestoneScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  name: 'name',
+  weekNumber: 'weekNumber',
+  duration: 'duration',
+  paymentPct: 'paymentPct',
+  paymentLabel: 'paymentLabel',
+  position: 'position'
+} as const
+
+export type QuoteMilestoneScalarFieldEnum = (typeof QuoteMilestoneScalarFieldEnum)[keyof typeof QuoteMilestoneScalarFieldEnum]
 
 
 export const MilestoneScalarFieldEnum = {

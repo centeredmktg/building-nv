@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Quote: 'Quote',
+  QuoteMilestone: 'QuoteMilestone',
   Milestone: 'Milestone',
   LineItemSection: 'LineItemSection',
   LineItem: 'LineItem',
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "quote" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
+    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -495,6 +496,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.QuoteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.QuoteCountAggregateOutputType> | number
+        }
+      }
+    }
+    QuoteMilestone: {
+      payload: Prisma.$QuoteMilestonePayload<ExtArgs>
+      fields: Prisma.QuoteMilestoneFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QuoteMilestoneFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QuoteMilestoneFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>
+        }
+        findFirst: {
+          args: Prisma.QuoteMilestoneFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QuoteMilestoneFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>
+        }
+        findMany: {
+          args: Prisma.QuoteMilestoneFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>[]
+        }
+        create: {
+          args: Prisma.QuoteMilestoneCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>
+        }
+        createMany: {
+          args: Prisma.QuoteMilestoneCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QuoteMilestoneCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>[]
+        }
+        delete: {
+          args: Prisma.QuoteMilestoneDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>
+        }
+        update: {
+          args: Prisma.QuoteMilestoneUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>
+        }
+        deleteMany: {
+          args: Prisma.QuoteMilestoneDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QuoteMilestoneUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QuoteMilestoneUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>[]
+        }
+        upsert: {
+          args: Prisma.QuoteMilestoneUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QuoteMilestonePayload>
+        }
+        aggregate: {
+          args: Prisma.QuoteMilestoneAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQuoteMilestone>
+        }
+        groupBy: {
+          args: Prisma.QuoteMilestoneGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteMilestoneGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QuoteMilestoneCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QuoteMilestoneCountAggregateOutputType> | number
         }
       }
     }
@@ -2046,6 +2121,20 @@ export const QuoteScalarFieldEnum = {
 export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
 
 
+export const QuoteMilestoneScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  name: 'name',
+  weekNumber: 'weekNumber',
+  duration: 'duration',
+  paymentPct: 'paymentPct',
+  paymentLabel: 'paymentLabel',
+  position: 'position'
+} as const
+
+export type QuoteMilestoneScalarFieldEnum = (typeof QuoteMilestoneScalarFieldEnum)[keyof typeof QuoteMilestoneScalarFieldEnum]
+
+
 export const MilestoneScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -2532,6 +2621,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   quote?: Prisma.QuoteOmit
+  quoteMilestone?: Prisma.QuoteMilestoneOmit
   milestone?: Prisma.MilestoneOmit
   lineItemSection?: Prisma.LineItemSectionOmit
   lineItem?: Prisma.LineItemOmit
