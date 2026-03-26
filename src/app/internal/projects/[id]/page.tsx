@@ -22,6 +22,9 @@ export default async function ProjectDetailPage({
         projectContacts: { include: { contact: true } },
         quotes: { select: { id: true, title: true, status: true, address: true } },
         milestones: { orderBy: { position: "asc" } },
+        invoices: {
+          select: { id: true, amount: true, status: true },
+        },
         teamMembers: {
           include: {
             employee: {
@@ -46,6 +49,10 @@ export default async function ProjectDetailPage({
   const siteAddress = project.siteAddress
     ? `${project.siteAddress}, ${project.siteCity}, ${project.siteState} ${project.siteZip}`
     : null;
+
+  const invoicedTotal = (project.invoices ?? [])
+    .filter((inv: { status: string }) => ['sent', 'viewed', 'paid'].includes(inv.status))
+    .reduce((sum: number, inv: { amount: number }) => sum + inv.amount, 0);
 
   return (
     <div className="max-w-3xl">
@@ -105,6 +112,7 @@ export default async function ProjectDetailPage({
               estimatedEndDate: project.estimatedEndDate?.toISOString() ?? null,
               timingNotes: project.timingNotes ?? null,
             }}
+            invoicedTotal={invoicedTotal}
           />
         </section>
       )}
@@ -122,6 +130,52 @@ export default async function ProjectDetailPage({
               updatedAt: m.updatedAt.toISOString(),
             }))}
           />
+        </section>
+      )}
+
+      {/* Invoices */}
+      {["preconstruction", "active", "punch_list", "complete"].includes(project.stage) && (
+        <section className="border border-border rounded-sm p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-text-primary font-semibold">Invoices</h2>
+            <Link
+              href={`/internal/projects/${id}/invoices`}
+              className="text-accent text-sm hover:underline"
+            >
+              View All →
+            </Link>
+          </div>
+          {(() => {
+            const activeInvoices = (project.invoices ?? []).filter((inv: { status: string }) =>
+              ['sent', 'viewed', 'paid'].includes(inv.status)
+            );
+            const invoicedSum = activeInvoices.reduce((sum: number, inv: { amount: number }) => sum + inv.amount, 0);
+            const paidTotal = (project.invoices ?? [])
+              .filter((inv: { status: string }) => inv.status === 'paid')
+              .reduce((sum: number, inv: { amount: number }) => sum + inv.amount, 0);
+            return (
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <p className="text-text-muted text-xs">Invoiced</p>
+                  <p className="text-text-primary text-sm font-medium">
+                    ${invoicedSum.toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-text-muted text-xs">Paid</p>
+                  <p className="text-text-primary text-sm font-medium">
+                    ${paidTotal.toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-text-muted text-xs">Count</p>
+                  <p className="text-text-primary text-sm font-medium">
+                    {project.invoices.length} invoice{project.invoices.length !== 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
+            );
+          })()}
         </section>
       )}
 
