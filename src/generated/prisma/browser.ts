@@ -83,6 +83,41 @@ export type Contact = Prisma.ContactModel
  */
 export type Company = Prisma.CompanyModel
 /**
+ * Model SubcontractorProfile
+ * 
+ */
+export type SubcontractorProfile = Prisma.SubcontractorProfileModel
+/**
+ * Model ContactNote
+ * 
+ */
+export type ContactNote = Prisma.ContactNoteModel
+/**
+ * Model SubcontractorReview
+ * 
+ */
+export type SubcontractorReview = Prisma.SubcontractorReviewModel
+/**
+ * Model InHouseCapability
+ * 
+ */
+export type InHouseCapability = Prisma.InHouseCapabilityModel
+/**
+ * Model BidRequest
+ * 
+ */
+export type BidRequest = Prisma.BidRequestModel
+/**
+ * Model BidInvitation
+ * 
+ */
+export type BidInvitation = Prisma.BidInvitationModel
+/**
+ * Model BidResponse
+ * 
+ */
+export type BidResponse = Prisma.BidResponseModel
+/**
  * Model ProjectContact
  * 
  */

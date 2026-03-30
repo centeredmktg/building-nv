@@ -64,6 +64,13 @@ export const ModelName = {
   Project: 'Project',
   Contact: 'Contact',
   Company: 'Company',
+  SubcontractorProfile: 'SubcontractorProfile',
+  ContactNote: 'ContactNote',
+  SubcontractorReview: 'SubcontractorReview',
+  InHouseCapability: 'InHouseCapability',
+  BidRequest: 'BidRequest',
+  BidInvitation: 'BidInvitation',
+  BidResponse: 'BidResponse',
   ProjectContact: 'ProjectContact',
   ProjectCompany: 'ProjectCompany',
   QuoteContact: 'QuoteContact',
@@ -159,6 +166,7 @@ export const LineItemSectionScalarFieldEnum = {
   id: 'id',
   title: 'title',
   position: 'position',
+  trade: 'trade',
   quoteId: 'quoteId'
 } as const
 
@@ -175,7 +183,8 @@ export const LineItemScalarFieldEnum = {
   isMaterial: 'isMaterial',
   position: 'position',
   sectionId: 'sectionId',
-  componentId: 'componentId'
+  componentId: 'componentId',
+  trade: 'trade'
 } as const
 
 export type LineItemScalarFieldEnum = (typeof LineItemScalarFieldEnum)[keyof typeof LineItemScalarFieldEnum]
@@ -333,6 +342,109 @@ export const CompanyScalarFieldEnum = {
 } as const
 
 export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
+
+
+export const SubcontractorProfileScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  trades: 'trades',
+  licenseNumber: 'licenseNumber',
+  bidLimit: 'bidLimit',
+  onboardingStatus: 'onboardingStatus',
+  insuranceExpiry: 'insuranceExpiry',
+  w9OnFile: 'w9OnFile',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubcontractorProfileScalarFieldEnum = (typeof SubcontractorProfileScalarFieldEnum)[keyof typeof SubcontractorProfileScalarFieldEnum]
+
+
+export const ContactNoteScalarFieldEnum = {
+  id: 'id',
+  contactId: 'contactId',
+  companyId: 'companyId',
+  preferred: 'preferred',
+  flagged: 'flagged',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContactNoteScalarFieldEnum = (typeof ContactNoteScalarFieldEnum)[keyof typeof ContactNoteScalarFieldEnum]
+
+
+export const SubcontractorReviewScalarFieldEnum = {
+  id: 'id',
+  subcontractorId: 'subcontractorId',
+  projectId: 'projectId',
+  reviewerId: 'reviewerId',
+  timeliness: 'timeliness',
+  communication: 'communication',
+  price: 'price',
+  qualityOfWork: 'qualityOfWork',
+  wouldRehire: 'wouldRehire',
+  notes: 'notes',
+  createdAt: 'createdAt'
+} as const
+
+export type SubcontractorReviewScalarFieldEnum = (typeof SubcontractorReviewScalarFieldEnum)[keyof typeof SubcontractorReviewScalarFieldEnum]
+
+
+export const InHouseCapabilityScalarFieldEnum = {
+  id: 'id',
+  trade: 'trade',
+  canPerform: 'canPerform',
+  capacityCheckAvailable: 'capacityCheckAvailable'
+} as const
+
+export type InHouseCapabilityScalarFieldEnum = (typeof InHouseCapabilityScalarFieldEnum)[keyof typeof InHouseCapabilityScalarFieldEnum]
+
+
+export const BidRequestScalarFieldEnum = {
+  id: 'id',
+  quoteId: 'quoteId',
+  projectId: 'projectId',
+  projectType: 'projectType',
+  generalLocation: 'generalLocation',
+  scopeOfWork: 'scopeOfWork',
+  requiredTrade: 'requiredTrade',
+  responseDeadline: 'responseDeadline',
+  startWindow: 'startWindow',
+  specialRequirements: 'specialRequirements',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BidRequestScalarFieldEnum = (typeof BidRequestScalarFieldEnum)[keyof typeof BidRequestScalarFieldEnum]
+
+
+export const BidInvitationScalarFieldEnum = {
+  id: 'id',
+  bidRequestId: 'bidRequestId',
+  subcontractorId: 'subcontractorId',
+  sentAt: 'sentAt',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type BidInvitationScalarFieldEnum = (typeof BidInvitationScalarFieldEnum)[keyof typeof BidInvitationScalarFieldEnum]
+
+
+export const BidResponseScalarFieldEnum = {
+  id: 'id',
+  bidInvitationId: 'bidInvitationId',
+  amount: 'amount',
+  scopeNotes: 'scopeNotes',
+  estimatedDuration: 'estimatedDuration',
+  availableStartDate: 'availableStartDate',
+  receivedAt: 'receivedAt',
+  status: 'status'
+} as const
+
+export type BidResponseScalarFieldEnum = (typeof BidResponseScalarFieldEnum)[keyof typeof BidResponseScalarFieldEnum]
 
 
 export const ProjectContactScalarFieldEnum = {

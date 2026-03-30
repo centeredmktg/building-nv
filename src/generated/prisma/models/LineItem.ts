@@ -51,6 +51,7 @@ export type LineItemMinAggregateOutputType = {
   position: number | null
   sectionId: string | null
   componentId: string | null
+  trade: string | null
 }
 
 export type LineItemMaxAggregateOutputType = {
@@ -64,6 +65,7 @@ export type LineItemMaxAggregateOutputType = {
   position: number | null
   sectionId: string | null
   componentId: string | null
+  trade: string | null
 }
 
 export type LineItemCountAggregateOutputType = {
@@ -77,6 +79,7 @@ export type LineItemCountAggregateOutputType = {
   position: number
   sectionId: number
   componentId: number
+  trade: number
   _all: number
 }
 
@@ -106,6 +109,7 @@ export type LineItemMinAggregateInputType = {
   position?: true
   sectionId?: true
   componentId?: true
+  trade?: true
 }
 
 export type LineItemMaxAggregateInputType = {
@@ -119,6 +123,7 @@ export type LineItemMaxAggregateInputType = {
   position?: true
   sectionId?: true
   componentId?: true
+  trade?: true
 }
 
 export type LineItemCountAggregateInputType = {
@@ -132,6 +137,7 @@ export type LineItemCountAggregateInputType = {
   position?: true
   sectionId?: true
   componentId?: true
+  trade?: true
   _all?: true
 }
 
@@ -232,6 +238,7 @@ export type LineItemGroupByOutputType = {
   position: number
   sectionId: string
   componentId: string | null
+  trade: string | null
   _count: LineItemCountAggregateOutputType | null
   _avg: LineItemAvgAggregateOutputType | null
   _sum: LineItemSumAggregateOutputType | null
@@ -268,6 +275,7 @@ export type LineItemWhereInput = {
   position?: Prisma.IntFilter<"LineItem"> | number
   sectionId?: Prisma.StringFilter<"LineItem"> | string
   componentId?: Prisma.StringNullableFilter<"LineItem"> | string | null
+  trade?: Prisma.StringNullableFilter<"LineItem"> | string | null
   section?: Prisma.XOR<Prisma.LineItemSectionScalarRelationFilter, Prisma.LineItemSectionWhereInput>
   component?: Prisma.XOR<Prisma.ComponentNullableScalarRelationFilter, Prisma.ComponentWhereInput> | null
 }
@@ -283,6 +291,7 @@ export type LineItemOrderByWithRelationInput = {
   position?: Prisma.SortOrder
   sectionId?: Prisma.SortOrder
   componentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  trade?: Prisma.SortOrderInput | Prisma.SortOrder
   section?: Prisma.LineItemSectionOrderByWithRelationInput
   component?: Prisma.ComponentOrderByWithRelationInput
 }
@@ -301,6 +310,7 @@ export type LineItemWhereUniqueInput = Prisma.AtLeast<{
   position?: Prisma.IntFilter<"LineItem"> | number
   sectionId?: Prisma.StringFilter<"LineItem"> | string
   componentId?: Prisma.StringNullableFilter<"LineItem"> | string | null
+  trade?: Prisma.StringNullableFilter<"LineItem"> | string | null
   section?: Prisma.XOR<Prisma.LineItemSectionScalarRelationFilter, Prisma.LineItemSectionWhereInput>
   component?: Prisma.XOR<Prisma.ComponentNullableScalarRelationFilter, Prisma.ComponentWhereInput> | null
 }, "id">
@@ -316,6 +326,7 @@ export type LineItemOrderByWithAggregationInput = {
   position?: Prisma.SortOrder
   sectionId?: Prisma.SortOrder
   componentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  trade?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LineItemCountOrderByAggregateInput
   _avg?: Prisma.LineItemAvgOrderByAggregateInput
   _max?: Prisma.LineItemMaxOrderByAggregateInput
@@ -337,6 +348,7 @@ export type LineItemScalarWhereWithAggregatesInput = {
   position?: Prisma.IntWithAggregatesFilter<"LineItem"> | number
   sectionId?: Prisma.StringWithAggregatesFilter<"LineItem"> | string
   componentId?: Prisma.StringNullableWithAggregatesFilter<"LineItem"> | string | null
+  trade?: Prisma.StringNullableWithAggregatesFilter<"LineItem"> | string | null
 }
 
 export type LineItemCreateInput = {
@@ -348,6 +360,7 @@ export type LineItemCreateInput = {
   vendorCost?: number | null
   isMaterial?: boolean
   position: number
+  trade?: string | null
   section: Prisma.LineItemSectionCreateNestedOneWithoutItemsInput
   component?: Prisma.ComponentCreateNestedOneWithoutLineItemsInput
 }
@@ -363,6 +376,7 @@ export type LineItemUncheckedCreateInput = {
   position: number
   sectionId: string
   componentId?: string | null
+  trade?: string | null
 }
 
 export type LineItemUpdateInput = {
@@ -374,6 +388,7 @@ export type LineItemUpdateInput = {
   vendorCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   section?: Prisma.LineItemSectionUpdateOneRequiredWithoutItemsNestedInput
   component?: Prisma.ComponentUpdateOneWithoutLineItemsNestedInput
 }
@@ -389,6 +404,7 @@ export type LineItemUncheckedUpdateInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
   sectionId?: Prisma.StringFieldUpdateOperationsInput | string
   componentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LineItemCreateManyInput = {
@@ -402,6 +418,7 @@ export type LineItemCreateManyInput = {
   position: number
   sectionId: string
   componentId?: string | null
+  trade?: string | null
 }
 
 export type LineItemUpdateManyMutationInput = {
@@ -413,6 +430,7 @@ export type LineItemUpdateManyMutationInput = {
   vendorCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LineItemUncheckedUpdateManyInput = {
@@ -426,6 +444,7 @@ export type LineItemUncheckedUpdateManyInput = {
   position?: Prisma.IntFieldUpdateOperationsInput | number
   sectionId?: Prisma.StringFieldUpdateOperationsInput | string
   componentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LineItemListRelationFilter = {
@@ -449,6 +468,7 @@ export type LineItemCountOrderByAggregateInput = {
   position?: Prisma.SortOrder
   sectionId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
+  trade?: Prisma.SortOrder
 }
 
 export type LineItemAvgOrderByAggregateInput = {
@@ -469,6 +489,7 @@ export type LineItemMaxOrderByAggregateInput = {
   position?: Prisma.SortOrder
   sectionId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
+  trade?: Prisma.SortOrder
 }
 
 export type LineItemMinOrderByAggregateInput = {
@@ -482,6 +503,7 @@ export type LineItemMinOrderByAggregateInput = {
   position?: Prisma.SortOrder
   sectionId?: Prisma.SortOrder
   componentId?: Prisma.SortOrder
+  trade?: Prisma.SortOrder
 }
 
 export type LineItemSumOrderByAggregateInput = {
@@ -588,6 +610,7 @@ export type LineItemCreateWithoutSectionInput = {
   vendorCost?: number | null
   isMaterial?: boolean
   position: number
+  trade?: string | null
   component?: Prisma.ComponentCreateNestedOneWithoutLineItemsInput
 }
 
@@ -601,6 +624,7 @@ export type LineItemUncheckedCreateWithoutSectionInput = {
   isMaterial?: boolean
   position: number
   componentId?: string | null
+  trade?: string | null
 }
 
 export type LineItemCreateOrConnectWithoutSectionInput = {
@@ -643,6 +667,7 @@ export type LineItemScalarWhereInput = {
   position?: Prisma.IntFilter<"LineItem"> | number
   sectionId?: Prisma.StringFilter<"LineItem"> | string
   componentId?: Prisma.StringNullableFilter<"LineItem"> | string | null
+  trade?: Prisma.StringNullableFilter<"LineItem"> | string | null
 }
 
 export type LineItemCreateWithoutComponentInput = {
@@ -654,6 +679,7 @@ export type LineItemCreateWithoutComponentInput = {
   vendorCost?: number | null
   isMaterial?: boolean
   position: number
+  trade?: string | null
   section: Prisma.LineItemSectionCreateNestedOneWithoutItemsInput
 }
 
@@ -667,6 +693,7 @@ export type LineItemUncheckedCreateWithoutComponentInput = {
   isMaterial?: boolean
   position: number
   sectionId: string
+  trade?: string | null
 }
 
 export type LineItemCreateOrConnectWithoutComponentInput = {
@@ -705,6 +732,7 @@ export type LineItemCreateManySectionInput = {
   isMaterial?: boolean
   position: number
   componentId?: string | null
+  trade?: string | null
 }
 
 export type LineItemUpdateWithoutSectionInput = {
@@ -716,6 +744,7 @@ export type LineItemUpdateWithoutSectionInput = {
   vendorCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   component?: Prisma.ComponentUpdateOneWithoutLineItemsNestedInput
 }
 
@@ -729,6 +758,7 @@ export type LineItemUncheckedUpdateWithoutSectionInput = {
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LineItemUncheckedUpdateManyWithoutSectionInput = {
@@ -741,6 +771,7 @@ export type LineItemUncheckedUpdateManyWithoutSectionInput = {
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
   componentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LineItemCreateManyComponentInput = {
@@ -753,6 +784,7 @@ export type LineItemCreateManyComponentInput = {
   isMaterial?: boolean
   position: number
   sectionId: string
+  trade?: string | null
 }
 
 export type LineItemUpdateWithoutComponentInput = {
@@ -764,6 +796,7 @@ export type LineItemUpdateWithoutComponentInput = {
   vendorCost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   section?: Prisma.LineItemSectionUpdateOneRequiredWithoutItemsNestedInput
 }
 
@@ -777,6 +810,7 @@ export type LineItemUncheckedUpdateWithoutComponentInput = {
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
   sectionId?: Prisma.StringFieldUpdateOperationsInput | string
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LineItemUncheckedUpdateManyWithoutComponentInput = {
@@ -789,6 +823,7 @@ export type LineItemUncheckedUpdateManyWithoutComponentInput = {
   isMaterial?: Prisma.BoolFieldUpdateOperationsInput | boolean
   position?: Prisma.IntFieldUpdateOperationsInput | number
   sectionId?: Prisma.StringFieldUpdateOperationsInput | string
+  trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -804,6 +839,7 @@ export type LineItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   position?: boolean
   sectionId?: boolean
   componentId?: boolean
+  trade?: boolean
   section?: boolean | Prisma.LineItemSectionDefaultArgs<ExtArgs>
   component?: boolean | Prisma.LineItem$componentArgs<ExtArgs>
 }, ExtArgs["result"]["lineItem"]>
@@ -819,6 +855,7 @@ export type LineItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   position?: boolean
   sectionId?: boolean
   componentId?: boolean
+  trade?: boolean
   section?: boolean | Prisma.LineItemSectionDefaultArgs<ExtArgs>
   component?: boolean | Prisma.LineItem$componentArgs<ExtArgs>
 }, ExtArgs["result"]["lineItem"]>
@@ -834,6 +871,7 @@ export type LineItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   position?: boolean
   sectionId?: boolean
   componentId?: boolean
+  trade?: boolean
   section?: boolean | Prisma.LineItemSectionDefaultArgs<ExtArgs>
   component?: boolean | Prisma.LineItem$componentArgs<ExtArgs>
 }, ExtArgs["result"]["lineItem"]>
@@ -849,9 +887,10 @@ export type LineItemSelectScalar = {
   position?: boolean
   sectionId?: boolean
   componentId?: boolean
+  trade?: boolean
 }
 
-export type LineItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "quantity" | "unit" | "unitPrice" | "vendorCost" | "isMaterial" | "position" | "sectionId" | "componentId", ExtArgs["result"]["lineItem"]>
+export type LineItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "quantity" | "unit" | "unitPrice" | "vendorCost" | "isMaterial" | "position" | "sectionId" | "componentId" | "trade", ExtArgs["result"]["lineItem"]>
 export type LineItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   section?: boolean | Prisma.LineItemSectionDefaultArgs<ExtArgs>
   component?: boolean | Prisma.LineItem$componentArgs<ExtArgs>
@@ -882,6 +921,7 @@ export type $LineItemPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     position: number
     sectionId: string
     componentId: string | null
+    trade: string | null
   }, ExtArgs["result"]["lineItem"]>
   composites: {}
 }
@@ -1317,6 +1357,7 @@ export interface LineItemFieldRefs {
   readonly position: Prisma.FieldRef<"LineItem", 'Int'>
   readonly sectionId: Prisma.FieldRef<"LineItem", 'String'>
   readonly componentId: Prisma.FieldRef<"LineItem", 'String'>
+  readonly trade: Prisma.FieldRef<"LineItem", 'String'>
 }
     
 

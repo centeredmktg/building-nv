@@ -211,6 +211,7 @@ export type ContactWhereInput = {
   quoteContacts?: Prisma.QuoteContactListRelationFilter
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   invoices?: Prisma.InvoiceListRelationFilter
+  contactNotes?: Prisma.ContactNoteListRelationFilter
 }
 
 export type ContactOrderByWithRelationInput = {
@@ -227,6 +228,7 @@ export type ContactOrderByWithRelationInput = {
   quoteContacts?: Prisma.QuoteContactOrderByRelationAggregateInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
+  contactNotes?: Prisma.ContactNoteOrderByRelationAggregateInput
 }
 
 export type ContactWhereUniqueInput = Prisma.AtLeast<{
@@ -246,6 +248,7 @@ export type ContactWhereUniqueInput = Prisma.AtLeast<{
   quoteContacts?: Prisma.QuoteContactListRelationFilter
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   invoices?: Prisma.InvoiceListRelationFilter
+  contactNotes?: Prisma.ContactNoteListRelationFilter
 }, "id" | "email">
 
 export type ContactOrderByWithAggregationInput = {
@@ -289,6 +292,7 @@ export type ContactCreateInput = {
   quoteContacts?: Prisma.QuoteContactCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutContactInput
 }
 
 export type ContactUncheckedCreateInput = {
@@ -304,6 +308,7 @@ export type ContactUncheckedCreateInput = {
   quoteContacts?: Prisma.QuoteContactUncheckedCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutContactInput
 }
 
 export type ContactUpdateInput = {
@@ -319,6 +324,7 @@ export type ContactUpdateInput = {
   quoteContacts?: Prisma.QuoteContactUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutContactNestedInput
 }
 
 export type ContactUncheckedUpdateInput = {
@@ -334,6 +340,7 @@ export type ContactUncheckedUpdateInput = {
   quoteContacts?: Prisma.QuoteContactUncheckedUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateManyInput = {
@@ -472,6 +479,20 @@ export type ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput = {
   deleteMany?: Prisma.ContactScalarWhereInput | Prisma.ContactScalarWhereInput[]
 }
 
+export type ContactCreateNestedOneWithoutContactNotesInput = {
+  create?: Prisma.XOR<Prisma.ContactCreateWithoutContactNotesInput, Prisma.ContactUncheckedCreateWithoutContactNotesInput>
+  connectOrCreate?: Prisma.ContactCreateOrConnectWithoutContactNotesInput
+  connect?: Prisma.ContactWhereUniqueInput
+}
+
+export type ContactUpdateOneRequiredWithoutContactNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.ContactCreateWithoutContactNotesInput, Prisma.ContactUncheckedCreateWithoutContactNotesInput>
+  connectOrCreate?: Prisma.ContactCreateOrConnectWithoutContactNotesInput
+  upsert?: Prisma.ContactUpsertWithoutContactNotesInput
+  connect?: Prisma.ContactWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ContactUpdateToOneWithWhereWithoutContactNotesInput, Prisma.ContactUpdateWithoutContactNotesInput>, Prisma.ContactUncheckedUpdateWithoutContactNotesInput>
+}
+
 export type ContactCreateNestedOneWithoutProjectContactsInput = {
   create?: Prisma.XOR<Prisma.ContactCreateWithoutProjectContactsInput, Prisma.ContactUncheckedCreateWithoutProjectContactsInput>
   connectOrCreate?: Prisma.ContactCreateOrConnectWithoutProjectContactsInput
@@ -526,6 +547,7 @@ export type ContactCreateWithoutInvoicesInput = {
   projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
   quoteContacts?: Prisma.QuoteContactCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutContactInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutContactInput
 }
 
 export type ContactUncheckedCreateWithoutInvoicesInput = {
@@ -540,6 +562,7 @@ export type ContactUncheckedCreateWithoutInvoicesInput = {
   projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
   quoteContacts?: Prisma.QuoteContactUncheckedCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutContactInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutContactInput
 }
 
 export type ContactCreateOrConnectWithoutInvoicesInput = {
@@ -570,6 +593,7 @@ export type ContactUpdateWithoutInvoicesInput = {
   projectContacts?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
   quoteContacts?: Prisma.QuoteContactUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutContactNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutContactNestedInput
 }
 
 export type ContactUncheckedUpdateWithoutInvoicesInput = {
@@ -584,6 +608,7 @@ export type ContactUncheckedUpdateWithoutInvoicesInput = {
   projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
   quoteContacts?: Prisma.QuoteContactUncheckedUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutContactNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateWithoutPrimaryCompanyInput = {
@@ -598,6 +623,7 @@ export type ContactCreateWithoutPrimaryCompanyInput = {
   quoteContacts?: Prisma.QuoteContactCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutContactInput
 }
 
 export type ContactUncheckedCreateWithoutPrimaryCompanyInput = {
@@ -612,6 +638,7 @@ export type ContactUncheckedCreateWithoutPrimaryCompanyInput = {
   quoteContacts?: Prisma.QuoteContactUncheckedCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutContactInput
 }
 
 export type ContactCreateOrConnectWithoutPrimaryCompanyInput = {
@@ -654,6 +681,82 @@ export type ContactScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Contact"> | Date | string
 }
 
+export type ContactCreateWithoutContactNotesInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email?: string | null
+  phone?: string | null
+  type?: string
+  createdAt?: Date | string
+  primaryCompany?: Prisma.CompanyCreateNestedOneWithoutContactsInput
+  projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
+  quoteContacts?: Prisma.QuoteContactCreateNestedManyWithoutContactInput
+  employee?: Prisma.EmployeeCreateNestedOneWithoutContactInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingContactInput
+}
+
+export type ContactUncheckedCreateWithoutContactNotesInput = {
+  id?: string
+  firstName: string
+  lastName?: string | null
+  email?: string | null
+  phone?: string | null
+  type?: string
+  primaryCompanyId?: string | null
+  createdAt?: Date | string
+  projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
+  quoteContacts?: Prisma.QuoteContactUncheckedCreateNestedManyWithoutContactInput
+  employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutContactInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingContactInput
+}
+
+export type ContactCreateOrConnectWithoutContactNotesInput = {
+  where: Prisma.ContactWhereUniqueInput
+  create: Prisma.XOR<Prisma.ContactCreateWithoutContactNotesInput, Prisma.ContactUncheckedCreateWithoutContactNotesInput>
+}
+
+export type ContactUpsertWithoutContactNotesInput = {
+  update: Prisma.XOR<Prisma.ContactUpdateWithoutContactNotesInput, Prisma.ContactUncheckedUpdateWithoutContactNotesInput>
+  create: Prisma.XOR<Prisma.ContactCreateWithoutContactNotesInput, Prisma.ContactUncheckedCreateWithoutContactNotesInput>
+  where?: Prisma.ContactWhereInput
+}
+
+export type ContactUpdateToOneWithWhereWithoutContactNotesInput = {
+  where?: Prisma.ContactWhereInput
+  data: Prisma.XOR<Prisma.ContactUpdateWithoutContactNotesInput, Prisma.ContactUncheckedUpdateWithoutContactNotesInput>
+}
+
+export type ContactUpdateWithoutContactNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  primaryCompany?: Prisma.CompanyUpdateOneWithoutContactsNestedInput
+  projectContacts?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
+  quoteContacts?: Prisma.QuoteContactUpdateManyWithoutContactNestedInput
+  employee?: Prisma.EmployeeUpdateOneWithoutContactNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutBillingContactNestedInput
+}
+
+export type ContactUncheckedUpdateWithoutContactNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  primaryCompanyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
+  quoteContacts?: Prisma.QuoteContactUncheckedUpdateManyWithoutContactNestedInput
+  employee?: Prisma.EmployeeUncheckedUpdateOneWithoutContactNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingContactNestedInput
+}
+
 export type ContactCreateWithoutProjectContactsInput = {
   id?: string
   firstName: string
@@ -666,6 +769,7 @@ export type ContactCreateWithoutProjectContactsInput = {
   quoteContacts?: Prisma.QuoteContactCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutContactInput
 }
 
 export type ContactUncheckedCreateWithoutProjectContactsInput = {
@@ -680,6 +784,7 @@ export type ContactUncheckedCreateWithoutProjectContactsInput = {
   quoteContacts?: Prisma.QuoteContactUncheckedCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutContactInput
 }
 
 export type ContactCreateOrConnectWithoutProjectContactsInput = {
@@ -710,6 +815,7 @@ export type ContactUpdateWithoutProjectContactsInput = {
   quoteContacts?: Prisma.QuoteContactUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutContactNestedInput
 }
 
 export type ContactUncheckedUpdateWithoutProjectContactsInput = {
@@ -724,6 +830,7 @@ export type ContactUncheckedUpdateWithoutProjectContactsInput = {
   quoteContacts?: Prisma.QuoteContactUncheckedUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateWithoutQuoteContactsInput = {
@@ -738,6 +845,7 @@ export type ContactCreateWithoutQuoteContactsInput = {
   projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutContactInput
 }
 
 export type ContactUncheckedCreateWithoutQuoteContactsInput = {
@@ -752,6 +860,7 @@ export type ContactUncheckedCreateWithoutQuoteContactsInput = {
   projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
   employee?: Prisma.EmployeeUncheckedCreateNestedOneWithoutContactInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutContactInput
 }
 
 export type ContactCreateOrConnectWithoutQuoteContactsInput = {
@@ -782,6 +891,7 @@ export type ContactUpdateWithoutQuoteContactsInput = {
   projectContacts?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutContactNestedInput
 }
 
 export type ContactUncheckedUpdateWithoutQuoteContactsInput = {
@@ -796,6 +906,7 @@ export type ContactUncheckedUpdateWithoutQuoteContactsInput = {
   projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateWithoutEmployeeInput = {
@@ -810,6 +921,7 @@ export type ContactCreateWithoutEmployeeInput = {
   projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutContactInput
   quoteContacts?: Prisma.QuoteContactCreateNestedManyWithoutContactInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutContactInput
 }
 
 export type ContactUncheckedCreateWithoutEmployeeInput = {
@@ -824,6 +936,7 @@ export type ContactUncheckedCreateWithoutEmployeeInput = {
   projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutContactInput
   quoteContacts?: Prisma.QuoteContactUncheckedCreateNestedManyWithoutContactInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingContactInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutContactInput
 }
 
 export type ContactCreateOrConnectWithoutEmployeeInput = {
@@ -854,6 +967,7 @@ export type ContactUpdateWithoutEmployeeInput = {
   projectContacts?: Prisma.ProjectContactUpdateManyWithoutContactNestedInput
   quoteContacts?: Prisma.QuoteContactUpdateManyWithoutContactNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutContactNestedInput
 }
 
 export type ContactUncheckedUpdateWithoutEmployeeInput = {
@@ -868,6 +982,7 @@ export type ContactUncheckedUpdateWithoutEmployeeInput = {
   projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutContactNestedInput
   quoteContacts?: Prisma.QuoteContactUncheckedUpdateManyWithoutContactNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactCreateManyPrimaryCompanyInput = {
@@ -892,6 +1007,7 @@ export type ContactUpdateWithoutPrimaryCompanyInput = {
   quoteContacts?: Prisma.QuoteContactUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutContactNestedInput
 }
 
 export type ContactUncheckedUpdateWithoutPrimaryCompanyInput = {
@@ -906,6 +1022,7 @@ export type ContactUncheckedUpdateWithoutPrimaryCompanyInput = {
   quoteContacts?: Prisma.QuoteContactUncheckedUpdateManyWithoutContactNestedInput
   employee?: Prisma.EmployeeUncheckedUpdateOneWithoutContactNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingContactNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutContactNestedInput
 }
 
 export type ContactUncheckedUpdateManyWithoutPrimaryCompanyInput = {
@@ -927,12 +1044,14 @@ export type ContactCountOutputType = {
   projectContacts: number
   quoteContacts: number
   invoices: number
+  contactNotes: number
 }
 
 export type ContactCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   projectContacts?: boolean | ContactCountOutputTypeCountProjectContactsArgs
   quoteContacts?: boolean | ContactCountOutputTypeCountQuoteContactsArgs
   invoices?: boolean | ContactCountOutputTypeCountInvoicesArgs
+  contactNotes?: boolean | ContactCountOutputTypeCountContactNotesArgs
 }
 
 /**
@@ -966,6 +1085,13 @@ export type ContactCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Type
   where?: Prisma.InvoiceWhereInput
 }
 
+/**
+ * ContactCountOutputType without action
+ */
+export type ContactCountOutputTypeCountContactNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ContactNoteWhereInput
+}
+
 
 export type ContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -981,6 +1107,7 @@ export type ContactSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   quoteContacts?: boolean | Prisma.Contact$quoteContactsArgs<ExtArgs>
   employee?: boolean | Prisma.Contact$employeeArgs<ExtArgs>
   invoices?: boolean | Prisma.Contact$invoicesArgs<ExtArgs>
+  contactNotes?: boolean | Prisma.Contact$contactNotesArgs<ExtArgs>
   _count?: boolean | Prisma.ContactCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contact"]>
 
@@ -1026,6 +1153,7 @@ export type ContactInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   quoteContacts?: boolean | Prisma.Contact$quoteContactsArgs<ExtArgs>
   employee?: boolean | Prisma.Contact$employeeArgs<ExtArgs>
   invoices?: boolean | Prisma.Contact$invoicesArgs<ExtArgs>
+  contactNotes?: boolean | Prisma.Contact$contactNotesArgs<ExtArgs>
   _count?: boolean | Prisma.ContactCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ContactIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1043,6 +1171,7 @@ export type $ContactPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     quoteContacts: Prisma.$QuoteContactPayload<ExtArgs>[]
     employee: Prisma.$EmployeePayload<ExtArgs> | null
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
+    contactNotes: Prisma.$ContactNotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1452,6 +1581,7 @@ export interface Prisma__ContactClient<T, Null = never, ExtArgs extends runtime.
   quoteContacts<T extends Prisma.Contact$quoteContactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$quoteContactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   employee<T extends Prisma.Contact$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   invoices<T extends Prisma.Contact$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  contactNotes<T extends Prisma.Contact$contactNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contact$contactNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1992,6 +2122,30 @@ export type Contact$invoicesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
+}
+
+/**
+ * Contact.contactNotes
+ */
+export type Contact$contactNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContactNote
+   */
+  select?: Prisma.ContactNoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContactNote
+   */
+  omit?: Prisma.ContactNoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContactNoteInclude<ExtArgs> | null
+  where?: Prisma.ContactNoteWhereInput
+  orderBy?: Prisma.ContactNoteOrderByWithRelationInput | Prisma.ContactNoteOrderByWithRelationInput[]
+  cursor?: Prisma.ContactNoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ContactNoteScalarFieldEnum | Prisma.ContactNoteScalarFieldEnum[]
 }
 
 /**

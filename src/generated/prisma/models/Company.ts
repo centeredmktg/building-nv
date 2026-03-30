@@ -194,6 +194,10 @@ export type CompanyWhereInput = {
   projectCompanies?: Prisma.ProjectCompanyListRelationFilter
   quoteCompanies?: Prisma.QuoteCompanyListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
+  subcontractorProfile?: Prisma.XOR<Prisma.SubcontractorProfileNullableScalarRelationFilter, Prisma.SubcontractorProfileWhereInput> | null
+  bidInvitations?: Prisma.BidInvitationListRelationFilter
+  subcontractorReviews?: Prisma.SubcontractorReviewListRelationFilter
+  contactNotes?: Prisma.ContactNoteListRelationFilter
 }
 
 export type CompanyOrderByWithRelationInput = {
@@ -207,6 +211,10 @@ export type CompanyOrderByWithRelationInput = {
   projectCompanies?: Prisma.ProjectCompanyOrderByRelationAggregateInput
   quoteCompanies?: Prisma.QuoteCompanyOrderByRelationAggregateInput
   invoices?: Prisma.InvoiceOrderByRelationAggregateInput
+  subcontractorProfile?: Prisma.SubcontractorProfileOrderByWithRelationInput
+  bidInvitations?: Prisma.BidInvitationOrderByRelationAggregateInput
+  subcontractorReviews?: Prisma.SubcontractorReviewOrderByRelationAggregateInput
+  contactNotes?: Prisma.ContactNoteOrderByRelationAggregateInput
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -223,6 +231,10 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   projectCompanies?: Prisma.ProjectCompanyListRelationFilter
   quoteCompanies?: Prisma.QuoteCompanyListRelationFilter
   invoices?: Prisma.InvoiceListRelationFilter
+  subcontractorProfile?: Prisma.XOR<Prisma.SubcontractorProfileNullableScalarRelationFilter, Prisma.SubcontractorProfileWhereInput> | null
+  bidInvitations?: Prisma.BidInvitationListRelationFilter
+  subcontractorReviews?: Prisma.SubcontractorReviewListRelationFilter
+  contactNotes?: Prisma.ContactNoteListRelationFilter
 }, "id" | "domain">
 
 export type CompanyOrderByWithAggregationInput = {
@@ -260,6 +272,10 @@ export type CompanyCreateInput = {
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateInput = {
@@ -273,6 +289,10 @@ export type CompanyUncheckedCreateInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUpdateInput = {
@@ -286,6 +306,10 @@ export type CompanyUpdateInput = {
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateInput = {
@@ -299,6 +323,10 @@ export type CompanyUncheckedUpdateInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateManyInput = {
@@ -397,6 +425,62 @@ export type CompanyUpdateOneWithoutContactsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutContactsInput, Prisma.CompanyUpdateWithoutContactsInput>, Prisma.CompanyUncheckedUpdateWithoutContactsInput>
 }
 
+export type CompanyCreateNestedOneWithoutSubcontractorProfileInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorProfileInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorProfileInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutSubcontractorProfileInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutSubcontractorProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorProfileInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorProfileInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutSubcontractorProfileInput
+  upsert?: Prisma.CompanyUpsertWithoutSubcontractorProfileInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutSubcontractorProfileInput, Prisma.CompanyUpdateWithoutSubcontractorProfileInput>, Prisma.CompanyUncheckedUpdateWithoutSubcontractorProfileInput>
+}
+
+export type CompanyCreateNestedOneWithoutContactNotesInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutContactNotesInput, Prisma.CompanyUncheckedCreateWithoutContactNotesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutContactNotesInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutContactNotesNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutContactNotesInput, Prisma.CompanyUncheckedCreateWithoutContactNotesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutContactNotesInput
+  upsert?: Prisma.CompanyUpsertWithoutContactNotesInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutContactNotesInput, Prisma.CompanyUpdateWithoutContactNotesInput>, Prisma.CompanyUncheckedUpdateWithoutContactNotesInput>
+}
+
+export type CompanyCreateNestedOneWithoutSubcontractorReviewsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorReviewsInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorReviewsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutSubcontractorReviewsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutSubcontractorReviewsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorReviewsInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorReviewsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutSubcontractorReviewsInput
+  upsert?: Prisma.CompanyUpsertWithoutSubcontractorReviewsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutSubcontractorReviewsInput, Prisma.CompanyUpdateWithoutSubcontractorReviewsInput>, Prisma.CompanyUncheckedUpdateWithoutSubcontractorReviewsInput>
+}
+
+export type CompanyCreateNestedOneWithoutBidInvitationsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutBidInvitationsInput, Prisma.CompanyUncheckedCreateWithoutBidInvitationsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutBidInvitationsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutBidInvitationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutBidInvitationsInput, Prisma.CompanyUncheckedCreateWithoutBidInvitationsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutBidInvitationsInput
+  upsert?: Prisma.CompanyUpsertWithoutBidInvitationsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutBidInvitationsInput, Prisma.CompanyUpdateWithoutBidInvitationsInput>, Prisma.CompanyUncheckedUpdateWithoutBidInvitationsInput>
+}
+
 export type CompanyCreateNestedOneWithoutProjectCompaniesInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutProjectCompaniesInput, Prisma.CompanyUncheckedCreateWithoutProjectCompaniesInput>
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutProjectCompaniesInput
@@ -435,6 +519,10 @@ export type CompanyCreateWithoutInvoicesInput = {
   contacts?: Prisma.ContactCreateNestedManyWithoutPrimaryCompanyInput
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutInvoicesInput = {
@@ -447,6 +535,10 @@ export type CompanyUncheckedCreateWithoutInvoicesInput = {
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutPrimaryCompanyInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutInvoicesInput = {
@@ -475,6 +567,10 @@ export type CompanyUpdateWithoutInvoicesInput = {
   contacts?: Prisma.ContactUpdateManyWithoutPrimaryCompanyNestedInput
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutInvoicesInput = {
@@ -487,6 +583,10 @@ export type CompanyUncheckedUpdateWithoutInvoicesInput = {
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutContactsInput = {
@@ -499,6 +599,10 @@ export type CompanyCreateWithoutContactsInput = {
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutContactsInput = {
@@ -511,6 +615,10 @@ export type CompanyUncheckedCreateWithoutContactsInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutContactsInput = {
@@ -539,6 +647,10 @@ export type CompanyUpdateWithoutContactsInput = {
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutContactsInput = {
@@ -551,6 +663,330 @@ export type CompanyUncheckedUpdateWithoutContactsInput = {
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutSubcontractorProfileInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutSubcontractorProfileInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutSubcontractorProfileInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorProfileInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorProfileInput>
+}
+
+export type CompanyUpsertWithoutSubcontractorProfileInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutSubcontractorProfileInput, Prisma.CompanyUncheckedUpdateWithoutSubcontractorProfileInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorProfileInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorProfileInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutSubcontractorProfileInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutSubcontractorProfileInput, Prisma.CompanyUncheckedUpdateWithoutSubcontractorProfileInput>
+}
+
+export type CompanyUpdateWithoutSubcontractorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutSubcontractorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutContactNotesInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+}
+
+export type CompanyUncheckedCreateWithoutContactNotesInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+}
+
+export type CompanyCreateOrConnectWithoutContactNotesInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutContactNotesInput, Prisma.CompanyUncheckedCreateWithoutContactNotesInput>
+}
+
+export type CompanyUpsertWithoutContactNotesInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutContactNotesInput, Prisma.CompanyUncheckedUpdateWithoutContactNotesInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutContactNotesInput, Prisma.CompanyUncheckedCreateWithoutContactNotesInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutContactNotesInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutContactNotesInput, Prisma.CompanyUncheckedUpdateWithoutContactNotesInput>
+}
+
+export type CompanyUpdateWithoutContactNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutContactNotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+}
+
+export type CompanyCreateWithoutSubcontractorReviewsInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutSubcontractorReviewsInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutSubcontractorReviewsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorReviewsInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorReviewsInput>
+}
+
+export type CompanyUpsertWithoutSubcontractorReviewsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutSubcontractorReviewsInput, Prisma.CompanyUncheckedUpdateWithoutSubcontractorReviewsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutSubcontractorReviewsInput, Prisma.CompanyUncheckedCreateWithoutSubcontractorReviewsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutSubcontractorReviewsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutSubcontractorReviewsInput, Prisma.CompanyUncheckedUpdateWithoutSubcontractorReviewsInput>
+}
+
+export type CompanyUpdateWithoutSubcontractorReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutSubcontractorReviewsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutBidInvitationsInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutBidInvitationsInput = {
+  id?: string
+  name: string
+  type?: string
+  domain?: string | null
+  phone?: string | null
+  createdAt?: Date | string
+  contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutPrimaryCompanyInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutBidInvitationsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutBidInvitationsInput, Prisma.CompanyUncheckedCreateWithoutBidInvitationsInput>
+}
+
+export type CompanyUpsertWithoutBidInvitationsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutBidInvitationsInput, Prisma.CompanyUncheckedUpdateWithoutBidInvitationsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutBidInvitationsInput, Prisma.CompanyUncheckedCreateWithoutBidInvitationsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutBidInvitationsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutBidInvitationsInput, Prisma.CompanyUncheckedUpdateWithoutBidInvitationsInput>
+}
+
+export type CompanyUpdateWithoutBidInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutBidInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  domain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutProjectCompaniesInput = {
@@ -563,6 +999,10 @@ export type CompanyCreateWithoutProjectCompaniesInput = {
   contacts?: Prisma.ContactCreateNestedManyWithoutPrimaryCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutProjectCompaniesInput = {
@@ -575,6 +1015,10 @@ export type CompanyUncheckedCreateWithoutProjectCompaniesInput = {
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutPrimaryCompanyInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutProjectCompaniesInput = {
@@ -603,6 +1047,10 @@ export type CompanyUpdateWithoutProjectCompaniesInput = {
   contacts?: Prisma.ContactUpdateManyWithoutPrimaryCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutProjectCompaniesInput = {
@@ -615,6 +1063,10 @@ export type CompanyUncheckedUpdateWithoutProjectCompaniesInput = {
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput
   quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutQuoteCompaniesInput = {
@@ -627,6 +1079,10 @@ export type CompanyCreateWithoutQuoteCompaniesInput = {
   contacts?: Prisma.ContactCreateNestedManyWithoutPrimaryCompanyInput
   projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutQuoteCompaniesInput = {
@@ -639,6 +1095,10 @@ export type CompanyUncheckedCreateWithoutQuoteCompaniesInput = {
   contacts?: Prisma.ContactUncheckedCreateNestedManyWithoutPrimaryCompanyInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutCompanyInput
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutBillingCompanyInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedCreateNestedOneWithoutCompanyInput
+  bidInvitations?: Prisma.BidInvitationUncheckedCreateNestedManyWithoutSubcontractorInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutSubcontractorInput
+  contactNotes?: Prisma.ContactNoteUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutQuoteCompaniesInput = {
@@ -667,6 +1127,10 @@ export type CompanyUpdateWithoutQuoteCompaniesInput = {
   contacts?: Prisma.ContactUpdateManyWithoutPrimaryCompanyNestedInput
   projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutQuoteCompaniesInput = {
@@ -679,6 +1143,10 @@ export type CompanyUncheckedUpdateWithoutQuoteCompaniesInput = {
   contacts?: Prisma.ContactUncheckedUpdateManyWithoutPrimaryCompanyNestedInput
   projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutCompanyNestedInput
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutBillingCompanyNestedInput
+  subcontractorProfile?: Prisma.SubcontractorProfileUncheckedUpdateOneWithoutCompanyNestedInput
+  bidInvitations?: Prisma.BidInvitationUncheckedUpdateManyWithoutSubcontractorNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutSubcontractorNestedInput
+  contactNotes?: Prisma.ContactNoteUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -691,6 +1159,9 @@ export type CompanyCountOutputType = {
   projectCompanies: number
   quoteCompanies: number
   invoices: number
+  bidInvitations: number
+  subcontractorReviews: number
+  contactNotes: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -698,6 +1169,9 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   projectCompanies?: boolean | CompanyCountOutputTypeCountProjectCompaniesArgs
   quoteCompanies?: boolean | CompanyCountOutputTypeCountQuoteCompaniesArgs
   invoices?: boolean | CompanyCountOutputTypeCountInvoicesArgs
+  bidInvitations?: boolean | CompanyCountOutputTypeCountBidInvitationsArgs
+  subcontractorReviews?: boolean | CompanyCountOutputTypeCountSubcontractorReviewsArgs
+  contactNotes?: boolean | CompanyCountOutputTypeCountContactNotesArgs
 }
 
 /**
@@ -738,6 +1212,27 @@ export type CompanyCountOutputTypeCountInvoicesArgs<ExtArgs extends runtime.Type
   where?: Prisma.InvoiceWhereInput
 }
 
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountBidInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BidInvitationWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountSubcontractorReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubcontractorReviewWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountContactNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ContactNoteWhereInput
+}
+
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -750,6 +1245,10 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   projectCompanies?: boolean | Prisma.Company$projectCompaniesArgs<ExtArgs>
   quoteCompanies?: boolean | Prisma.Company$quoteCompaniesArgs<ExtArgs>
   invoices?: boolean | Prisma.Company$invoicesArgs<ExtArgs>
+  subcontractorProfile?: boolean | Prisma.Company$subcontractorProfileArgs<ExtArgs>
+  bidInvitations?: boolean | Prisma.Company$bidInvitationsArgs<ExtArgs>
+  subcontractorReviews?: boolean | Prisma.Company$subcontractorReviewsArgs<ExtArgs>
+  contactNotes?: boolean | Prisma.Company$contactNotesArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
@@ -786,6 +1285,10 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   projectCompanies?: boolean | Prisma.Company$projectCompaniesArgs<ExtArgs>
   quoteCompanies?: boolean | Prisma.Company$quoteCompaniesArgs<ExtArgs>
   invoices?: boolean | Prisma.Company$invoicesArgs<ExtArgs>
+  subcontractorProfile?: boolean | Prisma.Company$subcontractorProfileArgs<ExtArgs>
+  bidInvitations?: boolean | Prisma.Company$bidInvitationsArgs<ExtArgs>
+  subcontractorReviews?: boolean | Prisma.Company$subcontractorReviewsArgs<ExtArgs>
+  contactNotes?: boolean | Prisma.Company$contactNotesArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -798,6 +1301,10 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     projectCompanies: Prisma.$ProjectCompanyPayload<ExtArgs>[]
     quoteCompanies: Prisma.$QuoteCompanyPayload<ExtArgs>[]
     invoices: Prisma.$InvoicePayload<ExtArgs>[]
+    subcontractorProfile: Prisma.$SubcontractorProfilePayload<ExtArgs> | null
+    bidInvitations: Prisma.$BidInvitationPayload<ExtArgs>[]
+    subcontractorReviews: Prisma.$SubcontractorReviewPayload<ExtArgs>[]
+    contactNotes: Prisma.$ContactNotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1204,6 +1711,10 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   projectCompanies<T extends Prisma.Company$projectCompaniesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$projectCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   quoteCompanies<T extends Prisma.Company$quoteCompaniesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$quoteCompaniesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteCompanyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invoices<T extends Prisma.Company$invoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subcontractorProfile<T extends Prisma.Company$subcontractorProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$subcontractorProfileArgs<ExtArgs>>): Prisma.Prisma__SubcontractorProfileClient<runtime.Types.Result.GetResult<Prisma.$SubcontractorProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  bidInvitations<T extends Prisma.Company$bidInvitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$bidInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subcontractorReviews<T extends Prisma.Company$subcontractorReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$subcontractorReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubcontractorReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  contactNotes<T extends Prisma.Company$contactNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$contactNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContactNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1720,6 +2231,97 @@ export type Company$invoicesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.InvoiceScalarFieldEnum | Prisma.InvoiceScalarFieldEnum[]
+}
+
+/**
+ * Company.subcontractorProfile
+ */
+export type Company$subcontractorProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SubcontractorProfile
+   */
+  select?: Prisma.SubcontractorProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SubcontractorProfile
+   */
+  omit?: Prisma.SubcontractorProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubcontractorProfileInclude<ExtArgs> | null
+  where?: Prisma.SubcontractorProfileWhereInput
+}
+
+/**
+ * Company.bidInvitations
+ */
+export type Company$bidInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BidInvitation
+   */
+  select?: Prisma.BidInvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BidInvitation
+   */
+  omit?: Prisma.BidInvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BidInvitationInclude<ExtArgs> | null
+  where?: Prisma.BidInvitationWhereInput
+  orderBy?: Prisma.BidInvitationOrderByWithRelationInput | Prisma.BidInvitationOrderByWithRelationInput[]
+  cursor?: Prisma.BidInvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BidInvitationScalarFieldEnum | Prisma.BidInvitationScalarFieldEnum[]
+}
+
+/**
+ * Company.subcontractorReviews
+ */
+export type Company$subcontractorReviewsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SubcontractorReview
+   */
+  select?: Prisma.SubcontractorReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SubcontractorReview
+   */
+  omit?: Prisma.SubcontractorReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubcontractorReviewInclude<ExtArgs> | null
+  where?: Prisma.SubcontractorReviewWhereInput
+  orderBy?: Prisma.SubcontractorReviewOrderByWithRelationInput | Prisma.SubcontractorReviewOrderByWithRelationInput[]
+  cursor?: Prisma.SubcontractorReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubcontractorReviewScalarFieldEnum | Prisma.SubcontractorReviewScalarFieldEnum[]
+}
+
+/**
+ * Company.contactNotes
+ */
+export type Company$contactNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContactNote
+   */
+  select?: Prisma.ContactNoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ContactNote
+   */
+  omit?: Prisma.ContactNoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContactNoteInclude<ExtArgs> | null
+  where?: Prisma.ContactNoteWhereInput
+  orderBy?: Prisma.ContactNoteOrderByWithRelationInput | Prisma.ContactNoteOrderByWithRelationInput[]
+  cursor?: Prisma.ContactNoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ContactNoteScalarFieldEnum | Prisma.ContactNoteScalarFieldEnum[]
 }
 
 /**

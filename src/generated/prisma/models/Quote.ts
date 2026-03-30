@@ -375,6 +375,7 @@ export type QuoteWhereInput = {
   acceptance?: Prisma.XOR<Prisma.AcceptanceNullableScalarRelationFilter, Prisma.AcceptanceWhereInput> | null
   contract?: Prisma.XOR<Prisma.ContractNullableScalarRelationFilter, Prisma.ContractWhereInput> | null
   milestones?: Prisma.QuoteMilestoneListRelationFilter
+  bidRequests?: Prisma.BidRequestListRelationFilter
 }
 
 export type QuoteOrderByWithRelationInput = {
@@ -408,6 +409,7 @@ export type QuoteOrderByWithRelationInput = {
   acceptance?: Prisma.AcceptanceOrderByWithRelationInput
   contract?: Prisma.ContractOrderByWithRelationInput
   milestones?: Prisma.QuoteMilestoneOrderByRelationAggregateInput
+  bidRequests?: Prisma.BidRequestOrderByRelationAggregateInput
 }
 
 export type QuoteWhereUniqueInput = Prisma.AtLeast<{
@@ -444,6 +446,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   acceptance?: Prisma.XOR<Prisma.AcceptanceNullableScalarRelationFilter, Prisma.AcceptanceWhereInput> | null
   contract?: Prisma.XOR<Prisma.ContractNullableScalarRelationFilter, Prisma.ContractWhereInput> | null
   milestones?: Prisma.QuoteMilestoneListRelationFilter
+  bidRequests?: Prisma.BidRequestListRelationFilter
 }, "id" | "slug" | "signingToken">
 
 export type QuoteOrderByWithAggregationInput = {
@@ -536,6 +539,7 @@ export type QuoteCreateInput = {
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateInput = {
@@ -568,6 +572,7 @@ export type QuoteUncheckedCreateInput = {
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUpdateInput = {
@@ -600,6 +605,7 @@ export type QuoteUpdateInput = {
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateInput = {
@@ -632,6 +638,7 @@ export type QuoteUncheckedUpdateInput = {
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateManyInput = {
@@ -938,6 +945,20 @@ export type QuoteUncheckedUpdateManyWithoutProjectNestedInput = {
   deleteMany?: Prisma.QuoteScalarWhereInput | Prisma.QuoteScalarWhereInput[]
 }
 
+export type QuoteCreateNestedOneWithoutBidRequestsInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutBidRequestsInput, Prisma.QuoteUncheckedCreateWithoutBidRequestsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutBidRequestsInput
+  connect?: Prisma.QuoteWhereUniqueInput
+}
+
+export type QuoteUpdateOneRequiredWithoutBidRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.QuoteCreateWithoutBidRequestsInput, Prisma.QuoteUncheckedCreateWithoutBidRequestsInput>
+  connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutBidRequestsInput
+  upsert?: Prisma.QuoteUpsertWithoutBidRequestsInput
+  connect?: Prisma.QuoteWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuoteUpdateToOneWithWhereWithoutBidRequestsInput, Prisma.QuoteUpdateWithoutBidRequestsInput>, Prisma.QuoteUncheckedUpdateWithoutBidRequestsInput>
+}
+
 export type QuoteCreateNestedOneWithoutQuoteContactsInput = {
   create?: Prisma.XOR<Prisma.QuoteCreateWithoutQuoteContactsInput, Prisma.QuoteUncheckedCreateWithoutQuoteContactsInput>
   connectOrCreate?: Prisma.QuoteCreateOrConnectWithoutQuoteContactsInput
@@ -995,6 +1016,7 @@ export type QuoteCreateWithoutMilestonesInput = {
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutMilestonesInput = {
@@ -1026,6 +1048,7 @@ export type QuoteUncheckedCreateWithoutMilestonesInput = {
   sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutMilestonesInput = {
@@ -1073,6 +1096,7 @@ export type QuoteUpdateWithoutMilestonesInput = {
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutMilestonesInput = {
@@ -1104,6 +1128,7 @@ export type QuoteUncheckedUpdateWithoutMilestonesInput = {
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutSectionsInput = {
@@ -1135,6 +1160,7 @@ export type QuoteCreateWithoutSectionsInput = {
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutSectionsInput = {
@@ -1166,6 +1192,7 @@ export type QuoteUncheckedCreateWithoutSectionsInput = {
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutSectionsInput = {
@@ -1213,6 +1240,7 @@ export type QuoteUpdateWithoutSectionsInput = {
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutSectionsInput = {
@@ -1244,6 +1272,7 @@ export type QuoteUncheckedUpdateWithoutSectionsInput = {
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutAcceptanceInput = {
@@ -1275,6 +1304,7 @@ export type QuoteCreateWithoutAcceptanceInput = {
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutAcceptanceInput = {
@@ -1306,6 +1336,7 @@ export type QuoteUncheckedCreateWithoutAcceptanceInput = {
   sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
   contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutAcceptanceInput = {
@@ -1353,6 +1384,7 @@ export type QuoteUpdateWithoutAcceptanceInput = {
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutAcceptanceInput = {
@@ -1384,6 +1416,7 @@ export type QuoteUncheckedUpdateWithoutAcceptanceInput = {
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
   contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutContractInput = {
@@ -1415,6 +1448,7 @@ export type QuoteCreateWithoutContractInput = {
   sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutContractInput = {
@@ -1446,6 +1480,7 @@ export type QuoteUncheckedCreateWithoutContractInput = {
   sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutContractInput = {
@@ -1493,6 +1528,7 @@ export type QuoteUpdateWithoutContractInput = {
   sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutContractInput = {
@@ -1524,6 +1560,7 @@ export type QuoteUncheckedUpdateWithoutContractInput = {
   sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutProjectInput = {
@@ -1555,6 +1592,7 @@ export type QuoteCreateWithoutProjectInput = {
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutProjectInput = {
@@ -1586,6 +1624,7 @@ export type QuoteUncheckedCreateWithoutProjectInput = {
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutProjectInput = {
@@ -1643,6 +1682,150 @@ export type QuoteScalarWhereInput = {
   estimatedStartDate?: Prisma.DateTimeNullableFilter<"Quote"> | Date | string | null
 }
 
+export type QuoteCreateWithoutBidRequestsInput = {
+  id?: string
+  slug: string
+  title: string
+  address: string
+  projectType: string
+  status?: string
+  scopeText?: string | null
+  materialMarkupPct?: number
+  overheadPct?: number
+  profitPct?: number
+  paymentTerms?: string
+  exclusions?: string
+  notes?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sentAt?: Date | string | null
+  estimatedDuration?: string | null
+  estimatedStartDate?: Date | string | null
+  quoteContacts?: Prisma.QuoteContactCreateNestedManyWithoutQuoteInput
+  quoteCompanies?: Prisma.QuoteCompanyCreateNestedManyWithoutQuoteInput
+  project?: Prisma.ProjectCreateNestedOneWithoutQuotesInput
+  sections?: Prisma.LineItemSectionCreateNestedManyWithoutQuoteInput
+  acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
+  milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteUncheckedCreateWithoutBidRequestsInput = {
+  id?: string
+  slug: string
+  title: string
+  address: string
+  projectType: string
+  status?: string
+  scopeText?: string | null
+  materialMarkupPct?: number
+  overheadPct?: number
+  profitPct?: number
+  paymentTerms?: string
+  exclusions?: string
+  notes?: string | null
+  projectId?: string | null
+  signingToken?: string | null
+  signingTokenExpiresAt?: Date | string | null
+  signedAt?: Date | string | null
+  signedPdfPath?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sentAt?: Date | string | null
+  estimatedDuration?: string | null
+  estimatedStartDate?: Date | string | null
+  quoteContacts?: Prisma.QuoteContactUncheckedCreateNestedManyWithoutQuoteInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedCreateNestedManyWithoutQuoteInput
+  sections?: Prisma.LineItemSectionUncheckedCreateNestedManyWithoutQuoteInput
+  acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
+  contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
+  milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+}
+
+export type QuoteCreateOrConnectWithoutBidRequestsInput = {
+  where: Prisma.QuoteWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutBidRequestsInput, Prisma.QuoteUncheckedCreateWithoutBidRequestsInput>
+}
+
+export type QuoteUpsertWithoutBidRequestsInput = {
+  update: Prisma.XOR<Prisma.QuoteUpdateWithoutBidRequestsInput, Prisma.QuoteUncheckedUpdateWithoutBidRequestsInput>
+  create: Prisma.XOR<Prisma.QuoteCreateWithoutBidRequestsInput, Prisma.QuoteUncheckedCreateWithoutBidRequestsInput>
+  where?: Prisma.QuoteWhereInput
+}
+
+export type QuoteUpdateToOneWithWhereWithoutBidRequestsInput = {
+  where?: Prisma.QuoteWhereInput
+  data: Prisma.XOR<Prisma.QuoteUpdateWithoutBidRequestsInput, Prisma.QuoteUncheckedUpdateWithoutBidRequestsInput>
+}
+
+export type QuoteUpdateWithoutBidRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusions?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDuration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quoteContacts?: Prisma.QuoteContactUpdateManyWithoutQuoteNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUpdateManyWithoutQuoteNestedInput
+  project?: Prisma.ProjectUpdateOneWithoutQuotesNestedInput
+  sections?: Prisma.LineItemSectionUpdateManyWithoutQuoteNestedInput
+  acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
+  milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+}
+
+export type QuoteUncheckedUpdateWithoutBidRequestsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  scopeText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
+  exclusions?: Prisma.StringFieldUpdateOperationsInput | string
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signingTokenExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  signedPdfPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sentAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDuration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  quoteContacts?: Prisma.QuoteContactUncheckedUpdateManyWithoutQuoteNestedInput
+  quoteCompanies?: Prisma.QuoteCompanyUncheckedUpdateManyWithoutQuoteNestedInput
+  sections?: Prisma.LineItemSectionUncheckedUpdateManyWithoutQuoteNestedInput
+  acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
+  contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
+  milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+}
+
 export type QuoteCreateWithoutQuoteContactsInput = {
   id?: string
   slug: string
@@ -1672,6 +1855,7 @@ export type QuoteCreateWithoutQuoteContactsInput = {
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutQuoteContactsInput = {
@@ -1703,6 +1887,7 @@ export type QuoteUncheckedCreateWithoutQuoteContactsInput = {
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutQuoteContactsInput = {
@@ -1750,6 +1935,7 @@ export type QuoteUpdateWithoutQuoteContactsInput = {
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutQuoteContactsInput = {
@@ -1781,6 +1967,7 @@ export type QuoteUncheckedUpdateWithoutQuoteContactsInput = {
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateWithoutQuoteCompaniesInput = {
@@ -1812,6 +1999,7 @@ export type QuoteCreateWithoutQuoteCompaniesInput = {
   acceptance?: Prisma.AcceptanceCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteUncheckedCreateWithoutQuoteCompaniesInput = {
@@ -1843,6 +2031,7 @@ export type QuoteUncheckedCreateWithoutQuoteCompaniesInput = {
   acceptance?: Prisma.AcceptanceUncheckedCreateNestedOneWithoutQuoteInput
   contract?: Prisma.ContractUncheckedCreateNestedOneWithoutQuoteInput
   milestones?: Prisma.QuoteMilestoneUncheckedCreateNestedManyWithoutQuoteInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutQuoteInput
 }
 
 export type QuoteCreateOrConnectWithoutQuoteCompaniesInput = {
@@ -1890,6 +2079,7 @@ export type QuoteUpdateWithoutQuoteCompaniesInput = {
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutQuoteCompaniesInput = {
@@ -1921,6 +2111,7 @@ export type QuoteUncheckedUpdateWithoutQuoteCompaniesInput = {
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteCreateManyProjectInput = {
@@ -1977,6 +2168,7 @@ export type QuoteUpdateWithoutProjectInput = {
   acceptance?: Prisma.AcceptanceUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateWithoutProjectInput = {
@@ -2008,6 +2200,7 @@ export type QuoteUncheckedUpdateWithoutProjectInput = {
   acceptance?: Prisma.AcceptanceUncheckedUpdateOneWithoutQuoteNestedInput
   contract?: Prisma.ContractUncheckedUpdateOneWithoutQuoteNestedInput
   milestones?: Prisma.QuoteMilestoneUncheckedUpdateManyWithoutQuoteNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutQuoteNestedInput
 }
 
 export type QuoteUncheckedUpdateManyWithoutProjectInput = {
@@ -2045,6 +2238,7 @@ export type QuoteCountOutputType = {
   quoteCompanies: number
   sections: number
   milestones: number
+  bidRequests: number
 }
 
 export type QuoteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2052,6 +2246,7 @@ export type QuoteCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   quoteCompanies?: boolean | QuoteCountOutputTypeCountQuoteCompaniesArgs
   sections?: boolean | QuoteCountOutputTypeCountSectionsArgs
   milestones?: boolean | QuoteCountOutputTypeCountMilestonesArgs
+  bidRequests?: boolean | QuoteCountOutputTypeCountBidRequestsArgs
 }
 
 /**
@@ -2092,6 +2287,13 @@ export type QuoteCountOutputTypeCountMilestonesArgs<ExtArgs extends runtime.Type
   where?: Prisma.QuoteMilestoneWhereInput
 }
 
+/**
+ * QuoteCountOutputType without action
+ */
+export type QuoteCountOutputTypeCountBidRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BidRequestWhereInput
+}
+
 
 export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2124,6 +2326,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   acceptance?: boolean | Prisma.Quote$acceptanceArgs<ExtArgs>
   contract?: boolean | Prisma.Quote$contractArgs<ExtArgs>
   milestones?: boolean | Prisma.Quote$milestonesArgs<ExtArgs>
+  bidRequests?: boolean | Prisma.Quote$bidRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["quote"]>
 
@@ -2216,6 +2419,7 @@ export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   acceptance?: boolean | Prisma.Quote$acceptanceArgs<ExtArgs>
   contract?: boolean | Prisma.Quote$contractArgs<ExtArgs>
   milestones?: boolean | Prisma.Quote$milestonesArgs<ExtArgs>
+  bidRequests?: boolean | Prisma.Quote$bidRequestsArgs<ExtArgs>
   _count?: boolean | Prisma.QuoteCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuoteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2235,6 +2439,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     acceptance: Prisma.$AcceptancePayload<ExtArgs> | null
     contract: Prisma.$ContractPayload<ExtArgs> | null
     milestones: Prisma.$QuoteMilestonePayload<ExtArgs>[]
+    bidRequests: Prisma.$BidRequestPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2661,6 +2866,7 @@ export interface Prisma__QuoteClient<T, Null = never, ExtArgs extends runtime.Ty
   acceptance<T extends Prisma.Quote$acceptanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$acceptanceArgs<ExtArgs>>): Prisma.Prisma__AcceptanceClient<runtime.Types.Result.GetResult<Prisma.$AcceptancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   contract<T extends Prisma.Quote$contractArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$contractArgs<ExtArgs>>): Prisma.Prisma__ContractClient<runtime.Types.Result.GetResult<Prisma.$ContractPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   milestones<T extends Prisma.Quote$milestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuoteMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  bidRequests<T extends Prisma.Quote$bidRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Quote$bidRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3259,6 +3465,30 @@ export type Quote$milestonesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.QuoteMilestoneScalarFieldEnum | Prisma.QuoteMilestoneScalarFieldEnum[]
+}
+
+/**
+ * Quote.bidRequests
+ */
+export type Quote$bidRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BidRequest
+   */
+  select?: Prisma.BidRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BidRequest
+   */
+  omit?: Prisma.BidRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BidRequestInclude<ExtArgs> | null
+  where?: Prisma.BidRequestWhereInput
+  orderBy?: Prisma.BidRequestOrderByWithRelationInput | Prisma.BidRequestOrderByWithRelationInput[]
+  cursor?: Prisma.BidRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BidRequestScalarFieldEnum | Prisma.BidRequestScalarFieldEnum[]
 }
 
 /**
