@@ -70,6 +70,7 @@ model Milestone {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   invoiceMilestones InvoiceMilestone[]
+  projectTasks  ProjectTask[]
 }
 
 model LineItemSection {
@@ -233,6 +234,8 @@ model Project {
   contracts        Contract[]
   teamMembers      ProjectTeamMember[]
   invoices         Invoice[]
+  projectTasks         ProjectTask[]
+  complianceChatMessages ComplianceChatMessage[]
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
 }
@@ -440,4 +443,59 @@ model ProjectTeamMember {
   assignedAt DateTime @default(now())
 
   @@unique([projectId, employeeId])
+}
+
+// ─── Compliance & Project Planning ────────────────────────────────────────────
+
+model ProjectTask {
+  id              String           @id @default(cuid())
+  projectId       String
+  project         Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  name            String
+  description     String?
+  phase           String           // groups tasks: "demolition", "framing", etc.
+  position        Int              // ordering within phase
+  durationDays    Int
+  startDay        Int              // offset from project start
+  endDay          Int              // startDay + durationDays
+  isMilestoneTask Boolean          @default(false)
+  milestoneId     String?
+  milestone       Milestone?       @relation(fields: [milestoneId], references: [id])
+  isCriticalPath  Boolean          @default(false)
+  status          String           @default("pending") // pending | in_progress | completed | blocked
+  completedAt     DateTime?
+  complianceFlags ComplianceFlag[]
+  // Self-referential many-to-many for dependencies
+  dependsOn       ProjectTask[]    @relation("TaskDependency")
+  dependedOnBy    ProjectTask[]    @relation("TaskDependency")
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model ComplianceFlag {
+  id            String       @id @default(cuid())
+  projectTaskId String
+  projectTask   ProjectTask  @relation(fields: [projectTaskId], references: [id], onDelete: Cascade)
+  ruleId        String       // matches corpus file id, e.g. "osha-engineering-survey"
+  severity      String       // BLOCK | WARNING | INFO
+  title         String
+  citation      String
+  actionItem    String
+  resolvedAt    DateTime?
+  resolvedBy    String?
+  resolvedNote  String?
+  createdAt     DateTime     @default(now())
+}
+
+model ComplianceChatMessage {
+  id        String   @id @default(cuid())
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id])
+  sessionId String
+  role      String   // user | assistant
+  content   String
+  citations Json     @default("[]") // [{ruleId, citation, relevance}]
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
 }
