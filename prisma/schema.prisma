@@ -41,6 +41,7 @@ model Quote {
   estimatedDuration   String?
   estimatedStartDate  DateTime?
   milestones        QuoteMilestone[]
+  bidRequests      BidRequest[]
 }
 
 model QuoteMilestone {
@@ -77,6 +78,7 @@ model LineItemSection {
   id      String     @id @default(cuid())
   title   String
   position Int
+  trade    String?          // Default trade for items in this section
   quoteId String
   quote   Quote      @relation(fields: [quoteId], references: [id], onDelete: Cascade)
   items   LineItem[]
@@ -96,6 +98,7 @@ model LineItem {
   // CPQ link — optional, set when line item comes from component catalog
   componentId String?
   component   Component?      @relation(fields: [componentId], references: [id])
+  trade       String?         // Trade classification — see src/lib/trades.ts for valid values
 }
 
 model Acceptance {
@@ -236,6 +239,8 @@ model Project {
   invoices         Invoice[]
   projectTasks         ProjectTask[]
   complianceChatMessages ComplianceChatMessage[]
+  subcontractorReviews SubcontractorReview[]
+  bidRequests          BidRequest[]
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
 }
@@ -253,20 +258,130 @@ model Contact {
   quoteContacts    QuoteContact[]
   employee         Employee?
   invoices         Invoice[]
+  contactNotes     ContactNote[]
   createdAt        DateTime         @default(now())
 }
 
 model Company {
   id               String           @id @default(cuid())
   name             String
-  type             String           @default("customer") // customer | vendor | pm | other
+  type             String           @default("customer") // customer | vendor | pm | subcontractor | other
   domain           String?          @unique
   phone            String?
   contacts         Contact[]
   projectCompanies ProjectCompany[]
   quoteCompanies   QuoteCompany[]
   invoices         Invoice[]
+  subcontractorProfile SubcontractorProfile?
+  bidInvitations       BidInvitation[]
+  subcontractorReviews SubcontractorReview[]
+  contactNotes         ContactNote[]
   createdAt        DateTime         @default(now())
+}
+
+// ─── Subcontractor Management ─────────────────────────────────────────────────
+
+// 1:1 extension of Company. Only exists when company.type = "subcontractor".
+model SubcontractorProfile {
+  id               String   @id @default(cuid())
+  companyId        String   @unique
+  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  trades           String[] // Array of TradeId values
+  licenseNumber    String?
+  bidLimit         Float?
+  onboardingStatus String   @default("pending") // pending | documents_requested | under_review | approved | suspended
+  insuranceExpiry  DateTime?
+  w9OnFile         Boolean  @default(false)
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ContactNote {
+  id        String   @id @default(cuid())
+  contactId String
+  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  preferred Boolean  @default(false)
+  flagged   Boolean  @default(false)
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([contactId, companyId])
+}
+
+model SubcontractorReview {
+  id              String   @id @default(cuid())
+  subcontractorId String
+  subcontractor   Company  @relation(fields: [subcontractorId], references: [id], onDelete: Cascade)
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  reviewerId      String
+  timeliness      Int      // 1-5
+  communication   Int      // 1-5
+  price           Int      // 1-5
+  qualityOfWork   Int      // 1-5
+  wouldRehire     Boolean
+  notes           String?
+  createdAt       DateTime @default(now())
+
+  @@unique([subcontractorId, projectId])
+}
+
+model InHouseCapability {
+  id                     String  @id @default(cuid())
+  trade                  String  @unique // TradeId
+  canPerform             Boolean @default(false)
+  capacityCheckAvailable Boolean @default(false)
+}
+
+// ─── Bid Request Pipeline ─────────────────────────────────────────────────────
+
+model BidRequest {
+  id                  String          @id @default(cuid())
+  quoteId             String
+  quote               Quote           @relation(fields: [quoteId], references: [id])
+  projectId           String?
+  project             Project?        @relation(fields: [projectId], references: [id])
+  projectType         String
+  generalLocation     String
+  scopeOfWork         String          // Generated scope text — no pricing, no client details
+  requiredTrade       String          // TradeId
+  responseDeadline    DateTime
+  startWindow         String?
+  specialRequirements String?
+  status              String          @default("draft") // draft | sent | responses_received | awarded | cancelled
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  invitations         BidInvitation[]
+}
+
+model BidInvitation {
+  id              String       @id @default(cuid())
+  bidRequestId    String
+  bidRequest      BidRequest   @relation(fields: [bidRequestId], references: [id], onDelete: Cascade)
+  subcontractorId String
+  subcontractor   Company      @relation(fields: [subcontractorId], references: [id])
+  sentAt          DateTime?
+  status          String       @default("pending") // pending | viewed | responded | declined
+  response        BidResponse?
+  createdAt       DateTime     @default(now())
+
+  @@unique([bidRequestId, subcontractorId])
+}
+
+model BidResponse {
+  id               String        @id @default(cuid())
+  bidInvitationId  String        @unique
+  bidInvitation    BidInvitation @relation(fields: [bidInvitationId], references: [id], onDelete: Cascade)
+  amount           Float
+  scopeNotes       String?
+  estimatedDuration String?
+  availableStartDate DateTime?
+  receivedAt       DateTime      @default(now())
+  status           String        @default("submitted") // submitted | under_review | accepted | rejected
 }
 
 model ProjectContact {
