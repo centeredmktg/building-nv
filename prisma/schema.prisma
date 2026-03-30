@@ -470,7 +470,7 @@ model Employee {
   legalName           String
   hireDate            DateTime
   employmentType      String    // "W2" | "CONTRACTOR_1099"
-  tradeClassification String    // "laborer" | "carpenter" | "electrician" | "superintendent" | "pm" | "other"
+  tradeClassification String    // TradeId — see src/lib/trades.ts. Legacy: superintendent/pm mapped to "other"
   activeStatus        String    @default("active") // "active" | "inactive" | "terminated"
   terminatedAt        DateTime?
 
