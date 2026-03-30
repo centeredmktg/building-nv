@@ -97,3 +97,36 @@ export interface JobProject extends CRMProject {
   milestones: Milestone[];
   invoicedTotal?: number;
 }
+
+export interface SubcontractorScorecard {
+  jobsCompleted: number;
+  avgTimeliness: number | null;
+  avgCommunication: number | null;
+  avgPrice: number | null;
+  avgQualityOfWork: number | null;
+  wouldRehirePercent: number | null;
+  lastJobDate: string | null;
+}
+
+export interface SubcontractorListItem {
+  id: string;
+  company: CRMCompany;
+  trades: string[];
+  licenseNumber: string | null;
+  bidLimit: number | null;
+  onboardingStatus: string;
+  insuranceExpiry: string | null;
+  scorecard: SubcontractorScorecard;
+}
+
+export interface BidRequestListItem {
+  id: string;
+  projectType: string;
+  generalLocation: string;
+  requiredTrade: string;
+  responseDeadline: string;
+  status: string;
+  invitationCount: number;
+  responseCount: number;
+  createdAt: string;
+}
