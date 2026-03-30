@@ -74,7 +74,10 @@ export const ModelName = {
   Certification: 'Certification',
   OnboardingStep: 'OnboardingStep',
   OnboardingInvite: 'OnboardingInvite',
-  ProjectTeamMember: 'ProjectTeamMember'
+  ProjectTeamMember: 'ProjectTeamMember',
+  ProjectTask: 'ProjectTask',
+  ComplianceFlag: 'ComplianceFlag',
+  ComplianceChatMessage: 'ComplianceChatMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -478,12 +481,71 @@ export const ProjectTeamMemberScalarFieldEnum = {
 export type ProjectTeamMemberScalarFieldEnum = (typeof ProjectTeamMemberScalarFieldEnum)[keyof typeof ProjectTeamMemberScalarFieldEnum]
 
 
+export const ProjectTaskScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  name: 'name',
+  description: 'description',
+  phase: 'phase',
+  position: 'position',
+  durationDays: 'durationDays',
+  startDay: 'startDay',
+  endDay: 'endDay',
+  isMilestoneTask: 'isMilestoneTask',
+  milestoneId: 'milestoneId',
+  isCriticalPath: 'isCriticalPath',
+  status: 'status',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectTaskScalarFieldEnum = (typeof ProjectTaskScalarFieldEnum)[keyof typeof ProjectTaskScalarFieldEnum]
+
+
+export const ComplianceFlagScalarFieldEnum = {
+  id: 'id',
+  projectTaskId: 'projectTaskId',
+  ruleId: 'ruleId',
+  severity: 'severity',
+  title: 'title',
+  citation: 'citation',
+  actionItem: 'actionItem',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  resolvedNote: 'resolvedNote',
+  createdAt: 'createdAt'
+} as const
+
+export type ComplianceFlagScalarFieldEnum = (typeof ComplianceFlagScalarFieldEnum)[keyof typeof ComplianceFlagScalarFieldEnum]
+
+
+export const ComplianceChatMessageScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  sessionId: 'sessionId',
+  role: 'role',
+  content: 'content',
+  citations: 'citations',
+  createdAt: 'createdAt'
+} as const
+
+export type ComplianceChatMessageScalarFieldEnum = (typeof ComplianceChatMessageScalarFieldEnum)[keyof typeof ComplianceChatMessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -500,4 +562,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

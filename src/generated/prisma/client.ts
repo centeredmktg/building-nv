@@ -161,3 +161,18 @@ export type OnboardingInvite = Prisma.OnboardingInviteModel
  * 
  */
 export type ProjectTeamMember = Prisma.ProjectTeamMemberModel
+/**
+ * Model ProjectTask
+ * 
+ */
+export type ProjectTask = Prisma.ProjectTaskModel
+/**
+ * Model ComplianceFlag
+ * 
+ */
+export type ComplianceFlag = Prisma.ComplianceFlagModel
+/**
+ * Model ComplianceChatMessage
+ * 
+ */
+export type ComplianceChatMessage = Prisma.ComplianceChatMessageModel

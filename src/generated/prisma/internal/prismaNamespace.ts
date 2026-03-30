@@ -407,7 +407,10 @@ export const ModelName = {
   Certification: 'Certification',
   OnboardingStep: 'OnboardingStep',
   OnboardingInvite: 'OnboardingInvite',
-  ProjectTeamMember: 'ProjectTeamMember'
+  ProjectTeamMember: 'ProjectTeamMember',
+  ProjectTask: 'ProjectTask',
+  ComplianceFlag: 'ComplianceFlag',
+  ComplianceChatMessage: 'ComplianceChatMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -423,7 +426,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "invoice" | "invoiceMilestone" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember"
+    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "invoice" | "invoiceMilestone" | "project" | "contact" | "company" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember" | "projectTask" | "complianceFlag" | "complianceChatMessage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2203,6 +2206,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProjectTask: {
+      payload: Prisma.$ProjectTaskPayload<ExtArgs>
+      fields: Prisma.ProjectTaskFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectTaskFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectTaskFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectTaskFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectTaskFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectTaskFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectTaskCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectTaskCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectTaskCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectTaskDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>
+        }
+        update: {
+          args: Prisma.ProjectTaskUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectTaskDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectTaskUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectTaskUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectTaskUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectTaskPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectTaskAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectTask>
+        }
+        groupBy: {
+          args: Prisma.ProjectTaskGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectTaskGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectTaskCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectTaskCountAggregateOutputType> | number
+        }
+      }
+    }
+    ComplianceFlag: {
+      payload: Prisma.$ComplianceFlagPayload<ExtArgs>
+      fields: Prisma.ComplianceFlagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ComplianceFlagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ComplianceFlagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>
+        }
+        findFirst: {
+          args: Prisma.ComplianceFlagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ComplianceFlagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>
+        }
+        findMany: {
+          args: Prisma.ComplianceFlagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>[]
+        }
+        create: {
+          args: Prisma.ComplianceFlagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>
+        }
+        createMany: {
+          args: Prisma.ComplianceFlagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ComplianceFlagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>[]
+        }
+        delete: {
+          args: Prisma.ComplianceFlagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>
+        }
+        update: {
+          args: Prisma.ComplianceFlagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>
+        }
+        deleteMany: {
+          args: Prisma.ComplianceFlagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ComplianceFlagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ComplianceFlagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>[]
+        }
+        upsert: {
+          args: Prisma.ComplianceFlagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceFlagPayload>
+        }
+        aggregate: {
+          args: Prisma.ComplianceFlagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateComplianceFlag>
+        }
+        groupBy: {
+          args: Prisma.ComplianceFlagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ComplianceFlagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ComplianceFlagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ComplianceFlagCountAggregateOutputType> | number
+        }
+      }
+    }
+    ComplianceChatMessage: {
+      payload: Prisma.$ComplianceChatMessagePayload<ExtArgs>
+      fields: Prisma.ComplianceChatMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ComplianceChatMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ComplianceChatMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.ComplianceChatMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ComplianceChatMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>
+        }
+        findMany: {
+          args: Prisma.ComplianceChatMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>[]
+        }
+        create: {
+          args: Prisma.ComplianceChatMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>
+        }
+        createMany: {
+          args: Prisma.ComplianceChatMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ComplianceChatMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.ComplianceChatMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>
+        }
+        update: {
+          args: Prisma.ComplianceChatMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.ComplianceChatMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ComplianceChatMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ComplianceChatMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.ComplianceChatMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ComplianceChatMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.ComplianceChatMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateComplianceChatMessage>
+        }
+        groupBy: {
+          args: Prisma.ComplianceChatMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ComplianceChatMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ComplianceChatMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ComplianceChatMessageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2627,12 +2852,71 @@ export const ProjectTeamMemberScalarFieldEnum = {
 export type ProjectTeamMemberScalarFieldEnum = (typeof ProjectTeamMemberScalarFieldEnum)[keyof typeof ProjectTeamMemberScalarFieldEnum]
 
 
+export const ProjectTaskScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  name: 'name',
+  description: 'description',
+  phase: 'phase',
+  position: 'position',
+  durationDays: 'durationDays',
+  startDay: 'startDay',
+  endDay: 'endDay',
+  isMilestoneTask: 'isMilestoneTask',
+  milestoneId: 'milestoneId',
+  isCriticalPath: 'isCriticalPath',
+  status: 'status',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectTaskScalarFieldEnum = (typeof ProjectTaskScalarFieldEnum)[keyof typeof ProjectTaskScalarFieldEnum]
+
+
+export const ComplianceFlagScalarFieldEnum = {
+  id: 'id',
+  projectTaskId: 'projectTaskId',
+  ruleId: 'ruleId',
+  severity: 'severity',
+  title: 'title',
+  citation: 'citation',
+  actionItem: 'actionItem',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  resolvedNote: 'resolvedNote',
+  createdAt: 'createdAt'
+} as const
+
+export type ComplianceFlagScalarFieldEnum = (typeof ComplianceFlagScalarFieldEnum)[keyof typeof ComplianceFlagScalarFieldEnum]
+
+
+export const ComplianceChatMessageScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  sessionId: 'sessionId',
+  role: 'role',
+  content: 'content',
+  citations: 'citations',
+  createdAt: 'createdAt'
+} as const
+
+export type ComplianceChatMessageScalarFieldEnum = (typeof ComplianceChatMessageScalarFieldEnum)[keyof typeof ComplianceChatMessageScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -2649,6 +2933,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2717,6 +3010,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -2838,6 +3145,9 @@ export type GlobalOmitConfig = {
   onboardingStep?: Prisma.OnboardingStepOmit
   onboardingInvite?: Prisma.OnboardingInviteOmit
   projectTeamMember?: Prisma.ProjectTeamMemberOmit
+  projectTask?: Prisma.ProjectTaskOmit
+  complianceFlag?: Prisma.ComplianceFlagOmit
+  complianceChatMessage?: Prisma.ComplianceChatMessageOmit
 }
 
 /* Types for Logging */
