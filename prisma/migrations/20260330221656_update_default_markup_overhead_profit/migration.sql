@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Quote" ALTER COLUMN "materialMarkupPct" SET DEFAULT 20,
+ALTER COLUMN "overheadPct" SET DEFAULT 15,
+ALTER COLUMN "profitPct" SET DEFAULT 12;

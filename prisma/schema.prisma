@@ -17,9 +17,9 @@ model Quote {
   projectType       String
   status            String          @default("draft") // draft | sent | quote_signed
   scopeText         String?
-  materialMarkupPct Float           @default(10)
-  overheadPct       Float           @default(10)
-  profitPct         Float           @default(10)
+  materialMarkupPct Float           @default(20)
+  overheadPct       Float           @default(15)
+  profitPct         Float           @default(12)
   paymentTerms      String          @default("10% due at signing. 25% due after materials purchased. Balance due net 30.")
   exclusions        String          @default("Plans. Permit fees. Any work not specifically described above. All valuables and personal property to be removed from work areas prior to work.")
   notes             String?

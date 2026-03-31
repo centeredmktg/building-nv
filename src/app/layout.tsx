@@ -27,6 +27,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          defer
+          src="https://umami-production-9b943.up.railway.app/script.js"
+          data-website-id="dce9c2df-07f1-4d9f-ba7b-cda861eeb739"
+        />
+      </head>
       <body className="font-sans bg-bg text-text-primary antialiased">
         <Providers>{children}</Providers>
       </body>
