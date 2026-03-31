@@ -46,3 +46,6 @@ next-env.d.ts
 # git worktrees
 .worktrees/
 docs-storage/
+
+# planset ingestion pipeline
+scripts/planset-ingestion/output/
