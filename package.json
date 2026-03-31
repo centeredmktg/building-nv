@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "jest"
+    "test": "jest",
+    "ingest:split": "tsx scripts/planset-ingestion/split-pdf.ts",
+    "ingest:extract": "tsx scripts/planset-ingestion/extract-planset.ts",
+    "ingest:seed": "tsx scripts/planset-ingestion/seed-from-extraction.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
