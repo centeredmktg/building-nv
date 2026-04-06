@@ -3003,6 +3003,7 @@ export const QuoteScalarFieldEnum = {
   materialMarkupPct: 'materialMarkupPct',
   overheadPct: 'overheadPct',
   profitPct: 'profitPct',
+  paddingPct: 'paddingPct',
   paymentTerms: 'paymentTerms',
   exclusions: 'exclusions',
   notes: 'notes',

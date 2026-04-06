@@ -39,6 +39,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       materialMarkupPct: body.materialMarkupPct,
       overheadPct: body.overheadPct,
       profitPct: body.profitPct,
+      paddingPct: body.paddingPct,
       paymentTerms: body.paymentTerms,
       exclusions: body.exclusions,
       notes: body.notes,

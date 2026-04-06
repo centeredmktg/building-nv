@@ -30,12 +30,14 @@ export type QuoteAvgAggregateOutputType = {
   materialMarkupPct: number | null
   overheadPct: number | null
   profitPct: number | null
+  paddingPct: number | null
 }
 
 export type QuoteSumAggregateOutputType = {
   materialMarkupPct: number | null
   overheadPct: number | null
   profitPct: number | null
+  paddingPct: number | null
 }
 
 export type QuoteMinAggregateOutputType = {
@@ -49,6 +51,7 @@ export type QuoteMinAggregateOutputType = {
   materialMarkupPct: number | null
   overheadPct: number | null
   profitPct: number | null
+  paddingPct: number | null
   paymentTerms: string | null
   exclusions: string | null
   notes: string | null
@@ -75,6 +78,7 @@ export type QuoteMaxAggregateOutputType = {
   materialMarkupPct: number | null
   overheadPct: number | null
   profitPct: number | null
+  paddingPct: number | null
   paymentTerms: string | null
   exclusions: string | null
   notes: string | null
@@ -101,6 +105,7 @@ export type QuoteCountAggregateOutputType = {
   materialMarkupPct: number
   overheadPct: number
   profitPct: number
+  paddingPct: number
   paymentTerms: number
   exclusions: number
   notes: number
@@ -122,12 +127,14 @@ export type QuoteAvgAggregateInputType = {
   materialMarkupPct?: true
   overheadPct?: true
   profitPct?: true
+  paddingPct?: true
 }
 
 export type QuoteSumAggregateInputType = {
   materialMarkupPct?: true
   overheadPct?: true
   profitPct?: true
+  paddingPct?: true
 }
 
 export type QuoteMinAggregateInputType = {
@@ -141,6 +148,7 @@ export type QuoteMinAggregateInputType = {
   materialMarkupPct?: true
   overheadPct?: true
   profitPct?: true
+  paddingPct?: true
   paymentTerms?: true
   exclusions?: true
   notes?: true
@@ -167,6 +175,7 @@ export type QuoteMaxAggregateInputType = {
   materialMarkupPct?: true
   overheadPct?: true
   profitPct?: true
+  paddingPct?: true
   paymentTerms?: true
   exclusions?: true
   notes?: true
@@ -193,6 +202,7 @@ export type QuoteCountAggregateInputType = {
   materialMarkupPct?: true
   overheadPct?: true
   profitPct?: true
+  paddingPct?: true
   paymentTerms?: true
   exclusions?: true
   notes?: true
@@ -306,6 +316,7 @@ export type QuoteGroupByOutputType = {
   materialMarkupPct: number
   overheadPct: number
   profitPct: number
+  paddingPct: number
   paymentTerms: string
   exclusions: string
   notes: string | null
@@ -355,6 +366,7 @@ export type QuoteWhereInput = {
   materialMarkupPct?: Prisma.FloatFilter<"Quote"> | number
   overheadPct?: Prisma.FloatFilter<"Quote"> | number
   profitPct?: Prisma.FloatFilter<"Quote"> | number
+  paddingPct?: Prisma.FloatFilter<"Quote"> | number
   paymentTerms?: Prisma.StringFilter<"Quote"> | string
   exclusions?: Prisma.StringFilter<"Quote"> | string
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
@@ -389,6 +401,7 @@ export type QuoteOrderByWithRelationInput = {
   materialMarkupPct?: Prisma.SortOrder
   overheadPct?: Prisma.SortOrder
   profitPct?: Prisma.SortOrder
+  paddingPct?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -427,6 +440,7 @@ export type QuoteWhereUniqueInput = Prisma.AtLeast<{
   materialMarkupPct?: Prisma.FloatFilter<"Quote"> | number
   overheadPct?: Prisma.FloatFilter<"Quote"> | number
   profitPct?: Prisma.FloatFilter<"Quote"> | number
+  paddingPct?: Prisma.FloatFilter<"Quote"> | number
   paymentTerms?: Prisma.StringFilter<"Quote"> | string
   exclusions?: Prisma.StringFilter<"Quote"> | string
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
@@ -460,6 +474,7 @@ export type QuoteOrderByWithAggregationInput = {
   materialMarkupPct?: Prisma.SortOrder
   overheadPct?: Prisma.SortOrder
   profitPct?: Prisma.SortOrder
+  paddingPct?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -494,6 +509,7 @@ export type QuoteScalarWhereWithAggregatesInput = {
   materialMarkupPct?: Prisma.FloatWithAggregatesFilter<"Quote"> | number
   overheadPct?: Prisma.FloatWithAggregatesFilter<"Quote"> | number
   profitPct?: Prisma.FloatWithAggregatesFilter<"Quote"> | number
+  paddingPct?: Prisma.FloatWithAggregatesFilter<"Quote"> | number
   paymentTerms?: Prisma.StringWithAggregatesFilter<"Quote"> | string
   exclusions?: Prisma.StringWithAggregatesFilter<"Quote"> | string
   notes?: Prisma.StringNullableWithAggregatesFilter<"Quote"> | string | null
@@ -520,6 +536,7 @@ export type QuoteCreateInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -553,6 +570,7 @@ export type QuoteUncheckedCreateInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -586,6 +604,7 @@ export type QuoteUpdateInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -619,6 +638,7 @@ export type QuoteUncheckedUpdateInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -652,6 +672,7 @@ export type QuoteCreateManyInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -678,6 +699,7 @@ export type QuoteUpdateManyMutationInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -703,6 +725,7 @@ export type QuoteUncheckedUpdateManyInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -729,6 +752,7 @@ export type QuoteCountOrderByAggregateInput = {
   materialMarkupPct?: Prisma.SortOrder
   overheadPct?: Prisma.SortOrder
   profitPct?: Prisma.SortOrder
+  paddingPct?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -748,6 +772,7 @@ export type QuoteAvgOrderByAggregateInput = {
   materialMarkupPct?: Prisma.SortOrder
   overheadPct?: Prisma.SortOrder
   profitPct?: Prisma.SortOrder
+  paddingPct?: Prisma.SortOrder
 }
 
 export type QuoteMaxOrderByAggregateInput = {
@@ -761,6 +786,7 @@ export type QuoteMaxOrderByAggregateInput = {
   materialMarkupPct?: Prisma.SortOrder
   overheadPct?: Prisma.SortOrder
   profitPct?: Prisma.SortOrder
+  paddingPct?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -787,6 +813,7 @@ export type QuoteMinOrderByAggregateInput = {
   materialMarkupPct?: Prisma.SortOrder
   overheadPct?: Prisma.SortOrder
   profitPct?: Prisma.SortOrder
+  paddingPct?: Prisma.SortOrder
   paymentTerms?: Prisma.SortOrder
   exclusions?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -806,6 +833,7 @@ export type QuoteSumOrderByAggregateInput = {
   materialMarkupPct?: Prisma.SortOrder
   overheadPct?: Prisma.SortOrder
   profitPct?: Prisma.SortOrder
+  paddingPct?: Prisma.SortOrder
 }
 
 export type QuoteScalarRelationFilter = {
@@ -998,6 +1026,7 @@ export type QuoteCreateWithoutMilestonesInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1030,6 +1059,7 @@ export type QuoteUncheckedCreateWithoutMilestonesInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1078,6 +1108,7 @@ export type QuoteUpdateWithoutMilestonesInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1110,6 +1141,7 @@ export type QuoteUncheckedUpdateWithoutMilestonesInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1142,6 +1174,7 @@ export type QuoteCreateWithoutSectionsInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1174,6 +1207,7 @@ export type QuoteUncheckedCreateWithoutSectionsInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1222,6 +1256,7 @@ export type QuoteUpdateWithoutSectionsInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1254,6 +1289,7 @@ export type QuoteUncheckedUpdateWithoutSectionsInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1286,6 +1322,7 @@ export type QuoteCreateWithoutAcceptanceInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1318,6 +1355,7 @@ export type QuoteUncheckedCreateWithoutAcceptanceInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1366,6 +1404,7 @@ export type QuoteUpdateWithoutAcceptanceInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1398,6 +1437,7 @@ export type QuoteUncheckedUpdateWithoutAcceptanceInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1430,6 +1470,7 @@ export type QuoteCreateWithoutContractInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1462,6 +1503,7 @@ export type QuoteUncheckedCreateWithoutContractInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1510,6 +1552,7 @@ export type QuoteUpdateWithoutContractInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1542,6 +1585,7 @@ export type QuoteUncheckedUpdateWithoutContractInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1574,6 +1618,7 @@ export type QuoteCreateWithoutProjectInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1606,6 +1651,7 @@ export type QuoteUncheckedCreateWithoutProjectInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1667,6 +1713,7 @@ export type QuoteScalarWhereInput = {
   materialMarkupPct?: Prisma.FloatFilter<"Quote"> | number
   overheadPct?: Prisma.FloatFilter<"Quote"> | number
   profitPct?: Prisma.FloatFilter<"Quote"> | number
+  paddingPct?: Prisma.FloatFilter<"Quote"> | number
   paymentTerms?: Prisma.StringFilter<"Quote"> | string
   exclusions?: Prisma.StringFilter<"Quote"> | string
   notes?: Prisma.StringNullableFilter<"Quote"> | string | null
@@ -1693,6 +1740,7 @@ export type QuoteCreateWithoutBidRequestsInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1725,6 +1773,7 @@ export type QuoteUncheckedCreateWithoutBidRequestsInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1773,6 +1822,7 @@ export type QuoteUpdateWithoutBidRequestsInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1805,6 +1855,7 @@ export type QuoteUncheckedUpdateWithoutBidRequestsInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1837,6 +1888,7 @@ export type QuoteCreateWithoutQuoteContactsInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1869,6 +1921,7 @@ export type QuoteUncheckedCreateWithoutQuoteContactsInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -1917,6 +1970,7 @@ export type QuoteUpdateWithoutQuoteContactsInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1949,6 +2003,7 @@ export type QuoteUncheckedUpdateWithoutQuoteContactsInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1981,6 +2036,7 @@ export type QuoteCreateWithoutQuoteCompaniesInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -2013,6 +2069,7 @@ export type QuoteUncheckedCreateWithoutQuoteCompaniesInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -2061,6 +2118,7 @@ export type QuoteUpdateWithoutQuoteCompaniesInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2093,6 +2151,7 @@ export type QuoteUncheckedUpdateWithoutQuoteCompaniesInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2125,6 +2184,7 @@ export type QuoteCreateManyProjectInput = {
   materialMarkupPct?: number
   overheadPct?: number
   profitPct?: number
+  paddingPct?: number
   paymentTerms?: string
   exclusions?: string
   notes?: string | null
@@ -2150,6 +2210,7 @@ export type QuoteUpdateWithoutProjectInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2182,6 +2243,7 @@ export type QuoteUncheckedUpdateWithoutProjectInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2214,6 +2276,7 @@ export type QuoteUncheckedUpdateManyWithoutProjectInput = {
   materialMarkupPct?: Prisma.FloatFieldUpdateOperationsInput | number
   overheadPct?: Prisma.FloatFieldUpdateOperationsInput | number
   profitPct?: Prisma.FloatFieldUpdateOperationsInput | number
+  paddingPct?: Prisma.FloatFieldUpdateOperationsInput | number
   paymentTerms?: Prisma.StringFieldUpdateOperationsInput | string
   exclusions?: Prisma.StringFieldUpdateOperationsInput | string
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2306,6 +2369,7 @@ export type QuoteSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   materialMarkupPct?: boolean
   overheadPct?: boolean
   profitPct?: boolean
+  paddingPct?: boolean
   paymentTerms?: boolean
   exclusions?: boolean
   notes?: boolean
@@ -2341,6 +2405,7 @@ export type QuoteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   materialMarkupPct?: boolean
   overheadPct?: boolean
   profitPct?: boolean
+  paddingPct?: boolean
   paymentTerms?: boolean
   exclusions?: boolean
   notes?: boolean
@@ -2368,6 +2433,7 @@ export type QuoteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   materialMarkupPct?: boolean
   overheadPct?: boolean
   profitPct?: boolean
+  paddingPct?: boolean
   paymentTerms?: boolean
   exclusions?: boolean
   notes?: boolean
@@ -2395,6 +2461,7 @@ export type QuoteSelectScalar = {
   materialMarkupPct?: boolean
   overheadPct?: boolean
   profitPct?: boolean
+  paddingPct?: boolean
   paymentTerms?: boolean
   exclusions?: boolean
   notes?: boolean
@@ -2410,7 +2477,7 @@ export type QuoteSelectScalar = {
   estimatedStartDate?: boolean
 }
 
-export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "address" | "projectType" | "status" | "scopeText" | "materialMarkupPct" | "overheadPct" | "profitPct" | "paymentTerms" | "exclusions" | "notes" | "projectId" | "signingToken" | "signingTokenExpiresAt" | "signedAt" | "signedPdfPath" | "createdAt" | "updatedAt" | "sentAt" | "estimatedDuration" | "estimatedStartDate", ExtArgs["result"]["quote"]>
+export type QuoteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "address" | "projectType" | "status" | "scopeText" | "materialMarkupPct" | "overheadPct" | "profitPct" | "paddingPct" | "paymentTerms" | "exclusions" | "notes" | "projectId" | "signingToken" | "signingTokenExpiresAt" | "signedAt" | "signedPdfPath" | "createdAt" | "updatedAt" | "sentAt" | "estimatedDuration" | "estimatedStartDate", ExtArgs["result"]["quote"]>
 export type QuoteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   quoteContacts?: boolean | Prisma.Quote$quoteContactsArgs<ExtArgs>
   quoteCompanies?: boolean | Prisma.Quote$quoteCompaniesArgs<ExtArgs>
@@ -2452,6 +2519,7 @@ export type $QuotePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     materialMarkupPct: number
     overheadPct: number
     profitPct: number
+    paddingPct: number
     paymentTerms: string
     exclusions: string
     notes: string | null
@@ -2906,6 +2974,7 @@ export interface QuoteFieldRefs {
   readonly materialMarkupPct: Prisma.FieldRef<"Quote", 'Float'>
   readonly overheadPct: Prisma.FieldRef<"Quote", 'Float'>
   readonly profitPct: Prisma.FieldRef<"Quote", 'Float'>
+  readonly paddingPct: Prisma.FieldRef<"Quote", 'Float'>
   readonly paymentTerms: Prisma.FieldRef<"Quote", 'String'>
   readonly exclusions: Prisma.FieldRef<"Quote", 'String'>
   readonly notes: Prisma.FieldRef<"Quote", 'String'>

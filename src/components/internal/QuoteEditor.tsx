@@ -68,6 +68,7 @@ interface Quote {
   materialMarkupPct: number;
   overheadPct: number;
   profitPct: number;
+  paddingPct: number;
   paymentTerms: string;
   exclusions: string;
   notes: string;
@@ -325,6 +326,51 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
       <div className="xl:col-span-1">
         <div className="border border-border rounded-sm p-4 sticky top-6">
           <h2 className="text-text-primary font-semibold text-sm mb-4">Quote Summary</h2>
+
+          {/* Padding — hidden markup baked into unit prices */}
+          <div className="bg-surface-2 rounded px-3 py-2.5 mb-4">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-text-muted text-xs font-medium uppercase tracking-wide">Padding</span>
+              {quote.paddingPct > 0 && (
+                <span className="text-[10px] text-amber-400">Applied: {quote.paddingPct}%</span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                id="padding-input"
+                defaultValue=""
+                placeholder="0"
+                step="0.5"
+                className="w-16 bg-surface border border-border rounded px-2 py-1 text-sm text-text-primary text-right focus:outline-none focus:border-accent"
+              />
+              <span className="text-text-muted text-xs">%</span>
+              <button
+                onClick={() => {
+                  const input = document.getElementById("padding-input") as HTMLInputElement;
+                  const pct = parseFloat(input.value);
+                  if (!pct || pct === 0) return;
+                  if (!confirm(`Apply ${pct}% padding to all unit prices? This will multiply every price by ${(1 + pct / 100).toFixed(4)}.`)) return;
+                  setQuote((q) => ({
+                    ...q,
+                    paddingPct: pct,
+                    sections: q.sections.map((s) => ({
+                      ...s,
+                      items: s.items.map((item) => ({
+                        ...item,
+                        unitPrice: Math.round(item.unitPrice * (1 + pct / 100) * 100) / 100,
+                      })),
+                    })),
+                  }));
+                  input.value = "";
+                }}
+                className="text-xs text-accent hover:text-accent/80 font-medium transition-colors"
+              >
+                Apply
+              </button>
+            </div>
+            <p className="text-[10px] text-text-muted mt-1.5">Multiplies all unit prices. Not shown on invoice.</p>
+          </div>
 
           <div className="flex flex-col gap-3 text-sm mb-4">
             <div className="flex justify-between">
