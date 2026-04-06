@@ -33,64 +33,71 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const { id } = await params;
   const body = await req.json();
 
-  const quote = await prisma.quote.update({
-    where: { id },
-    data: {
-      materialMarkupPct: body.materialMarkupPct,
-      overheadPct: body.overheadPct,
-      profitPct: body.profitPct,
-      paddingPct: body.paddingPct,
-      paymentTerms: body.paymentTerms,
-      exclusions: body.exclusions,
-      notes: body.notes,
-      status: body.status,
-      sentAt: body.status === "sent" ? new Date() : undefined,
-      estimatedStartDate: body.estimatedStartDate ? new Date(body.estimatedStartDate) : undefined,
-      estimatedDuration: body.estimatedDuration ?? undefined,
-    },
-  });
-
-  if (body.sections) {
-    await prisma.lineItemSection.deleteMany({ where: { quoteId: id } });
-
-    for (let si = 0; si < body.sections.length; si++) {
-      const sec = body.sections[si];
-      const section = await prisma.lineItemSection.create({
-        data: { quoteId: id, title: sec.title, position: si },
-      });
-      for (let li = 0; li < sec.items.length; li++) {
-        const item = sec.items[li];
-        await prisma.lineItem.create({
-          data: {
-            sectionId: section.id,
-            description: item.description,
-            quantity: item.quantity,
-            unit: item.unit,
-            unitPrice: item.unitPrice,
-            isMaterial: item.isMaterial ?? false,
-            position: li,
-          },
-        });
-      }
-    }
-  }
-
-  if (body.milestones) {
-    await prisma.quoteMilestone.deleteMany({ where: { quoteId: id } });
-    for (let i = 0; i < body.milestones.length; i++) {
-      const m = body.milestones[i];
-      await prisma.quoteMilestone.create({
+  try {
+    await prisma.$transaction(async (tx) => {
+      await tx.quote.update({
+        where: { id },
         data: {
-          quoteId: id,
-          name: m.name,
-          weekNumber: m.weekNumber,
-          duration: m.duration ?? null,
-          paymentPct: m.paymentPct ?? null,
-          paymentLabel: m.paymentLabel ?? null,
-          position: i,
+          materialMarkupPct: body.materialMarkupPct,
+          overheadPct: body.overheadPct,
+          profitPct: body.profitPct,
+          paddingPct: body.paddingPct,
+          paymentTerms: body.paymentTerms,
+          exclusions: body.exclusions,
+          notes: body.notes,
+          status: body.status,
+          sentAt: body.status === "sent" ? new Date() : undefined,
+          estimatedStartDate: body.estimatedStartDate ? new Date(body.estimatedStartDate) : undefined,
+          estimatedDuration: body.estimatedDuration ?? undefined,
         },
       });
-    }
+
+      if (body.sections) {
+        await tx.lineItemSection.deleteMany({ where: { quoteId: id } });
+
+        for (let si = 0; si < body.sections.length; si++) {
+          const sec = body.sections[si];
+          const section = await tx.lineItemSection.create({
+            data: { quoteId: id, title: sec.title, position: si },
+          });
+          for (let li = 0; li < sec.items.length; li++) {
+            const item = sec.items[li];
+            await tx.lineItem.create({
+              data: {
+                sectionId: section.id,
+                description: item.description,
+                quantity: item.quantity,
+                unit: item.unit,
+                unitPrice: item.unitPrice,
+                isMaterial: item.isMaterial ?? false,
+                position: li,
+              },
+            });
+          }
+        }
+      }
+
+      if (body.milestones) {
+        await tx.quoteMilestone.deleteMany({ where: { quoteId: id } });
+        for (let i = 0; i < body.milestones.length; i++) {
+          const m = body.milestones[i];
+          await tx.quoteMilestone.create({
+            data: {
+              quoteId: id,
+              name: m.name,
+              weekNumber: m.weekNumber,
+              duration: m.duration ?? null,
+              paymentPct: m.paymentPct ?? null,
+              paymentLabel: m.paymentLabel ?? null,
+              position: i,
+            },
+          });
+        }
+      }
+    }, { timeout: 30000 });
+  } catch (err) {
+    console.error("Quote save failed:", err);
+    return NextResponse.json({ error: "Save failed — no changes were applied" }, { status: 500 });
   }
 
   const updated = await prisma.quote.findUnique({

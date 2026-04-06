@@ -181,14 +181,24 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
 
   const save = useCallback(async () => {
     setSaving(true);
-    await fetch(`/api/quotes/${quote.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(quote),
-    });
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    try {
+      const res = await fetch(`/api/quotes/${quote.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(quote),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        alert(data.error ?? "Save failed — please try again");
+        return;
+      }
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      alert("Network error — save failed. Check your connection.");
+    } finally {
+      setSaving(false);
+    }
   }, [quote]);
 
   const sendForSignature = async () => {
@@ -234,6 +244,10 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
             <a href={`/proposals/${quote.slug}`} target="_blank"
               className="border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors">
               Preview
+            </a>
+            <a href={`/proposals/${quote.slug}/summary`} target="_blank"
+              className="border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors">
+              Summary
             </a>
             {quote.status === 'draft' || quote.status === 'sent' ? (
               <button
