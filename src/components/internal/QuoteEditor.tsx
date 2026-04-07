@@ -123,6 +123,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [sending, setSending] = useState(false);
+  const [collapsed, setCollapsed] = useState<Set<number>>(new Set());
 
   const allItems = quote.sections.flatMap((s) => s.items);
   const totals = calculateQuoteTotals(
@@ -172,6 +173,34 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
       ...q,
       sections: [...q.sections, { title: "New Section", items: [] }],
     }));
+  };
+
+  const toggleCollapse = (si: number) => {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      next.has(si) ? next.delete(si) : next.add(si);
+      return next;
+    });
+  };
+
+  const moveSection = (si: number, direction: -1 | 1) => {
+    const target = si + direction;
+    if (target < 0 || target >= quote.sections.length) return;
+    setQuote((q) => {
+      const sections = [...q.sections];
+      [sections[si], sections[target]] = [sections[target], sections[si]];
+      return { ...q, sections };
+    });
+    // Update collapsed indices to follow the moved sections
+    setCollapsed((prev) => {
+      const next = new Set<number>();
+      for (const idx of prev) {
+        if (idx === si) next.add(target);
+        else if (idx === target) next.add(si);
+        else next.add(idx);
+      }
+      return next;
+    });
   };
 
   const updateMilestone = (idx: number, field: keyof Milestone, value: string | number | null) => {
@@ -294,9 +323,18 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
         </div>
 
         <div className="flex flex-col gap-4">
-          {quote.sections.map((sec, si) => (
+          {quote.sections.map((sec, si) => {
+            const sectionSubtotal = sec.items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
+            const isCollapsed = collapsed.has(si);
+            return (
             <div key={si} className="border border-border rounded-sm">
               <div className="flex items-center gap-2 px-3 py-2 border-b border-border bg-surface">
+                <button
+                  onClick={() => toggleCollapse(si)}
+                  className="text-text-muted hover:text-text-primary transition-colors text-xs w-4 shrink-0"
+                >
+                  {isCollapsed ? "▶" : "▼"}
+                </button>
                 <input
                   value={sec.title}
                   onChange={(e) => setQuote((q) => ({
@@ -305,49 +343,74 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                   }))}
                   className="bg-transparent text-text-primary font-medium text-sm focus:outline-none flex-1"
                 />
+                <span className="text-text-muted text-xs tabular-nums shrink-0">
+                  {sec.items.length} item{sec.items.length !== 1 ? "s" : ""}
+                </span>
+                <span className="text-text-primary text-sm font-medium tabular-nums shrink-0">
+                  ${sectionSubtotal.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </span>
+                <div className="flex items-center gap-0.5 shrink-0 ml-1">
+                  <button
+                    onClick={() => moveSection(si, -1)}
+                    disabled={si === 0}
+                    className="text-text-muted hover:text-text-primary disabled:opacity-20 text-xs px-0.5 transition-colors"
+                    title="Move up"
+                  >↑</button>
+                  <button
+                    onClick={() => moveSection(si, 1)}
+                    disabled={si === quote.sections.length - 1}
+                    className="text-text-muted hover:text-text-primary disabled:opacity-20 text-xs px-0.5 transition-colors"
+                    title="Move down"
+                  >↓</button>
+                </div>
               </div>
-              <div className="divide-y divide-border">
-                {sec.items.map((item, ii) => (
-                  <div key={ii} className="grid grid-cols-12 gap-2 px-3 py-2 items-center group">
-                    <div className="col-span-5">
-                      <input value={item.description}
-                        onChange={(e) => updateItem(si, ii, "description", e.target.value)}
-                        className={inputClass} placeholder="Description" />
-                    </div>
-                    <div className="col-span-1">
-                      <input type="number" value={item.quantity}
-                        onChange={(e) => updateItem(si, ii, "quantity", parseFloat(e.target.value) || 0)}
-                        className={`${inputClass} text-right`} />
-                    </div>
-                    <div className="col-span-1">
-                      <select value={item.unit}
-                        onChange={(e) => updateItem(si, ii, "unit", e.target.value)}
-                        className="bg-surface border border-border rounded px-1 py-1 text-sm text-text-primary focus:outline-none focus:border-accent w-full">
-                        {UNITS.map((u) => <option key={u}>{u}</option>)}
-                      </select>
-                    </div>
-                    <div className="col-span-2 flex items-center">
-                      <span className="text-text-muted text-sm mr-0.5 select-none">$</span>
-                      <input type="number" value={item.unitPrice}
-                        onChange={(e) => updateItem(si, ii, "unitPrice", parseFloat(e.target.value) || 0)}
-                        className={`${inputClass} text-right flex-1`} />
-                    </div>
-                    <div className="col-span-2 text-right text-sm text-text-primary font-medium pr-2">
-                      ${(item.quantity * item.unitPrice).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </div>
-                    <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => removeItem(si, ii)}
-                        className="text-text-muted hover:text-red-400 text-xs px-1">✕</button>
-                    </div>
+              {!isCollapsed && (
+                <>
+                  <div className="divide-y divide-border">
+                    {sec.items.map((item, ii) => (
+                      <div key={ii} className="grid grid-cols-12 gap-2 px-3 py-2 items-center group">
+                        <div className="col-span-5">
+                          <input value={item.description}
+                            onChange={(e) => updateItem(si, ii, "description", e.target.value)}
+                            className={inputClass} placeholder="Description" />
+                        </div>
+                        <div className="col-span-1">
+                          <input type="number" value={item.quantity}
+                            onChange={(e) => updateItem(si, ii, "quantity", parseFloat(e.target.value) || 0)}
+                            className={`${inputClass} text-right`} />
+                        </div>
+                        <div className="col-span-1">
+                          <select value={item.unit}
+                            onChange={(e) => updateItem(si, ii, "unit", e.target.value)}
+                            className="bg-surface border border-border rounded px-1 py-1 text-sm text-text-primary focus:outline-none focus:border-accent w-full">
+                            {UNITS.map((u) => <option key={u}>{u}</option>)}
+                          </select>
+                        </div>
+                        <div className="col-span-2 flex items-center">
+                          <span className="text-text-muted text-sm mr-0.5 select-none">$</span>
+                          <input type="number" value={item.unitPrice}
+                            onChange={(e) => updateItem(si, ii, "unitPrice", parseFloat(e.target.value) || 0)}
+                            className={`${inputClass} text-right flex-1`} />
+                        </div>
+                        <div className="col-span-2 text-right text-sm text-text-primary font-medium pr-2">
+                          ${(item.quantity * item.unitPrice).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </div>
+                        <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button onClick={() => removeItem(si, ii)}
+                            className="text-text-muted hover:text-red-400 text-xs px-1">✕</button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-              <button onClick={() => addItem(si)}
-                className="w-full py-2 text-xs text-text-muted hover:text-accent transition-colors border-t border-border">
-                + Add Line Item
-              </button>
+                  <button onClick={() => addItem(si)}
+                    className="w-full py-2 text-xs text-text-muted hover:text-accent transition-colors border-t border-border">
+                    + Add Line Item
+                  </button>
+                </>
+              )}
             </div>
-          ))}
+            );
+          })}
           <button onClick={addSection}
             className="border border-dashed border-border rounded-sm py-3 text-sm text-text-muted hover:border-accent hover:text-accent transition-colors">
             + Add Section

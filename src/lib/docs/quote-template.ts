@@ -54,7 +54,7 @@ export function renderQuoteHtml(quote: QuoteWithRelations): string {
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid #e0e0e0;">
     <div>
       <h1>Building NV</h1>
-      <p style="color:#666;font-size:13px;margin:4px 0 0;">Commercial Tenant Improvement · Reno, Nevada</p>
+      <p style="color:#666;font-size:13px;margin:4px 0 0;">${esc(quote.projectType)} · Reno, Nevada</p>
     </div>
     <div style="text-align:right;">
       <p style="font-size:18px;font-weight:bold;margin:0;">PROPOSAL</p>

@@ -85,7 +85,7 @@ export default async function ProposalSummaryPage({ params }: { params: Promise<
                 Building NV
               </h1>
               <p className="text-[#8A9BB0] text-sm mt-0.5">
-                Commercial Tenant Improvement &middot; Reno, Nevada
+                {quote.projectType} &middot; Reno, Nevada
               </p>
             </div>
             <div className="text-right">
