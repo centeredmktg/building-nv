@@ -26,6 +26,25 @@ const SECTION_DEFAULT_UNITS: Record<string, string> = {
   "finish carpentry": "LF",
 };
 
+const PAYMENT_TERM_PRESETS = [
+  {
+    label: "Commercial TI — deposit + materials + balance",
+    text: "10% due at signing. 25% due after materials purchased. Balance due net 30.",
+  },
+  {
+    label: "Progress billing — deposit + weekly draws",
+    text: "10% deposit due at signing. Balance billed weekly against verified progress. All invoices due net 7.",
+  },
+  {
+    label: "Progress billing + escrow option",
+    text: "10% deposit due at signing. Balance billed weekly against verified progress. All invoices due net 7. Building control escrow available at additional cost.",
+  },
+  {
+    label: "Milestone draws",
+    text: "Payments due per milestone schedule above. Each draw invoiced upon phase completion and due net 10.",
+  },
+];
+
 function defaultUnitForSection(title: string): string {
   const key = title.toLowerCase().trim();
   for (const [section, unit] of Object.entries(SECTION_DEFAULT_UNITS)) {
@@ -338,7 +357,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
 
       {/* Summary panel — 1 col */}
       <div className="xl:col-span-1">
-        <div className="border border-border rounded-sm p-4 sticky top-6">
+        <div className="border border-border rounded-sm p-4 sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto">
           <h2 className="text-text-primary font-semibold text-sm mb-4">Quote Summary</h2>
 
           {/* Padding — hidden markup baked into unit prices */}
@@ -434,7 +453,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                 <label className="text-text-muted text-xs mb-1 block">Est. Start Date</label>
                 <input
                   type="date"
-                  value={quote.estimatedStartDate?.split("T")[0] ?? ""}
+                  value={quote.estimatedStartDate ? new Date(quote.estimatedStartDate).toISOString().split("T")[0] : ""}
                   onChange={(e) =>
                     setQuote((q) => ({ ...q, estimatedStartDate: e.target.value || null }))
                   }
@@ -518,7 +537,67 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
             })()}
           </div>
 
-          <div className="border-t border-border pt-4 flex flex-col gap-2">
+          {/* Payment Terms */}
+          <div className="border-t border-border pt-4 mt-4">
+            <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest mb-3">
+              Payment Terms
+            </h3>
+            <select
+              value={
+                PAYMENT_TERM_PRESETS.find((p) => p.text === quote.paymentTerms)
+                  ? quote.paymentTerms
+                  : "__custom"
+              }
+              onChange={(e) => {
+                if (e.target.value !== "__custom") {
+                  setQuote((q) => ({ ...q, paymentTerms: e.target.value }));
+                }
+              }}
+              className="w-full bg-surface border border-border rounded px-2 py-1.5 text-xs text-text-primary focus:outline-none focus:border-accent mb-2"
+            >
+              {PAYMENT_TERM_PRESETS.map((p) => (
+                <option key={p.label} value={p.text}>{p.label}</option>
+              ))}
+              {!PAYMENT_TERM_PRESETS.find((p) => p.text === quote.paymentTerms) && (
+                <option value="__custom">Custom</option>
+              )}
+            </select>
+            <textarea
+              value={quote.paymentTerms}
+              onChange={(e) => setQuote((q) => ({ ...q, paymentTerms: e.target.value }))}
+              rows={3}
+              className="w-full bg-surface border border-border rounded px-2 py-1.5 text-xs text-text-primary focus:outline-none focus:border-accent resize-none"
+            />
+          </div>
+
+          {/* Exclusions */}
+          <div className="border-t border-border pt-4 mt-4">
+            <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest mb-3">
+              Exclusions
+            </h3>
+            <textarea
+              value={quote.exclusions}
+              onChange={(e) => setQuote((q) => ({ ...q, exclusions: e.target.value }))}
+              rows={3}
+              className="w-full bg-surface border border-border rounded px-2 py-1.5 text-xs text-text-primary focus:outline-none focus:border-accent resize-none"
+            />
+          </div>
+
+          {/* Notes */}
+          <div className="border-t border-border pt-4 mt-4">
+            <h3 className="text-text-muted text-xs font-semibold uppercase tracking-widest mb-3">
+              Notes
+            </h3>
+            <textarea
+              value={quote.notes ?? ""}
+              onChange={(e) => setQuote((q) => ({ ...q, notes: e.target.value }))}
+              rows={2}
+              placeholder="Internal notes..."
+              className="w-full bg-surface border border-border rounded px-2 py-1.5 text-xs text-text-primary focus:outline-none focus:border-accent resize-none"
+            />
+          </div>
+
+          <div className="border-t border-border pt-4 mt-4 flex flex-col gap-2">
             <span className={`text-xs border px-2 py-1 rounded-full text-center uppercase tracking-wide ${
               quote.status === 'quote_signed' ? 'text-green-400 border-green-400' :
               quote.status === 'sent' ? 'text-accent border-accent' :
