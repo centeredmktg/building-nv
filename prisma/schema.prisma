@@ -615,3 +615,23 @@ model ComplianceChatMessage {
 
   @@index([sessionId])
 }
+
+// ─── Architectural Detail Library ────────────────────────────────────────────
+
+model DetailLibraryItem {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  manufacturer String
+  trade        String
+  csiDivision  String?
+  csiTitle     String?
+  detailType   String
+  format       String
+  sourceUrl    String   @unique
+  tags         String[]
+  isFree       Boolean  @default(true)
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
