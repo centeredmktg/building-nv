@@ -10,7 +10,8 @@
     "test": "jest",
     "ingest:split": "tsx scripts/planset-ingestion/split-pdf.ts",
     "ingest:extract": "tsx scripts/planset-ingestion/extract-planset.ts",
-    "ingest:seed": "tsx scripts/planset-ingestion/seed-from-extraction.ts"
+    "ingest:seed": "tsx scripts/planset-ingestion/seed-from-extraction.ts",
+    "seed:details": "tsx prisma/seed-detail-library.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

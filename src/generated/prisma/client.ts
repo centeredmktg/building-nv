@@ -211,3 +211,8 @@ export type ComplianceFlag = Prisma.ComplianceFlagModel
  * 
  */
 export type ComplianceChatMessage = Prisma.ComplianceChatMessageModel
+/**
+ * Model DetailLibraryItem
+ * 
+ */
+export type DetailLibraryItem = Prisma.DetailLibraryItemModel

@@ -84,7 +84,8 @@ export const ModelName = {
   ProjectTeamMember: 'ProjectTeamMember',
   ProjectTask: 'ProjectTask',
   ComplianceFlag: 'ComplianceFlag',
-  ComplianceChatMessage: 'ComplianceChatMessage'
+  ComplianceChatMessage: 'ComplianceChatMessage',
+  DetailLibraryItem: 'DetailLibraryItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,6 +645,27 @@ export const ComplianceChatMessageScalarFieldEnum = {
 } as const
 
 export type ComplianceChatMessageScalarFieldEnum = (typeof ComplianceChatMessageScalarFieldEnum)[keyof typeof ComplianceChatMessageScalarFieldEnum]
+
+
+export const DetailLibraryItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  manufacturer: 'manufacturer',
+  trade: 'trade',
+  csiDivision: 'csiDivision',
+  csiTitle: 'csiTitle',
+  detailType: 'detailType',
+  format: 'format',
+  sourceUrl: 'sourceUrl',
+  tags: 'tags',
+  isFree: 'isFree',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DetailLibraryItemScalarFieldEnum = (typeof DetailLibraryItemScalarFieldEnum)[keyof typeof DetailLibraryItemScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -417,7 +417,8 @@ export const ModelName = {
   ProjectTeamMember: 'ProjectTeamMember',
   ProjectTask: 'ProjectTask',
   ComplianceFlag: 'ComplianceFlag',
-  ComplianceChatMessage: 'ComplianceChatMessage'
+  ComplianceChatMessage: 'ComplianceChatMessage',
+  DetailLibraryItem: 'DetailLibraryItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -433,7 +434,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "invoice" | "invoiceMilestone" | "project" | "contact" | "company" | "subcontractorProfile" | "contactNote" | "subcontractorReview" | "inHouseCapability" | "bidRequest" | "bidInvitation" | "bidResponse" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember" | "projectTask" | "complianceFlag" | "complianceChatMessage"
+    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "invoice" | "invoiceMilestone" | "project" | "contact" | "company" | "subcontractorProfile" | "contactNote" | "subcontractorReview" | "inHouseCapability" | "bidRequest" | "bidInvitation" | "bidResponse" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember" | "projectTask" | "complianceFlag" | "complianceChatMessage" | "detailLibraryItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2953,6 +2954,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DetailLibraryItem: {
+      payload: Prisma.$DetailLibraryItemPayload<ExtArgs>
+      fields: Prisma.DetailLibraryItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DetailLibraryItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DetailLibraryItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>
+        }
+        findFirst: {
+          args: Prisma.DetailLibraryItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DetailLibraryItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>
+        }
+        findMany: {
+          args: Prisma.DetailLibraryItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>[]
+        }
+        create: {
+          args: Prisma.DetailLibraryItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>
+        }
+        createMany: {
+          args: Prisma.DetailLibraryItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DetailLibraryItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>[]
+        }
+        delete: {
+          args: Prisma.DetailLibraryItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>
+        }
+        update: {
+          args: Prisma.DetailLibraryItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.DetailLibraryItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DetailLibraryItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DetailLibraryItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.DetailLibraryItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetailLibraryItemPayload>
+        }
+        aggregate: {
+          args: Prisma.DetailLibraryItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDetailLibraryItem>
+        }
+        groupBy: {
+          args: Prisma.DetailLibraryItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DetailLibraryItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DetailLibraryItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DetailLibraryItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3535,6 +3610,27 @@ export const ComplianceChatMessageScalarFieldEnum = {
 export type ComplianceChatMessageScalarFieldEnum = (typeof ComplianceChatMessageScalarFieldEnum)[keyof typeof ComplianceChatMessageScalarFieldEnum]
 
 
+export const DetailLibraryItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  manufacturer: 'manufacturer',
+  trade: 'trade',
+  csiDivision: 'csiDivision',
+  csiTitle: 'csiTitle',
+  detailType: 'detailType',
+  format: 'format',
+  sourceUrl: 'sourceUrl',
+  tags: 'tags',
+  isFree: 'isFree',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DetailLibraryItemScalarFieldEnum = (typeof DetailLibraryItemScalarFieldEnum)[keyof typeof DetailLibraryItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3786,6 +3882,7 @@ export type GlobalOmitConfig = {
   projectTask?: Prisma.ProjectTaskOmit
   complianceFlag?: Prisma.ComplianceFlagOmit
   complianceChatMessage?: Prisma.ComplianceChatMessageOmit
+  detailLibraryItem?: Prisma.DetailLibraryItemOmit
 }
 
 /* Types for Logging */
