@@ -85,7 +85,9 @@ export const ModelName = {
   ProjectTask: 'ProjectTask',
   ComplianceFlag: 'ComplianceFlag',
   ComplianceChatMessage: 'ComplianceChatMessage',
-  DetailLibraryItem: 'DetailLibraryItem'
+  DetailLibraryItem: 'DetailLibraryItem',
+  QboConnection: 'QboConnection',
+  QboSyncRecord: 'QboSyncRecord'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -666,6 +668,40 @@ export const DetailLibraryItemScalarFieldEnum = {
 } as const
 
 export type DetailLibraryItemScalarFieldEnum = (typeof DetailLibraryItemScalarFieldEnum)[keyof typeof DetailLibraryItemScalarFieldEnum]
+
+
+export const QboConnectionScalarFieldEnum = {
+  id: 'id',
+  realmId: 'realmId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  companyName: 'companyName',
+  connectedBy: 'connectedBy',
+  isActive: 'isActive',
+  connectedAt: 'connectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QboConnectionScalarFieldEnum = (typeof QboConnectionScalarFieldEnum)[keyof typeof QboConnectionScalarFieldEnum]
+
+
+export const QboSyncRecordScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  localId: 'localId',
+  qboId: 'qboId',
+  qboSyncToken: 'qboSyncToken',
+  lastSyncedAt: 'lastSyncedAt',
+  lastSyncStatus: 'lastSyncStatus',
+  lastSyncError: 'lastSyncError',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QboSyncRecordScalarFieldEnum = (typeof QboSyncRecordScalarFieldEnum)[keyof typeof QboSyncRecordScalarFieldEnum]
 
 
 export const SortOrder = {

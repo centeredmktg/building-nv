@@ -216,3 +216,13 @@ export type ComplianceChatMessage = Prisma.ComplianceChatMessageModel
  * 
  */
 export type DetailLibraryItem = Prisma.DetailLibraryItemModel
+/**
+ * Model QboConnection
+ * 
+ */
+export type QboConnection = Prisma.QboConnectionModel
+/**
+ * Model QboSyncRecord
+ * 
+ */
+export type QboSyncRecord = Prisma.QboSyncRecordModel

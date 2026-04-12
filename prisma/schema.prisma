@@ -635,3 +635,48 @@ model DetailLibraryItem {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
+
+// ─── QuickBooks Online Integration ───────────────────────────────────────────
+
+enum QboEntityType {
+  CUSTOMER
+  PROJECT
+  INVOICE
+  PAYMENT
+}
+
+enum QboSyncStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+model QboConnection {
+  id                     String   @id @default(cuid())
+  realmId                String   @unique
+  accessToken            String
+  refreshToken           String
+  accessTokenExpiresAt   DateTime
+  refreshTokenExpiresAt  DateTime
+  companyName            String
+  connectedBy            String
+  isActive               Boolean  @default(true)
+  connectedAt            DateTime @default(now())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model QboSyncRecord {
+  id              String         @id @default(cuid())
+  entityType      QboEntityType
+  localId         String
+  qboId           String
+  qboSyncToken    String?
+  lastSyncedAt    DateTime
+  lastSyncStatus  QboSyncStatus
+  lastSyncError   String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@unique([entityType, localId])
+}

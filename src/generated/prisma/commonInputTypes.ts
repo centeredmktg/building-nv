@@ -280,6 +280,40 @@ export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonFilter<$PrismaModel>
 }
 
+export type EnumQboEntityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboEntityType | Prisma.EnumQboEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboEntityTypeFilter<$PrismaModel> | $Enums.QboEntityType
+}
+
+export type EnumQboSyncStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboSyncStatus | Prisma.EnumQboSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboSyncStatusFilter<$PrismaModel> | $Enums.QboSyncStatus
+}
+
+export type EnumQboEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboEntityType | Prisma.EnumQboEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.QboEntityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQboEntityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQboEntityTypeFilter<$PrismaModel>
+}
+
+export type EnumQboSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboSyncStatus | Prisma.EnumQboSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.QboSyncStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQboSyncStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQboSyncStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -519,6 +553,40 @@ export type NestedJsonFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
+}
+
+export type NestedEnumQboEntityTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboEntityType | Prisma.EnumQboEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboEntityTypeFilter<$PrismaModel> | $Enums.QboEntityType
+}
+
+export type NestedEnumQboSyncStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboSyncStatus | Prisma.EnumQboSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboSyncStatusFilter<$PrismaModel> | $Enums.QboSyncStatus
+}
+
+export type NestedEnumQboEntityTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboEntityType | Prisma.EnumQboEntityTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboEntityType[] | Prisma.ListEnumQboEntityTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboEntityTypeWithAggregatesFilter<$PrismaModel> | $Enums.QboEntityType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQboEntityTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQboEntityTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumQboSyncStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.QboSyncStatus | Prisma.EnumQboSyncStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.QboSyncStatus[] | Prisma.ListEnumQboSyncStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumQboSyncStatusWithAggregatesFilter<$PrismaModel> | $Enums.QboSyncStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumQboSyncStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumQboSyncStatusFilter<$PrismaModel>
 }
 
 
