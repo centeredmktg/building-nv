@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { syncInvoiceIfConnected } from '@/lib/quickbooks/sync';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
@@ -74,5 +75,6 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   }
 
   const updated = await prisma.invoice.update({ where: { id }, data });
+  syncInvoiceIfConnected(updated.id);
   return NextResponse.json(updated);
 }
