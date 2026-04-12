@@ -23,6 +23,7 @@
     "framer-motion": "^12.35.0",
     "geist": "^1.7.0",
     "gray-matter": "^4.0.3",
+    "intuit-oauth": "^4.2.3",
     "next": "16.1.6",
     "next-auth": "^4.24.13",
     "pg": "^8.20.0",
