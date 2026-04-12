@@ -33,6 +33,7 @@ export default function InternalNav() {
         {navLink("/internal/vendors", "Vendors")}
         {navLink("/internal/components", "Catalog")}
         {navLink("/internal/details", "Details")}
+        {navLink("/internal/floor-plans", "Floor Plans")}
         {navLink("/internal/subcontractors", "Subs")}
         {navLink("/internal/bid-requests", "Bids")}
       </div>
