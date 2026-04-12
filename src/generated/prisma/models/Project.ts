@@ -383,6 +383,7 @@ export type ProjectWhereInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageListRelationFilter
   subcontractorReviews?: Prisma.SubcontractorReviewListRelationFilter
   bidRequests?: Prisma.BidRequestListRelationFilter
+  floorPlans?: Prisma.FloorPlanListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
@@ -421,6 +422,7 @@ export type ProjectOrderByWithRelationInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageOrderByRelationAggregateInput
   subcontractorReviews?: Prisma.SubcontractorReviewOrderByRelationAggregateInput
   bidRequests?: Prisma.BidRequestOrderByRelationAggregateInput
+  floorPlans?: Prisma.FloorPlanOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -462,6 +464,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   complianceChatMessages?: Prisma.ComplianceChatMessageListRelationFilter
   subcontractorReviews?: Prisma.SubcontractorReviewListRelationFilter
   bidRequests?: Prisma.BidRequestListRelationFilter
+  floorPlans?: Prisma.FloorPlanListRelationFilter
 }, "id">
 
 export type ProjectOrderByWithAggregationInput = {
@@ -562,6 +565,7 @@ export type ProjectCreateInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
@@ -600,6 +604,7 @@ export type ProjectUncheckedCreateInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
@@ -638,6 +643,7 @@ export type ProjectUpdateInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
@@ -676,6 +682,7 @@ export type ProjectUncheckedUpdateInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
@@ -1022,6 +1029,22 @@ export type ProjectUpdateOneWithoutComplianceChatMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutComplianceChatMessagesInput, Prisma.ProjectUpdateWithoutComplianceChatMessagesInput>, Prisma.ProjectUncheckedUpdateWithoutComplianceChatMessagesInput>
 }
 
+export type ProjectCreateNestedOneWithoutFloorPlansInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutFloorPlansInput, Prisma.ProjectUncheckedCreateWithoutFloorPlansInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutFloorPlansInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneWithoutFloorPlansNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutFloorPlansInput, Prisma.ProjectUncheckedCreateWithoutFloorPlansInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutFloorPlansInput
+  upsert?: Prisma.ProjectUpsertWithoutFloorPlansInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutFloorPlansInput, Prisma.ProjectUpdateWithoutFloorPlansInput>, Prisma.ProjectUncheckedUpdateWithoutFloorPlansInput>
+}
+
 export type ProjectCreateWithoutQuotesInput = {
   id?: string
   name: string
@@ -1057,6 +1080,7 @@ export type ProjectCreateWithoutQuotesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutQuotesInput = {
@@ -1094,6 +1118,7 @@ export type ProjectUncheckedCreateWithoutQuotesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutQuotesInput = {
@@ -1147,6 +1172,7 @@ export type ProjectUpdateWithoutQuotesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutQuotesInput = {
@@ -1184,6 +1210,7 @@ export type ProjectUncheckedUpdateWithoutQuotesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutMilestonesInput = {
@@ -1221,6 +1248,7 @@ export type ProjectCreateWithoutMilestonesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutMilestonesInput = {
@@ -1258,6 +1286,7 @@ export type ProjectUncheckedCreateWithoutMilestonesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutMilestonesInput = {
@@ -1311,6 +1340,7 @@ export type ProjectUpdateWithoutMilestonesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutMilestonesInput = {
@@ -1348,6 +1378,7 @@ export type ProjectUncheckedUpdateWithoutMilestonesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutContractsInput = {
@@ -1385,6 +1416,7 @@ export type ProjectCreateWithoutContractsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutContractsInput = {
@@ -1422,6 +1454,7 @@ export type ProjectUncheckedCreateWithoutContractsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutContractsInput = {
@@ -1475,6 +1508,7 @@ export type ProjectUpdateWithoutContractsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutContractsInput = {
@@ -1512,6 +1546,7 @@ export type ProjectUncheckedUpdateWithoutContractsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutInvoicesInput = {
@@ -1549,6 +1584,7 @@ export type ProjectCreateWithoutInvoicesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutInvoicesInput = {
@@ -1586,6 +1622,7 @@ export type ProjectUncheckedCreateWithoutInvoicesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutInvoicesInput = {
@@ -1639,6 +1676,7 @@ export type ProjectUpdateWithoutInvoicesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutInvoicesInput = {
@@ -1676,6 +1714,7 @@ export type ProjectUncheckedUpdateWithoutInvoicesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutSubcontractorReviewsInput = {
@@ -1713,6 +1752,7 @@ export type ProjectCreateWithoutSubcontractorReviewsInput = {
   projectTasks?: Prisma.ProjectTaskCreateNestedManyWithoutProjectInput
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutSubcontractorReviewsInput = {
@@ -1750,6 +1790,7 @@ export type ProjectUncheckedCreateWithoutSubcontractorReviewsInput = {
   projectTasks?: Prisma.ProjectTaskUncheckedCreateNestedManyWithoutProjectInput
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutSubcontractorReviewsInput = {
@@ -1803,6 +1844,7 @@ export type ProjectUpdateWithoutSubcontractorReviewsInput = {
   projectTasks?: Prisma.ProjectTaskUpdateManyWithoutProjectNestedInput
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutSubcontractorReviewsInput = {
@@ -1840,6 +1882,7 @@ export type ProjectUncheckedUpdateWithoutSubcontractorReviewsInput = {
   projectTasks?: Prisma.ProjectTaskUncheckedUpdateManyWithoutProjectNestedInput
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutBidRequestsInput = {
@@ -1877,6 +1920,7 @@ export type ProjectCreateWithoutBidRequestsInput = {
   projectTasks?: Prisma.ProjectTaskCreateNestedManyWithoutProjectInput
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutBidRequestsInput = {
@@ -1914,6 +1958,7 @@ export type ProjectUncheckedCreateWithoutBidRequestsInput = {
   projectTasks?: Prisma.ProjectTaskUncheckedCreateNestedManyWithoutProjectInput
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutBidRequestsInput = {
@@ -1967,6 +2012,7 @@ export type ProjectUpdateWithoutBidRequestsInput = {
   projectTasks?: Prisma.ProjectTaskUpdateManyWithoutProjectNestedInput
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutBidRequestsInput = {
@@ -2004,6 +2050,7 @@ export type ProjectUncheckedUpdateWithoutBidRequestsInput = {
   projectTasks?: Prisma.ProjectTaskUncheckedUpdateManyWithoutProjectNestedInput
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutProjectContactsInput = {
@@ -2041,6 +2088,7 @@ export type ProjectCreateWithoutProjectContactsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutProjectContactsInput = {
@@ -2078,6 +2126,7 @@ export type ProjectUncheckedCreateWithoutProjectContactsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutProjectContactsInput = {
@@ -2131,6 +2180,7 @@ export type ProjectUpdateWithoutProjectContactsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutProjectContactsInput = {
@@ -2168,6 +2218,7 @@ export type ProjectUncheckedUpdateWithoutProjectContactsInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutProjectCompaniesInput = {
@@ -2205,6 +2256,7 @@ export type ProjectCreateWithoutProjectCompaniesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutProjectCompaniesInput = {
@@ -2242,6 +2294,7 @@ export type ProjectUncheckedCreateWithoutProjectCompaniesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutProjectCompaniesInput = {
@@ -2295,6 +2348,7 @@ export type ProjectUpdateWithoutProjectCompaniesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutProjectCompaniesInput = {
@@ -2332,6 +2386,7 @@ export type ProjectUncheckedUpdateWithoutProjectCompaniesInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutTeamMembersInput = {
@@ -2369,6 +2424,7 @@ export type ProjectCreateWithoutTeamMembersInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutTeamMembersInput = {
@@ -2406,6 +2462,7 @@ export type ProjectUncheckedCreateWithoutTeamMembersInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutTeamMembersInput = {
@@ -2459,6 +2516,7 @@ export type ProjectUpdateWithoutTeamMembersInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutTeamMembersInput = {
@@ -2496,6 +2554,7 @@ export type ProjectUncheckedUpdateWithoutTeamMembersInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutProjectTasksInput = {
@@ -2533,6 +2592,7 @@ export type ProjectCreateWithoutProjectTasksInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutProjectTasksInput = {
@@ -2570,6 +2630,7 @@ export type ProjectUncheckedCreateWithoutProjectTasksInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutProjectTasksInput = {
@@ -2623,6 +2684,7 @@ export type ProjectUpdateWithoutProjectTasksInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutProjectTasksInput = {
@@ -2660,6 +2722,7 @@ export type ProjectUncheckedUpdateWithoutProjectTasksInput = {
   complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutComplianceChatMessagesInput = {
@@ -2697,6 +2760,7 @@ export type ProjectCreateWithoutComplianceChatMessagesInput = {
   projectTasks?: Prisma.ProjectTaskCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutComplianceChatMessagesInput = {
@@ -2734,6 +2798,7 @@ export type ProjectUncheckedCreateWithoutComplianceChatMessagesInput = {
   projectTasks?: Prisma.ProjectTaskUncheckedCreateNestedManyWithoutProjectInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
   bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+  floorPlans?: Prisma.FloorPlanUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutComplianceChatMessagesInput = {
@@ -2787,6 +2852,7 @@ export type ProjectUpdateWithoutComplianceChatMessagesInput = {
   projectTasks?: Prisma.ProjectTaskUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutComplianceChatMessagesInput = {
@@ -2824,6 +2890,175 @@ export type ProjectUncheckedUpdateWithoutComplianceChatMessagesInput = {
   projectTasks?: Prisma.ProjectTaskUncheckedUpdateManyWithoutProjectNestedInput
   subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
   bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
+  floorPlans?: Prisma.FloorPlanUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutFloorPlansInput = {
+  id?: string
+  name: string
+  shortCode?: string | null
+  stage?: string
+  projectType?: string | null
+  message?: string | null
+  notes?: string | null
+  attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteState?: string | null
+  siteZip?: string | null
+  hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProjectInput
+  projectContacts?: Prisma.ProjectContactCreateNestedManyWithoutProjectInput
+  projectCompanies?: Prisma.ProjectCompanyCreateNestedManyWithoutProjectInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutProjectInput
+  contracts?: Prisma.ContractCreateNestedManyWithoutProjectInput
+  teamMembers?: Prisma.ProjectTeamMemberCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutProjectInput
+  projectTasks?: Prisma.ProjectTaskCreateNestedManyWithoutProjectInput
+  complianceChatMessages?: Prisma.ComplianceChatMessageCreateNestedManyWithoutProjectInput
+  subcontractorReviews?: Prisma.SubcontractorReviewCreateNestedManyWithoutProjectInput
+  bidRequests?: Prisma.BidRequestCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutFloorPlansInput = {
+  id?: string
+  name: string
+  shortCode?: string | null
+  stage?: string
+  projectType?: string | null
+  message?: string | null
+  notes?: string | null
+  attachmentUrl?: string | null
+  estimatedCloseDate?: Date | string | null
+  contractAmount?: number | null
+  targetCostAmount?: number | null
+  estimatedStartDate?: Date | string | null
+  estimatedEndDate?: Date | string | null
+  timingNotes?: string | null
+  siteAddress?: string | null
+  siteCity?: string | null
+  siteState?: string | null
+  siteZip?: string | null
+  hazardNotes?: string | null
+  nearestER?: string | null
+  nearestERAddress?: string | null
+  assemblyPoint?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProjectInput
+  projectContacts?: Prisma.ProjectContactUncheckedCreateNestedManyWithoutProjectInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedCreateNestedManyWithoutProjectInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutProjectInput
+  contracts?: Prisma.ContractUncheckedCreateNestedManyWithoutProjectInput
+  teamMembers?: Prisma.ProjectTeamMemberUncheckedCreateNestedManyWithoutProjectInput
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutProjectInput
+  projectTasks?: Prisma.ProjectTaskUncheckedCreateNestedManyWithoutProjectInput
+  complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedCreateNestedManyWithoutProjectInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedCreateNestedManyWithoutProjectInput
+  bidRequests?: Prisma.BidRequestUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutFloorPlansInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutFloorPlansInput, Prisma.ProjectUncheckedCreateWithoutFloorPlansInput>
+}
+
+export type ProjectUpsertWithoutFloorPlansInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutFloorPlansInput, Prisma.ProjectUncheckedUpdateWithoutFloorPlansInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutFloorPlansInput, Prisma.ProjectUncheckedCreateWithoutFloorPlansInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutFloorPlansInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutFloorPlansInput, Prisma.ProjectUncheckedUpdateWithoutFloorPlansInput>
+}
+
+export type ProjectUpdateWithoutFloorPlansInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUpdateManyWithoutProjectNestedInput
+  projectContacts?: Prisma.ProjectContactUpdateManyWithoutProjectNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUpdateManyWithoutProjectNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutProjectNestedInput
+  contracts?: Prisma.ContractUpdateManyWithoutProjectNestedInput
+  teamMembers?: Prisma.ProjectTeamMemberUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutProjectNestedInput
+  projectTasks?: Prisma.ProjectTaskUpdateManyWithoutProjectNestedInput
+  complianceChatMessages?: Prisma.ComplianceChatMessageUpdateManyWithoutProjectNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUpdateManyWithoutProjectNestedInput
+  bidRequests?: Prisma.BidRequestUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutFloorPlansInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  shortCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.StringFieldUpdateOperationsInput | string
+  projectType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  message?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachmentUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedCloseDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  contractAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  targetCostAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  estimatedStartDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedEndDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timingNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteCity?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteState?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  siteZip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hazardNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestER?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nearestERAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  assemblyPoint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  projectContacts?: Prisma.ProjectContactUncheckedUpdateManyWithoutProjectNestedInput
+  projectCompanies?: Prisma.ProjectCompanyUncheckedUpdateManyWithoutProjectNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutProjectNestedInput
+  contracts?: Prisma.ContractUncheckedUpdateManyWithoutProjectNestedInput
+  teamMembers?: Prisma.ProjectTeamMemberUncheckedUpdateManyWithoutProjectNestedInput
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutProjectNestedInput
+  projectTasks?: Prisma.ProjectTaskUncheckedUpdateManyWithoutProjectNestedInput
+  complianceChatMessages?: Prisma.ComplianceChatMessageUncheckedUpdateManyWithoutProjectNestedInput
+  subcontractorReviews?: Prisma.SubcontractorReviewUncheckedUpdateManyWithoutProjectNestedInput
+  bidRequests?: Prisma.BidRequestUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 
@@ -2843,6 +3078,7 @@ export type ProjectCountOutputType = {
   complianceChatMessages: number
   subcontractorReviews: number
   bidRequests: number
+  floorPlans: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2857,6 +3093,7 @@ export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   complianceChatMessages?: boolean | ProjectCountOutputTypeCountComplianceChatMessagesArgs
   subcontractorReviews?: boolean | ProjectCountOutputTypeCountSubcontractorReviewsArgs
   bidRequests?: boolean | ProjectCountOutputTypeCountBidRequestsArgs
+  floorPlans?: boolean | ProjectCountOutputTypeCountFloorPlansArgs
 }
 
 /**
@@ -2946,6 +3183,13 @@ export type ProjectCountOutputTypeCountBidRequestsArgs<ExtArgs extends runtime.T
   where?: Prisma.BidRequestWhereInput
 }
 
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountFloorPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FloorPlanWhereInput
+}
+
 
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2983,6 +3227,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   complianceChatMessages?: boolean | Prisma.Project$complianceChatMessagesArgs<ExtArgs>
   subcontractorReviews?: boolean | Prisma.Project$subcontractorReviewsArgs<ExtArgs>
   bidRequests?: boolean | Prisma.Project$bidRequestsArgs<ExtArgs>
+  floorPlans?: boolean | Prisma.Project$floorPlansArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -3080,6 +3325,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   complianceChatMessages?: boolean | Prisma.Project$complianceChatMessagesArgs<ExtArgs>
   subcontractorReviews?: boolean | Prisma.Project$subcontractorReviewsArgs<ExtArgs>
   bidRequests?: boolean | Prisma.Project$bidRequestsArgs<ExtArgs>
+  floorPlans?: boolean | Prisma.Project$floorPlansArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3099,6 +3345,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     complianceChatMessages: Prisma.$ComplianceChatMessagePayload<ExtArgs>[]
     subcontractorReviews: Prisma.$SubcontractorReviewPayload<ExtArgs>[]
     bidRequests: Prisma.$BidRequestPayload<ExtArgs>[]
+    floorPlans: Prisma.$FloorPlanPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3530,6 +3777,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   complianceChatMessages<T extends Prisma.Project$complianceChatMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$complianceChatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplianceChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subcontractorReviews<T extends Prisma.Project$subcontractorReviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$subcontractorReviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubcontractorReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   bidRequests<T extends Prisma.Project$bidRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$bidRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BidRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  floorPlans<T extends Prisma.Project$floorPlansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$floorPlansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FloorPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4232,6 +4480,30 @@ export type Project$bidRequestsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.BidRequestScalarFieldEnum | Prisma.BidRequestScalarFieldEnum[]
+}
+
+/**
+ * Project.floorPlans
+ */
+export type Project$floorPlansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FloorPlan
+   */
+  select?: Prisma.FloorPlanSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FloorPlan
+   */
+  omit?: Prisma.FloorPlanOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FloorPlanInclude<ExtArgs> | null
+  where?: Prisma.FloorPlanWhereInput
+  orderBy?: Prisma.FloorPlanOrderByWithRelationInput | Prisma.FloorPlanOrderByWithRelationInput[]
+  cursor?: Prisma.FloorPlanWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FloorPlanScalarFieldEnum | Prisma.FloorPlanScalarFieldEnum[]
 }
 
 /**

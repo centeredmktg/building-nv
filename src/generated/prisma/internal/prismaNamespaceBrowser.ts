@@ -85,7 +85,10 @@ export const ModelName = {
   ProjectTask: 'ProjectTask',
   ComplianceFlag: 'ComplianceFlag',
   ComplianceChatMessage: 'ComplianceChatMessage',
-  DetailLibraryItem: 'DetailLibraryItem'
+  DetailLibraryItem: 'DetailLibraryItem',
+  FloorPlan: 'FloorPlan',
+  QboConnection: 'QboConnection',
+  QboSyncRecord: 'QboSyncRecord'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -666,6 +669,54 @@ export const DetailLibraryItemScalarFieldEnum = {
 } as const
 
 export type DetailLibraryItemScalarFieldEnum = (typeof DetailLibraryItemScalarFieldEnum)[keyof typeof DetailLibraryItemScalarFieldEnum]
+
+
+export const FloorPlanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  projectId: 'projectId',
+  sourceImageUrl: 'sourceImageUrl',
+  canvasData: 'canvasData',
+  thumbnailUrl: 'thumbnailUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FloorPlanScalarFieldEnum = (typeof FloorPlanScalarFieldEnum)[keyof typeof FloorPlanScalarFieldEnum]
+
+
+export const QboConnectionScalarFieldEnum = {
+  id: 'id',
+  realmId: 'realmId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  companyName: 'companyName',
+  connectedBy: 'connectedBy',
+  isActive: 'isActive',
+  connectedAt: 'connectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QboConnectionScalarFieldEnum = (typeof QboConnectionScalarFieldEnum)[keyof typeof QboConnectionScalarFieldEnum]
+
+
+export const QboSyncRecordScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  localId: 'localId',
+  qboId: 'qboId',
+  qboSyncToken: 'qboSyncToken',
+  lastSyncedAt: 'lastSyncedAt',
+  lastSyncStatus: 'lastSyncStatus',
+  lastSyncError: 'lastSyncError',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QboSyncRecordScalarFieldEnum = (typeof QboSyncRecordScalarFieldEnum)[keyof typeof QboSyncRecordScalarFieldEnum]
 
 
 export const SortOrder = {

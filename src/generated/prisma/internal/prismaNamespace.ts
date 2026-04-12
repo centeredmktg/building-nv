@@ -418,7 +418,10 @@ export const ModelName = {
   ProjectTask: 'ProjectTask',
   ComplianceFlag: 'ComplianceFlag',
   ComplianceChatMessage: 'ComplianceChatMessage',
-  DetailLibraryItem: 'DetailLibraryItem'
+  DetailLibraryItem: 'DetailLibraryItem',
+  FloorPlan: 'FloorPlan',
+  QboConnection: 'QboConnection',
+  QboSyncRecord: 'QboSyncRecord'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -434,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "invoice" | "invoiceMilestone" | "project" | "contact" | "company" | "subcontractorProfile" | "contactNote" | "subcontractorReview" | "inHouseCapability" | "bidRequest" | "bidInvitation" | "bidResponse" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember" | "projectTask" | "complianceFlag" | "complianceChatMessage" | "detailLibraryItem"
+    modelProps: "quote" | "quoteMilestone" | "milestone" | "lineItemSection" | "lineItem" | "acceptance" | "contract" | "changeOrder" | "invoice" | "invoiceMilestone" | "project" | "contact" | "company" | "subcontractorProfile" | "contactNote" | "subcontractorReview" | "inHouseCapability" | "bidRequest" | "bidInvitation" | "bidResponse" | "projectContact" | "projectCompany" | "quoteContact" | "quoteCompany" | "vendor" | "component" | "employee" | "certification" | "onboardingStep" | "onboardingInvite" | "projectTeamMember" | "projectTask" | "complianceFlag" | "complianceChatMessage" | "detailLibraryItem" | "floorPlan" | "qboConnection" | "qboSyncRecord"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3028,6 +3031,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FloorPlan: {
+      payload: Prisma.$FloorPlanPayload<ExtArgs>
+      fields: Prisma.FloorPlanFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FloorPlanFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FloorPlanFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>
+        }
+        findFirst: {
+          args: Prisma.FloorPlanFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FloorPlanFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>
+        }
+        findMany: {
+          args: Prisma.FloorPlanFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>[]
+        }
+        create: {
+          args: Prisma.FloorPlanCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>
+        }
+        createMany: {
+          args: Prisma.FloorPlanCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FloorPlanCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>[]
+        }
+        delete: {
+          args: Prisma.FloorPlanDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>
+        }
+        update: {
+          args: Prisma.FloorPlanUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>
+        }
+        deleteMany: {
+          args: Prisma.FloorPlanDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FloorPlanUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FloorPlanUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>[]
+        }
+        upsert: {
+          args: Prisma.FloorPlanUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FloorPlanPayload>
+        }
+        aggregate: {
+          args: Prisma.FloorPlanAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFloorPlan>
+        }
+        groupBy: {
+          args: Prisma.FloorPlanGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FloorPlanGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FloorPlanCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FloorPlanCountAggregateOutputType> | number
+        }
+      }
+    }
+    QboConnection: {
+      payload: Prisma.$QboConnectionPayload<ExtArgs>
+      fields: Prisma.QboConnectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QboConnectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QboConnectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>
+        }
+        findFirst: {
+          args: Prisma.QboConnectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QboConnectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>
+        }
+        findMany: {
+          args: Prisma.QboConnectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>[]
+        }
+        create: {
+          args: Prisma.QboConnectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>
+        }
+        createMany: {
+          args: Prisma.QboConnectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QboConnectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>[]
+        }
+        delete: {
+          args: Prisma.QboConnectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>
+        }
+        update: {
+          args: Prisma.QboConnectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.QboConnectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QboConnectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QboConnectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.QboConnectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboConnectionPayload>
+        }
+        aggregate: {
+          args: Prisma.QboConnectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQboConnection>
+        }
+        groupBy: {
+          args: Prisma.QboConnectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QboConnectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QboConnectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QboConnectionCountAggregateOutputType> | number
+        }
+      }
+    }
+    QboSyncRecord: {
+      payload: Prisma.$QboSyncRecordPayload<ExtArgs>
+      fields: Prisma.QboSyncRecordFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.QboSyncRecordFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.QboSyncRecordFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>
+        }
+        findFirst: {
+          args: Prisma.QboSyncRecordFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.QboSyncRecordFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>
+        }
+        findMany: {
+          args: Prisma.QboSyncRecordFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>[]
+        }
+        create: {
+          args: Prisma.QboSyncRecordCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>
+        }
+        createMany: {
+          args: Prisma.QboSyncRecordCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.QboSyncRecordCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>[]
+        }
+        delete: {
+          args: Prisma.QboSyncRecordDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>
+        }
+        update: {
+          args: Prisma.QboSyncRecordUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>
+        }
+        deleteMany: {
+          args: Prisma.QboSyncRecordDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.QboSyncRecordUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.QboSyncRecordUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>[]
+        }
+        upsert: {
+          args: Prisma.QboSyncRecordUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$QboSyncRecordPayload>
+        }
+        aggregate: {
+          args: Prisma.QboSyncRecordAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateQboSyncRecord>
+        }
+        groupBy: {
+          args: Prisma.QboSyncRecordGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QboSyncRecordGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.QboSyncRecordCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.QboSyncRecordCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3631,6 +3856,54 @@ export const DetailLibraryItemScalarFieldEnum = {
 export type DetailLibraryItemScalarFieldEnum = (typeof DetailLibraryItemScalarFieldEnum)[keyof typeof DetailLibraryItemScalarFieldEnum]
 
 
+export const FloorPlanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  projectId: 'projectId',
+  sourceImageUrl: 'sourceImageUrl',
+  canvasData: 'canvasData',
+  thumbnailUrl: 'thumbnailUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FloorPlanScalarFieldEnum = (typeof FloorPlanScalarFieldEnum)[keyof typeof FloorPlanScalarFieldEnum]
+
+
+export const QboConnectionScalarFieldEnum = {
+  id: 'id',
+  realmId: 'realmId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  companyName: 'companyName',
+  connectedBy: 'connectedBy',
+  isActive: 'isActive',
+  connectedAt: 'connectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QboConnectionScalarFieldEnum = (typeof QboConnectionScalarFieldEnum)[keyof typeof QboConnectionScalarFieldEnum]
+
+
+export const QboSyncRecordScalarFieldEnum = {
+  id: 'id',
+  entityType: 'entityType',
+  localId: 'localId',
+  qboId: 'qboId',
+  qboSyncToken: 'qboSyncToken',
+  lastSyncedAt: 'lastSyncedAt',
+  lastSyncStatus: 'lastSyncStatus',
+  lastSyncError: 'lastSyncError',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type QboSyncRecordScalarFieldEnum = (typeof QboSyncRecordScalarFieldEnum)[keyof typeof QboSyncRecordScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3751,6 +4024,34 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'QboEntityType'
+ */
+export type EnumQboEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QboEntityType'>
+    
+
+
+/**
+ * Reference to a field of type 'QboEntityType[]'
+ */
+export type ListEnumQboEntityTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QboEntityType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QboSyncStatus'
+ */
+export type EnumQboSyncStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QboSyncStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'QboSyncStatus[]'
+ */
+export type ListEnumQboSyncStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QboSyncStatus[]'>
     
 
 /**
@@ -3883,6 +4184,9 @@ export type GlobalOmitConfig = {
   complianceFlag?: Prisma.ComplianceFlagOmit
   complianceChatMessage?: Prisma.ComplianceChatMessageOmit
   detailLibraryItem?: Prisma.DetailLibraryItemOmit
+  floorPlan?: Prisma.FloorPlanOmit
+  qboConnection?: Prisma.QboConnectionOmit
+  qboSyncRecord?: Prisma.QboSyncRecordOmit
 }
 
 /* Types for Logging */

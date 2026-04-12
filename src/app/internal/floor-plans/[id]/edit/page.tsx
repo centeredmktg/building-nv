@@ -1,9 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import nextDynamic from "next/dynamic";
+import EditorLoader from "./EditorLoader";
 import type { CanvasData } from "@/lib/floor-plan-types";
-
-const FloorPlanEditor = nextDynamic(() => import("./FloorPlanEditor"), { ssr: false });
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +19,11 @@ export default async function FloorPlanEditPage({
 
   if (!floorPlan) notFound();
 
-  const canvasData = floorPlan.canvasData as CanvasData;
+  const canvasData = floorPlan.canvasData as unknown as CanvasData;
 
   return (
     <div className="-mx-6 -mt-10">
-      <FloorPlanEditor
+      <EditorLoader
         floorPlanId={floorPlan.id}
         initialName={floorPlan.name}
         projectName={floorPlan.project?.name ?? null}

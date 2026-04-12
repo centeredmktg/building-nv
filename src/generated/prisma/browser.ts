@@ -192,3 +192,18 @@ export type ComplianceChatMessage = Prisma.ComplianceChatMessageModel
  * 
  */
 export type DetailLibraryItem = Prisma.DetailLibraryItemModel
+/**
+ * Model FloorPlan
+ * 
+ */
+export type FloorPlan = Prisma.FloorPlanModel
+/**
+ * Model QboConnection
+ * 
+ */
+export type QboConnection = Prisma.QboConnectionModel
+/**
+ * Model QboSyncRecord
+ * 
+ */
+export type QboSyncRecord = Prisma.QboSyncRecordModel

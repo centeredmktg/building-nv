@@ -9,7 +9,20 @@
 * 🟢 You can import this file directly.
 */
 
+export const QboEntityType = {
+  CUSTOMER: 'CUSTOMER',
+  PROJECT: 'PROJECT',
+  INVOICE: 'INVOICE',
+  PAYMENT: 'PAYMENT'
+} as const
+
+export type QboEntityType = (typeof QboEntityType)[keyof typeof QboEntityType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const QboSyncStatus = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING'
+} as const
+
+export type QboSyncStatus = (typeof QboSyncStatus)[keyof typeof QboSyncStatus]
