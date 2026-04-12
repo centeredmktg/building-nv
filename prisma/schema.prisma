@@ -242,6 +242,7 @@ model Project {
   complianceChatMessages ComplianceChatMessage[]
   subcontractorReviews SubcontractorReview[]
   bidRequests          BidRequest[]
+  floorPlans           FloorPlan[]
   createdAt        DateTime            @default(now())
   updatedAt        DateTime            @updatedAt
 }
@@ -634,4 +635,63 @@ model DetailLibraryItem {
   notes        String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+// ─── Floor Plan Designer ─────────────────────────────────────────────────────
+
+model FloorPlan {
+  id             String   @id @default(cuid())
+  name           String
+  projectId      String?
+  project        Project? @relation(fields: [projectId], references: [id])
+  sourceImageUrl String?
+  canvasData     Json
+  thumbnailUrl   String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ─── QuickBooks Online Integration ───────────────────────────────────────────
+
+enum QboEntityType {
+  CUSTOMER
+  PROJECT
+  INVOICE
+  PAYMENT
+}
+
+enum QboSyncStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+model QboConnection {
+  id                    String   @id @default(cuid())
+  realmId               String   @unique
+  accessToken           String
+  refreshToken          String
+  accessTokenExpiresAt  DateTime
+  refreshTokenExpiresAt DateTime
+  companyName           String
+  connectedBy           String
+  isActive              Boolean  @default(true)
+  connectedAt           DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model QboSyncRecord {
+  id             String        @id @default(cuid())
+  entityType     QboEntityType
+  localId        String
+  qboId          String
+  qboSyncToken   String?
+  lastSyncedAt   DateTime
+  lastSyncStatus QboSyncStatus
+  lastSyncError  String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@unique([entityType, localId])
 }
