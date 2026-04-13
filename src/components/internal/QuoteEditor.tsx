@@ -203,6 +203,24 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
     });
   };
 
+  const removeSection = (si: number) => {
+    const sec = quote.sections[si];
+    if (!confirm(`Delete "${sec.title}" and all its line items?`)) return;
+    setQuote((q) => ({
+      ...q,
+      sections: q.sections.filter((_, i) => i !== si),
+    }));
+    // Adjust collapsed indices after removal
+    setCollapsed((prev) => {
+      const next = new Set<number>();
+      for (const idx of prev) {
+        if (idx === si) continue;
+        next.add(idx > si ? idx - 1 : idx);
+      }
+      return next;
+    });
+  };
+
   const updateMilestone = (idx: number, field: keyof Milestone, value: string | number | null) => {
     setQuote((q) => ({
       ...q,
@@ -362,6 +380,11 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                     className="text-text-muted hover:text-text-primary disabled:opacity-20 text-xs px-0.5 transition-colors"
                     title="Move down"
                   >↓</button>
+                  <button
+                    onClick={() => removeSection(si)}
+                    className="text-text-muted hover:text-red-400 text-xs px-0.5 transition-colors ml-1"
+                    title="Delete section"
+                  >✕</button>
                 </div>
               </div>
               {!isCollapsed && (
