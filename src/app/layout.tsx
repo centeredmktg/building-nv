@@ -15,7 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Building NV | General Contractor | Reno, NV",
+  title: {
+    default: "Building NV | General Contractor Serving Reno, NV",
+    template: "%s | Building NV | General Contractor Serving Reno, NV",
+  },
   description:
     "Building NV is a Reno, Nevada general contractor specializing in residential builds, remodels, and commercial tenant improvement. We show up, we do the work, we stand behind it.",
 };

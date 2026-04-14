@@ -232,6 +232,7 @@ export default function NewQuotePage() {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>("ai");
   const [phase, setPhase] = useState<Phase>("idle");
+  const [error, setError] = useState("");
   const [scopeText, setScopeText] = useState("");
 
   // CRM links
@@ -261,6 +262,7 @@ export default function NewQuotePage() {
   const handleGenerate = async () => {
     if (!scopeText.trim()) return;
     setPhase("streaming");
+    setError("");
     setStreamStatus("Analyzing scope…");
     setSections([]);
     setGaps([]);
@@ -288,7 +290,11 @@ export default function NewQuotePage() {
         if (!line.trim()) continue;
         try {
           const event = JSON.parse(line);
-          if (event.type === "extracted") {
+          if (event.type === "error") {
+            setError(event.message || "Quote generation failed");
+            setPhase("idle");
+            return;
+          } else if (event.type === "extracted") {
             if (event.address && !address) setAddress(event.address);
             if (event.projectType && !projectType) setProjectType(event.projectType);
             const baseGaps: string[] = event.gaps ?? [];
@@ -424,6 +430,8 @@ export default function NewQuotePage() {
           </select>
         </div>
       </div>
+
+      {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-sm text-sm mb-6">{error}</div>}
 
       {/* ── AI scope input (AI mode, idle only) ── */}
       {mode === "ai" && phase === "idle" && (

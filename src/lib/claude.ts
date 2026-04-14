@@ -29,7 +29,8 @@ export interface QuoteGenerationResult {
 export type StreamEvent =
   | { type: "extracted"; contactName?: string; address?: string; projectType?: string; gaps: string[] }
   | { type: "section"; data: GeneratedSection }
-  | { type: "done" };
+  | { type: "done" }
+  | { type: "error"; message: string };
 
 // ─── Prompts ───────────────────────────────────────────────────────────────────
 

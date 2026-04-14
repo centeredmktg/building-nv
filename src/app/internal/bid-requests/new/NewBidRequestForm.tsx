@@ -127,12 +127,16 @@ export default function NewBidRequestForm({ quotes, subs }: Props) {
 
       <section className="border border-border rounded-sm p-6">
         <h2 className="text-lg font-semibold text-text-primary mb-4">Source Quote</h2>
-        <select className={inputClass} value={selectedQuoteId} onChange={(e) => { setSelectedQuoteId(e.target.value); setSelectedItemIds([]); }} required>
-          <option value="">Select a quote…</option>
-          {quotes.map((q) => (
-            <option key={q.id} value={q.id}>{q.title} — {q.projectType}</option>
-          ))}
-        </select>
+        {quotes.length === 0 ? (
+          <p className="text-text-muted text-sm">No quotes available. Only quotes marked as <strong>sent</strong> or <strong>signed</strong> can be used for bid requests.</p>
+        ) : (
+          <select className={inputClass} value={selectedQuoteId} onChange={(e) => { setSelectedQuoteId(e.target.value); setSelectedItemIds([]); }} required>
+            <option value="">Select a quote…</option>
+            {quotes.map((q) => (
+              <option key={q.id} value={q.id}>{q.title} — {q.projectType}</option>
+            ))}
+          </select>
+        )}
       </section>
 
       {selectedQuote && (

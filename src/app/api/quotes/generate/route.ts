@@ -22,6 +22,8 @@ export async function POST(req: NextRequest) {
         }
       } catch (err) {
         console.error('Stream error:', err);
+        const message = err instanceof Error ? err.message : 'Quote generation failed';
+        controller.enqueue(encoder.encode(JSON.stringify({ type: 'error', message }) + '\n'));
       } finally {
         controller.close();
       }

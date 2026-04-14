@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { calculateQuoteTotals, calculatePaymentSchedule } from "@/lib/pricing";
@@ -5,18 +6,9 @@ import AcceptanceBlock from "./AcceptanceBlock";
 import { resolveQuoteClient } from "@/lib/quote-client";
 import { durationToWeeks } from "@/lib/milestone-defaults";
 
-const fmt = (n: number) =>
-  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-export default async function ProposalPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const quote = await prisma.quote.findFirst({
-    where: {
-      OR: [
-        { slug: slug },
-        { signingToken: slug },
-      ],
-    },
+async function getQuoteBySlug(slug: string) {
+  return prisma.quote.findFirst({
+    where: { OR: [{ slug }, { signingToken: slug }] },
     include: {
       quoteContacts: { include: { contact: true } },
       quoteCompanies: { include: { company: true } },
@@ -28,6 +20,23 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
       milestones: { orderBy: { position: "asc" } },
     },
   });
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const quote = await getQuoteBySlug(slug);
+  if (!quote) return { title: "Quote Not Found" };
+
+  const client = resolveQuoteClient(quote);
+  return { title: `${quote.address} | ${client.name} | Quote` };
+}
+
+const fmt = (n: number) =>
+  n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+export default async function ProposalPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const quote = await getQuoteBySlug(slug);
 
   if (!quote) notFound();
 
@@ -50,7 +59,9 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
     totals.total
   );
   const maxWeek = quote.milestones.length > 0
-    ? Math.max(...quote.milestones.map((m) => m.weekNumber)) + 1
+    ? Math.ceil(quote.milestones
+        .filter((m) => m.position > 0)
+        .reduce((cursor, m) => cursor + Math.max(durationToWeeks(m.duration), 0.3), 0))
     : 0;
   const anchorDate = quote.estimatedStartDate
     ? new Date(quote.estimatedStartDate)
@@ -321,7 +332,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
             <h3 className="text-sm font-bold text-[#1A1917] uppercase tracking-wider">Payment Terms</h3>
           </div>
           <p className="text-sm text-[#4A4540] leading-relaxed pl-3 border-l-2 border-[#E8E4DD]">
-            {quote.paymentTerms}
+            Invoices will be due net 7 of receipt in coordination with the agreed upon payment schedule.
           </p>
         </div>
 
