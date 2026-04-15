@@ -207,3 +207,13 @@ export type QboConnection = Prisma.QboConnectionModel
  * 
  */
 export type QboSyncRecord = Prisma.QboSyncRecordModel
+/**
+ * Model JobPosting
+ * 
+ */
+export type JobPosting = Prisma.JobPostingModel
+/**
+ * Model JobApplication
+ * 
+ */
+export type JobApplication = Prisma.JobApplicationModel

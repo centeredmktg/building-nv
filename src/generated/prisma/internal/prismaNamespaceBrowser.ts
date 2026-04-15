@@ -88,7 +88,9 @@ export const ModelName = {
   DetailLibraryItem: 'DetailLibraryItem',
   FloorPlan: 'FloorPlan',
   QboConnection: 'QboConnection',
-  QboSyncRecord: 'QboSyncRecord'
+  QboSyncRecord: 'QboSyncRecord',
+  JobPosting: 'JobPosting',
+  JobApplication: 'JobApplication'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -717,6 +719,33 @@ export const QboSyncRecordScalarFieldEnum = {
 } as const
 
 export type QboSyncRecordScalarFieldEnum = (typeof QboSyncRecordScalarFieldEnum)[keyof typeof QboSyncRecordScalarFieldEnum]
+
+
+export const JobPostingScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  location: 'location',
+  type: 'type',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobPostingScalarFieldEnum = (typeof JobPostingScalarFieldEnum)[keyof typeof JobPostingScalarFieldEnum]
+
+
+export const JobApplicationScalarFieldEnum = {
+  id: 'id',
+  jobPostingId: 'jobPostingId',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  resumeUrl: 'resumeUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type JobApplicationScalarFieldEnum = (typeof JobApplicationScalarFieldEnum)[keyof typeof JobApplicationScalarFieldEnum]
 
 
 export const SortOrder = {
