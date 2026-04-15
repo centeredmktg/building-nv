@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
@@ -16,6 +18,11 @@ export default function Footer() {
               General Contractor · Reno, Nevada
             </p>
           </div>
+        </div>
+        <div className="flex items-center gap-6">
+          <Link href="/careers" className="text-text-muted text-xs hover:text-text-primary transition-colors">
+            Careers
+          </Link>
         </div>
         <p className="text-text-muted text-xs">
           &copy; {year} Building NV. All rights reserved.
