@@ -695,3 +695,29 @@ model QboSyncRecord {
 
   @@unique([entityType, localId])
 }
+
+// ─── Careers / Job Postings ─────────────────────────────────────────────────
+
+model JobPosting {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  location    String
+  type        String   @default("full-time")
+  status      String   @default("open")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  applications JobApplication[]
+}
+
+model JobApplication {
+  id           String     @id @default(cuid())
+  jobPostingId String
+  jobPosting   JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  name         String
+  email        String
+  phone        String?
+  resumeUrl    String
+  createdAt    DateTime   @default(now())
+}
