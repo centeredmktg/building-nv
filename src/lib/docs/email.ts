@@ -127,6 +127,58 @@ export async function sendInvoiceLink(opts: {
   });
 }
 
+export function buildPaymentReceiptEmail(opts: {
+  recipientFirstName: string;
+  projectTitle: string;
+  invoiceNumber: string;
+  amount: number;
+  paidDate: string;
+  paymentMethod: string;
+  senderName: string;
+}): string {
+  const amountStr = `$${opts.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+  return `
+<p>Hi ${opts.recipientFirstName},</p>
+<p>This confirms your payment has been received for <strong>${opts.projectTitle}</strong>.</p>
+<table style="font-size:14px;margin:16px 0;border-collapse:collapse;">
+  <tr><td style="padding:4px 16px 4px 0;color:#666;">Invoice</td><td style="font-weight:600;">${opts.invoiceNumber}</td></tr>
+  <tr><td style="padding:4px 16px 4px 0;color:#666;">Amount</td><td style="font-weight:600;">${amountStr}</td></tr>
+  <tr><td style="padding:4px 16px 4px 0;color:#666;">Date Paid</td><td>${opts.paidDate}</td></tr>
+  <tr><td style="padding:4px 16px 4px 0;color:#666;">Method</td><td>${opts.paymentMethod}</td></tr>
+</table>
+<p style="color:#666;font-size:13px;">Please retain this email for your records. If you have any questions, reply to this email.</p>
+<p>Thank you for your business.</p>
+<p>— ${opts.senderName}<br>Building NV</p>`;
+}
+
+export async function sendPaymentReceipt(opts: {
+  toEmail: string;
+  toName: string;
+  projectTitle: string;
+  invoiceNumber: string;
+  amount: number;
+  paidDate: string;
+  paymentMethod: string;
+}): Promise<void> {
+  const firstName = opts.toName.split(' ')[0] ?? opts.toName;
+  const r = resend();
+  await r.emails.send({
+    from: FROM(),
+    to: [opts.toEmail],
+    bcc: BCC() ? [BCC()] : [],
+    subject: `Payment Receipt — ${opts.invoiceNumber} — ${opts.projectTitle}`,
+    html: buildPaymentReceiptEmail({
+      recipientFirstName: firstName,
+      projectTitle: opts.projectTitle,
+      invoiceNumber: opts.invoiceNumber,
+      amount: opts.amount,
+      paidDate: opts.paidDate,
+      paymentMethod: opts.paymentMethod,
+      senderName: process.env.RESEND_FROM_NAME ?? 'Building NV',
+    }),
+  });
+}
+
 export async function sendSignedPDF(opts: {
   toEmail: string;
   toName: string;
