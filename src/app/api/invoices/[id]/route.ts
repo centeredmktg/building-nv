@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import { generateAndSendReceipt } from '@/lib/docs/receipt';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
@@ -74,5 +75,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   }
 
   const updated = await prisma.invoice.update({ where: { id }, data });
+
+  // Fire-and-forget receipt generation for paid invoices
+  if (data.status === 'paid') {
+    generateAndSendReceipt(updated.id).catch((err) => {
+      console.error('Failed to send payment receipt:', err);
+    });
+  }
+
   return NextResponse.json(updated);
 }
