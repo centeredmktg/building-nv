@@ -69,3 +69,28 @@ export async function generatePDF(
     await browser.close();
   }
 }
+
+/**
+ * HTML → PDF as in-memory Buffer (no file written).
+ * Used for email attachments where we don't need to persist the PDF.
+ */
+export async function generatePDFBuffer(
+  documentHtml: string,
+): Promise<Buffer> {
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+  });
+  try {
+    const page = await browser.newPage();
+    await page.setContent(documentHtml, { waitUntil: 'networkidle0' });
+    const pdfBuffer = await page.pdf({
+      format: 'Letter',
+      margin: { top: '0.75in', bottom: '0.75in', left: '0.75in', right: '0.75in' },
+    });
+    return Buffer.from(pdfBuffer);
+  } finally {
+    await browser.close();
+  }
+}
