@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getStripe } from '@/lib/stripe';
-import { sendPaymentReceipt } from '@/lib/docs/email';
+import { generateAndSendReceipt } from '@/lib/docs/receipt';
 import Stripe from 'stripe';
 
 export const dynamic = 'force-dynamic';
@@ -81,27 +81,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Send payment receipt email
-    const contactEmail = invoice.billingContact.email;
-    if (contactEmail) {
-      const contactName = [invoice.billingContact.firstName, invoice.billingContact.lastName]
-        .filter(Boolean)
-        .join(' ');
-      const methodLabel = paidMethod === 'stripe_ach' ? 'ACH Bank Transfer' : 'Credit Card';
-      try {
-        await sendPaymentReceipt({
-          toEmail: contactEmail,
-          toName: contactName,
-          projectTitle: invoice.project.name,
-          invoiceNumber: invoice.invoiceNumber,
-          amount: invoice.amount,
-          paidDate: paidAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-          paymentMethod: methodLabel,
-        });
-      } catch (err) {
-        // Receipt is nice-to-have — don't fail the webhook if email fails
-        console.error('Failed to send payment receipt:', err);
-      }
+    // Send payment receipt with PDF
+    try {
+      await generateAndSendReceipt(invoiceId);
+    } catch (err) {
+      // Receipt is nice-to-have — don't fail the webhook if it fails
+      console.error('Failed to send payment receipt:', err);
     }
   }
 
