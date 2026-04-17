@@ -138,17 +138,24 @@ export function buildPaymentReceiptEmail(opts: {
 }): string {
   const amountStr = `$${opts.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
   return `
-<p>Hi ${opts.recipientFirstName},</p>
-<p>This confirms your payment has been received for <strong>${opts.projectTitle}</strong>.</p>
-<table style="font-size:14px;margin:16px 0;border-collapse:collapse;">
-  <tr><td style="padding:4px 16px 4px 0;color:#666;">Invoice</td><td style="font-weight:600;">${opts.invoiceNumber}</td></tr>
-  <tr><td style="padding:4px 16px 4px 0;color:#666;">Amount</td><td style="font-weight:600;">${amountStr}</td></tr>
-  <tr><td style="padding:4px 16px 4px 0;color:#666;">Date Paid</td><td>${opts.paidDate}</td></tr>
-  <tr><td style="padding:4px 16px 4px 0;color:#666;">Method</td><td>${opts.paymentMethod}</td></tr>
-</table>
-<p style="color:#666;font-size:13px;">Please retain this email for your records. If you have any questions, reply to this email.</p>
-<p>Thank you for your business.</p>
-<p>— ${opts.senderName}<br>Building NV</p>`;
+<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#1f2937;">
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:24px;text-align:center;margin-bottom:24px;">
+    <div style="display:inline-block;background:#16a34a;color:white;font-size:11px;font-weight:700;letter-spacing:0.1em;padding:3px 12px;border-radius:3px;">PAID</div>
+    <p style="font-size:28px;font-weight:700;margin:8px 0 4px;">${amountStr}</p>
+    <p style="color:#6b7280;margin:0;font-size:13px;">${opts.paidDate} · ${opts.paymentMethod}</p>
+  </div>
+  <p style="font-size:14px;">Hi ${opts.recipientFirstName},</p>
+  <p style="font-size:14px;">This confirms your payment has been received for <strong>${opts.projectTitle}</strong>.</p>
+  <table style="font-size:14px;margin:16px 0;border-collapse:collapse;width:100%;">
+    <tr><td style="padding:6px 16px 6px 0;color:#6b7280;">Invoice</td><td style="font-weight:600;">${opts.invoiceNumber}</td></tr>
+    <tr><td style="padding:6px 16px 6px 0;color:#6b7280;">Amount</td><td style="font-weight:600;">${amountStr}</td></tr>
+    <tr><td style="padding:6px 16px 6px 0;color:#6b7280;">Date Paid</td><td>${opts.paidDate}</td></tr>
+    <tr><td style="padding:6px 16px 6px 0;color:#6b7280;">Method</td><td>${opts.paymentMethod}</td></tr>
+  </table>
+  <p style="color:#6b7280;font-size:13px;">A detailed receipt is attached as a PDF for your records.</p>
+  <p style="font-size:14px;">Thank you for your business.</p>
+  <p style="font-size:14px;">— ${opts.senderName}<br>Building NV</p>
+</div>`;
 }
 
 export async function sendPaymentReceipt(opts: {
@@ -159,9 +166,15 @@ export async function sendPaymentReceipt(opts: {
   amount: number;
   paidDate: string;
   paymentMethod: string;
+  pdfBuffer?: Buffer;
 }): Promise<void> {
   const firstName = opts.toName.split(' ')[0] ?? opts.toName;
   const r = resend();
+
+  const attachments = opts.pdfBuffer
+    ? [{ filename: `${opts.projectTitle} — Receipt — ${opts.invoiceNumber}.pdf`, content: opts.pdfBuffer }]
+    : [];
+
   await r.emails.send({
     from: FROM(),
     to: [opts.toEmail],
@@ -176,6 +189,7 @@ export async function sendPaymentReceipt(opts: {
       paymentMethod: opts.paymentMethod,
       senderName: process.env.RESEND_FROM_NAME ?? 'Building NV',
     }),
+    attachments,
   });
 }
 
