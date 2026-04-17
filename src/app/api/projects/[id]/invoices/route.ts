@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { renderInvoiceHtml } from '@/lib/docs/invoice-template';
 import { buildInvoiceNumber } from '@/lib/invoice-numbering';
+import { syncInvoiceIfConnected } from '@/lib/quickbooks/sync';
 import { writeFileSync, mkdirSync } from 'fs';
 import { randomUUID } from 'crypto';
 import path from 'path';
@@ -247,5 +248,6 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     return inv;
   });
 
+  syncInvoiceIfConnected(invoice.id);
   return NextResponse.json(invoice, { status: 201 });
 }

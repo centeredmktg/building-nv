@@ -37,6 +37,7 @@ export default function InternalNav() {
         {navLink("/internal/subcontractors", "Subs")}
         {navLink("/internal/bid-requests", "Bids")}
         {navLink("/internal/careers", "Careers")}
+        {navLink("/internal/settings/quickbooks", "Settings")}
       </div>
       <button
         onClick={() => signOut({ callbackUrl: "/login" })}

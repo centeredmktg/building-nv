@@ -4,6 +4,7 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { generateAndSendReceipt } from '@/lib/docs/receipt';
+import { syncInvoiceIfConnected } from '@/lib/quickbooks/sync';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
@@ -82,6 +83,9 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       console.error('Failed to send payment receipt:', err);
     });
   }
+
+  // Fire-and-forget QBO sync (gated on active QboConnection)
+  syncInvoiceIfConnected(updated.id);
 
   return NextResponse.json(updated);
 }
