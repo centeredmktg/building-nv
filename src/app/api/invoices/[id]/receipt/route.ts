@@ -31,7 +31,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: 'Invoice not found or not paid' }, { status: 404 });
   }
 
-  return new NextResponse(result.buffer, {
+  return new NextResponse(new Uint8Array(result.buffer), {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `attachment; filename="${result.filename}"`,
