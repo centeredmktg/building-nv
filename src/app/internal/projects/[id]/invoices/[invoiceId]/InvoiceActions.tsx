@@ -20,6 +20,8 @@ export default function InvoiceActions({
   const [paidMethod, setPaidMethod] = useState('check');
   const [error, setError] = useState('');
   const [sendResult, setSendResult] = useState<{ passcode: string; message: string } | null>(null);
+  const [sendingReceipt, setSendingReceipt] = useState(false);
+  const [receiptResult, setReceiptResult] = useState('');
 
   const sendInvoice = async () => {
     setSending(true);
@@ -53,6 +55,21 @@ export default function InvoiceActions({
     }
     setMarking(false);
     router.refresh();
+  };
+
+  const resendReceipt = async () => {
+    setSendingReceipt(true);
+    setError('');
+    setReceiptResult('');
+    const res = await fetch(`/api/invoices/${invoiceId}/receipt`, { method: 'POST' });
+    if (!res.ok) {
+      const data = await res.json();
+      setError(data.error ?? 'Failed to send receipt');
+      setSendingReceipt(false);
+      return;
+    }
+    setReceiptResult('Receipt sent!');
+    setSendingReceipt(false);
   };
 
   return (
@@ -114,6 +131,30 @@ export default function InvoiceActions({
           </div>
         )}
       </div>
+
+      {receiptResult && (
+        <div className="bg-green-500/10 border border-green-500/30 rounded-sm p-3 text-green-400 text-sm mt-4">
+          {receiptResult}
+        </div>
+      )}
+
+      {status === 'paid' && (
+        <div className="flex gap-3 mt-4 pt-4 border-t border-border">
+          <button
+            onClick={resendReceipt}
+            disabled={sendingReceipt}
+            className="border border-border text-text-primary font-semibold px-4 py-2 rounded-sm text-sm hover:bg-surface-2 transition-colors disabled:opacity-50"
+          >
+            {sendingReceipt ? 'Sending...' : 'Resend Receipt'}
+          </button>
+          <a
+            href={`/api/invoices/${invoiceId}/receipt`}
+            className="border border-border text-text-primary font-semibold px-4 py-2 rounded-sm text-sm hover:bg-surface-2 transition-colors inline-flex items-center"
+          >
+            Download Receipt PDF
+          </a>
+        </div>
+      )}
     </section>
   );
 }
