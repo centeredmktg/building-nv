@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "@jest/globals";
 import { seedDemoScene } from "../demo-scene";
-import useScene from "@pascal-app/core/dist/store/use-scene";
+import { useScene } from "@pascal-app/core";
 
 describe("demo-scene", () => {
   beforeEach(() => {
