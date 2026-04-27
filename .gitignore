@@ -49,3 +49,6 @@ docs-storage/
 
 # planset ingestion pipeline
 scripts/planset-ingestion/output/
+
+# Imported CPP proposal JSON files (may contain customer info)
+outputs/cpp-imports/
