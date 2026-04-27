@@ -1,4 +1,4 @@
-import { sectionTitleForTrade, deriveSlug } from "../../../scripts/import-cpp-proposal/trade-mapping";
+import { sectionTitleForTrade, deriveSlug, isKnownTrade } from "../../../scripts/import-cpp-proposal/trade-mapping";
 
 describe("sectionTitleForTrade", () => {
   it("maps demolition to 'Demo & Disposal'", () => {
@@ -34,5 +34,22 @@ describe("deriveSlug", () => {
 
   it("preserves numbers and lowercases", () => {
     expect(deriveSlug("123 Main St")).toBe("123-main-st");
+  });
+});
+
+describe("isKnownTrade", () => {
+  it("returns true for known trade IDs", () => {
+    expect(isKnownTrade("carpentry")).toBe(true);
+    expect(isKnownTrade("other")).toBe(true);
+    expect(isKnownTrade("demolition")).toBe(true);
+  });
+
+  it("returns false for unknown trade IDs", () => {
+    expect(isKnownTrade("foobar")).toBe(false);
+    expect(isKnownTrade("")).toBe(false);
+  });
+
+  it("is case-sensitive", () => {
+    expect(isKnownTrade("Carpentry")).toBe(false);
   });
 });
