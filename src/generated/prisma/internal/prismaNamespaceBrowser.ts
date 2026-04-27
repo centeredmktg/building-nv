@@ -121,6 +121,7 @@ export const QuoteScalarFieldEnum = {
   overheadPct: 'overheadPct',
   profitPct: 'profitPct',
   paddingPct: 'paddingPct',
+  cppBranded: 'cppBranded',
   paymentTerms: 'paymentTerms',
   exclusions: 'exclusions',
   notes: 'notes',

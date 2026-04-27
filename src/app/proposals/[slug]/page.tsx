@@ -87,7 +87,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
                 </span>
               </div>
               <h1 className="text-[28px] font-bold text-white tracking-tight leading-tight">
-                Building NV
+                {quote.cppBranded ? "CPP Painting & Construction" : "Building NV"}
               </h1>
               <p className="text-[#8A9BB0] text-sm mt-0.5">
                 {quote.projectType} &middot; Reno, Nevada
@@ -124,7 +124,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
 
         {/* Intro */}
         <p className="text-[#4A4540] leading-relaxed mb-10 print:mb-6">
-          Thank you for the opportunity to provide this proposal. Building NV proposes to perform the following work as outlined below.
+          Thank you for the opportunity to provide this proposal. {quote.cppBranded ? "CPP Painting & Construction" : "Building NV"} proposes to perform the following work as outlined below.
         </p>
 
         {/* Scope sections */}
@@ -375,7 +375,7 @@ export default async function ProposalPage({ params }: { params: Promise<{ slug:
         {/* Footer */}
         <div className="mt-12 mb-8 pt-6 border-t border-[#DDD8D0] flex items-center justify-between print:mt-6">
           <div>
-            <p className="text-xs font-bold text-[#1A1917] tracking-wide">Building NV</p>
+            <p className="text-xs font-bold text-[#1A1917] tracking-wide">{quote.cppBranded ? "CPP Painting & Construction" : "Building NV"}</p>
             <p className="text-[11px] text-[#9A9591]">NV License #0092515</p>
           </div>
           <p className="text-[11px] text-[#9A9591]">

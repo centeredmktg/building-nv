@@ -88,6 +88,7 @@ interface Quote {
   overheadPct: number;
   profitPct: number;
   paddingPct: number;
+  cppBranded: boolean;
   paymentTerms: string;
   exclusions: string;
   notes: string;
@@ -297,6 +298,18 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
     <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
       {/* Line items — takes 3 cols */}
       <div className="xl:col-span-3">
+        <label className="inline-flex items-center gap-2 mb-3 text-xs text-text-muted cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={quote.cppBranded}
+            onChange={(e) => setQuote((q) => ({ ...q, cppBranded: e.target.checked }))}
+            className="accent-accent w-4 h-4"
+          />
+          <span className={quote.cppBranded ? "text-amber-400 font-semibold uppercase tracking-wider" : "uppercase tracking-wider"}>CPP Branded?</span>
+          {quote.cppBranded && (
+            <span className="text-amber-400/70">Preview &amp; Summary will display CPP Painting &amp; Construction</span>
+          )}
+        </label>
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-xl font-bold text-text-primary">{quote.title}</h1>
@@ -304,22 +317,22 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
           </div>
           <div className="flex gap-3">
             <button onClick={save} disabled={saving}
-              className="border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors disabled:opacity-60">
+              className="inline-flex items-center justify-center text-center border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors disabled:opacity-60">
               {saving ? "Saving..." : saved ? "Saved" : "Save"}
             </button>
             <a href={`/proposals/${quote.slug}`} target="_blank"
-              className="border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors">
+              className="inline-flex items-center justify-center text-center border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors">
               Preview
             </a>
             <a href={`/proposals/${quote.slug}/summary`} target="_blank"
-              className="border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors">
+              className="inline-flex items-center justify-center text-center border border-border text-text-primary px-4 py-2 rounded-sm text-sm hover:border-text-muted transition-colors">
               Summary
             </a>
             {quote.status === 'draft' || quote.status === 'sent' ? (
               <button
                 onClick={sendForSignature}
                 disabled={sending}
-                className="bg-accent text-bg font-semibold px-4 py-2 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60"
+                className="inline-flex items-center justify-center text-center bg-accent text-bg font-semibold px-4 py-2 rounded-sm text-sm hover:bg-accent/90 transition-colors disabled:opacity-60"
               >
                 {sending ? 'Sending...' : quote.status === 'sent' ? 'Resend Link' : 'Send for Signature'}
               </button>
@@ -332,11 +345,12 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
 
         {/* Column headers */}
         <div className="grid grid-cols-12 gap-2 px-3 mb-1 text-xs text-text-muted uppercase tracking-widest">
-          <span className="col-span-5">Description</span>
+          <span className="col-span-4">Description</span>
           <span className="col-span-1 text-right">Qty</span>
           <span className="col-span-1">Unit</span>
           <span className="col-span-2 text-right">Unit Price</span>
           <span className="col-span-2 text-right">Total</span>
+          <span className="col-span-1 text-center" title="Material flag — marks line as material so the 20% material markup applies">Mat?</span>
           <span className="col-span-1" />
         </div>
 
@@ -392,7 +406,7 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                   <div className="divide-y divide-border">
                     {sec.items.map((item, ii) => (
                       <div key={ii} className="grid grid-cols-12 gap-2 px-3 py-2 items-center group">
-                        <div className="col-span-5">
+                        <div className="col-span-4">
                           <input value={item.description}
                             onChange={(e) => updateItem(si, ii, "description", e.target.value)}
                             className={inputClass} placeholder="Description" />
@@ -417,6 +431,15 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
                         </div>
                         <div className="col-span-2 text-right text-sm text-text-primary font-medium pr-2">
                           ${(item.quantity * item.unitPrice).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </div>
+                        <div className="col-span-1 flex items-center justify-center">
+                          <input
+                            type="checkbox"
+                            checked={item.isMaterial}
+                            onChange={(e) => updateItem(si, ii, "isMaterial", e.target.checked)}
+                            className="h-4 w-4 accent-accent cursor-pointer"
+                            title={item.isMaterial ? "Material — 20% markup applies" : "Labor/subcontract — no material markup"}
+                          />
                         </div>
                         <div className="col-span-1 flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                           <button onClick={() => removeItem(si, ii)}

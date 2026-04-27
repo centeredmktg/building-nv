@@ -555,10 +555,6 @@ export type LineItemUncheckedUpdateManyWithoutSectionNestedInput = {
   deleteMany?: Prisma.LineItemScalarWhereInput | Prisma.LineItemScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type LineItemCreateNestedManyWithoutComponentInput = {
   create?: Prisma.XOR<Prisma.LineItemCreateWithoutComponentInput, Prisma.LineItemUncheckedCreateWithoutComponentInput> | Prisma.LineItemCreateWithoutComponentInput[] | Prisma.LineItemUncheckedCreateWithoutComponentInput[]
   connectOrCreate?: Prisma.LineItemCreateOrConnectWithoutComponentInput | Prisma.LineItemCreateOrConnectWithoutComponentInput[]
