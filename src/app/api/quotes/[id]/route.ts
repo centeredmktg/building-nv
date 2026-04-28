@@ -38,6 +38,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       await tx.quote.update({
         where: { id },
         data: {
+          address: body.address,
           materialMarkupPct: body.materialMarkupPct,
           overheadPct: body.overheadPct,
           profitPct: body.profitPct,

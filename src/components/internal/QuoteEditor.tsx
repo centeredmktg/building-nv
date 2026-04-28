@@ -311,8 +311,14 @@ export default function QuoteEditor({ quote: initial }: { quote: Quote }) {
           )}
         </label>
         <div className="flex items-center justify-between mb-6">
-          <div>
+          <div className="min-w-0 flex-1 mr-4">
             <h1 className="text-xl font-bold text-text-primary">{quote.title}</h1>
+            <input
+              value={quote.address}
+              onChange={(e) => setQuote((q) => ({ ...q, address: e.target.value }))}
+              placeholder="Project address"
+              className="block w-full bg-transparent text-text-muted text-sm focus:outline-none focus:text-text-primary placeholder:text-text-muted/50"
+            />
             <p className="text-text-muted text-sm">{(() => { const c = resolveQuoteClient(quote); return c.name + (c.company ? ` · ${c.company}` : ""); })()}</p>
           </div>
           <div className="flex gap-3">
