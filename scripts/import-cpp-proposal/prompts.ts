@@ -3,6 +3,7 @@ import { TRADES } from "../../src/lib/trades";
 export const EXTRACTION_MODEL = "claude-sonnet-4-6";
 
 export const COMMERCIAL_PROJECT_TYPES = [
+  "Tenant Improvement",
   "Office Buildout",
   "Medical Suite",
   "Warehouse / Industrial",
