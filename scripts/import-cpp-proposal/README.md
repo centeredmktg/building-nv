@@ -27,6 +27,10 @@ npx tsx scripts/import-cpp-proposal/seed.ts outputs/cpp-imports/<slug>.json --fo
 - Customer Company found-or-created by name (case-insensitive).
 - Output JSON is gitignored (may contain customer info).
 
+## Caution: re-seeding signed quotes
+
+The idempotent delete only cascades to `LineItemSection` and `QuoteCompany`. It will **fail with a foreign-key error** if the existing Quote has an `Acceptance` or `Contract` record (i.e., if the quote has been through the signing flow). For backfill of archival proposals this is unlikely to matter — but if you need to re-seed a signed quote, delete its `Acceptance` and `Contract` rows first.
+
 ## When to update
 
 - LLM mis-tags trades → edit `trade-mapping.ts` overrides
